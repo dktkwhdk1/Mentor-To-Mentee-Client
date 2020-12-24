@@ -1,0 +1,22 @@
+nav {
+    background-color: rgb(89, 175, 204);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav h1 {
+    margin: 0 20px;
+}
+
+.menu {
+    display: flex;
+    padding-right: 30px;
+    align-items: center;
+}
+
+.nav-item {
+    /* 페이지를 늘렸을 때 nav-item사이의 패딩이 더 증가하도록 어떻게 할 수 있을까? */
+    list-style: none;
+    padding: 20px;
+}
