@@ -1,27 +1,39 @@
 import './App.css';
-import Header from './component/Header';
-import Main from './component/Main';
-import Footer from './component/Footer';
+import React, { useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  // Link
+} from "react-router-dom";
+
+import Header from './components/Header';
+import Main from './components/Main';
+import Footer from './components/Footer';
+import MyPage from './components/MyPage'
 
 function App() {
+  // Login 버튼 클릭시 모달창열기
+  const [loginButtonOn, setLoginButtonOn] = useState(false);
+
   return (
-    <div className='App'>
-      <Header />
-      <Main />
-      <Footer />
-    </div>
+    <Router>
+      <div className='App'>
+        <Header loginButtonOn={loginButtonOn} setLoginButtonOn={setLoginButtonOn} />
+
+        <Switch>
+          <Route path="/mypage">
+            <MyPage />
+          </Route>
+          <Route path="/">
+            <Main loginButtonOn={loginButtonOn} setLoginButtonOn={setLoginButtonOn} />
+          </Route>
+        </Switch>
+        
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
 export default App;
-/*
-import React from 'react';
-import './App.css';
-import MyPage from './components/MyPage';
-
-function App() {
-  return <MyPage />;
-}
-
-export default App;
-*/

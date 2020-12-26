@@ -1,10 +1,39 @@
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import './Card.css'
+import styled from 'styled-components';
+
+//styled Component
+const CardItem = styled.div`
+margin: 15px;
+width: 300px;
+height: 180px;
+background-color: lightblue;
+border-radius: 15px;
+font-size: 12px;
+
+.mentor-profile {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+.mentor-img {
+    margin: 10px;
+    width:60px;
+    height:60px;
+    border-radius: 50%;
+}
+
+.mentor-name {
+    margin-right: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
+`
 
 function Card() {
     return (
-        <div className="card-item">
+        <CardItem>
             <div className="mentor-profile">
                 <img className="mentor-img" src="https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg" />
                 <div className="name">
@@ -21,7 +50,7 @@ function Card() {
 
 
 
-        </div>
+        </CardItem>
     )
 }
 
