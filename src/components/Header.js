@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import styled, { css } from 'styled-components';
-// import './Header.css'
 
 const Nav = styled.nav`
 background-color: rgb(89, 175, 204);
@@ -36,7 +35,7 @@ h1 {
 function Header({ loginButtonOn, setLoginButtonOn }) {
 
     //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
 
     const loginHandler = () => {
         //TODO 로그인 버튼 눌렀을때, 로그인 모달창 띄우기
@@ -52,7 +51,9 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
             {isLogin ?
                 <ul className="menu">
                     <li className="nav-item">나의 질문</li>
-                    <li className="nav-item">멘토 지원하기</li>
+                    <Link to='/applymentor'>
+                        <li className="nav-item">멘토 지원하기</li>
+                    </Link>
 
                     <Link to='/mypage' className="nav-item">
                         <img src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-3.jpg" />

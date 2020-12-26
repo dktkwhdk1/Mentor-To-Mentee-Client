@@ -11,6 +11,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
 import MyPage from './components/MyPage'
+import ApplyMentor from './components/ApplyMentor';
 
 function App() {
   // Login 버튼 클릭시 모달창열기
@@ -24,6 +25,9 @@ function App() {
         <Switch>
           <Route path="/mypage">
             <MyPage />
+          </Route>
+          <Route path="/applymentor">
+            <ApplyMentor/>
           </Route>
           <Route path="/">
             <Main loginButtonOn={loginButtonOn} setLoginButtonOn={setLoginButtonOn} />
