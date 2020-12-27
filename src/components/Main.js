@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 //styled component
 const MainDiv = styled.main`
-margin-top: 30px;
+margin: 30px 0px;
 
 h2 {
     text-align: center;
@@ -37,12 +37,6 @@ function Main({loginButtonOn, setLoginButtonOn}) {
             <h2>멘토 리스트</h2>
             {loginButtonOn? <Login setLoginButtonOn={setLoginButtonOn} signupButtonOn={signupButtonOn} setSignupButtonOn={setSignupButtonOn}/>: ''}
             <div className="cards-container">
-                <Card className="card"/>
-                <Card className="card"/>
-                <Card className="card"/>
-                <Card className="card"/>
-                <Card className="card"/>
-                <Card className="card"/>
                 <Card className="card"/>
                 <Card className="card"/>
                 <Card className="card"/>
