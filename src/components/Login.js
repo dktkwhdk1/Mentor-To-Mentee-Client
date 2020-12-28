@@ -13,6 +13,7 @@ top: 30%;
 left: 30%;
 margin: auto;
 padding-bottom: 30px;
+z-index: 1;
 
 display: flex;
 flex-direction: column;
@@ -54,12 +55,16 @@ padding: 0px;
 padding-left: 10px;
 `
 
-function Login({ setLoginButtonOn, setSignupButtonOn }) {
+function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
     const [emailButtonOn, setEmailButtonOn] = useState(false)
     const [emailValue, setEmailValue] = useState("이메일을 입력해주세요")
     const [passwordValue, setPasswordValue] = useState("비밀번호를 입력해주세요")
 
-
+    //테스트용 강제로그인 기능
+    const handleForcedLogin = () => {
+        setLogin(true)
+        setLoginButtonOn(false)
+    }
     //이메일버튼 눌렀을때, 입력 폼 띄워주는 기능
     const handleEmailLogin = () => {
         setEmailButtonOn(true)
@@ -92,6 +97,7 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
                 <Button className="modal-item">구글 아이디로 로그인</Button>
                 <Button className="modal-item">네이버 아이디로 로그인</Button>
                 <Button onClick={handleEmailLogin} className="modal-item">이메일로 로그인</Button>
+                <Button onClick={handleForcedLogin} className="modal-item">(테스트용) 강제로그인</Button>
 
             </div>
 

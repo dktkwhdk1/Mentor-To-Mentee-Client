@@ -5,7 +5,8 @@ import styled from 'styled-components'
 const FooterDiv = styled.footer`
 margin-top: 30px;
 background-color: rgb(89, 175, 204);
-height: 150px;
+height: 70px;
+width: 100%;
 `
 
 function Footer() {
