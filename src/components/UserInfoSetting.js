@@ -5,7 +5,7 @@ import myImage from '../images.png';
 const InsertForm = styled.form`
   background: #f8f9fa;
   width: 484px;
-  height: 726px;
+  height: 760px;
 
   div {
     padding-top: 5px;
@@ -25,7 +25,7 @@ const Input = styled.input`
   border-radius: 4px;
   border: 1px solid #dee2e6;
   width: 87%;
-  font-size: 12px;
+  font-size: 14px;
   padding: 10px;
   margin-left: 20px;
   margin-bottom: 15px;
@@ -58,19 +58,36 @@ const Button = styled.button`
   height: 25px;
   display: flex;
   border: 1px solid #dee2e6;
+  border-radius: 4px;
+
   &:hover {
     cursor: pointer;
-    background: #e9ecef;
   }
 `;
 
+const SubmitButton = styled.button`
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  width: 91.5%;
+  font-size: 12px;
+  padding: 10px;
+  margin-left: 20px;
+  margin-bottom: 15px;
+  background: #38d9a9;
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+/*
 const UserImage1 = styled.div`
   background-image: url(${myImage});
   width: 180px;
   height: 180px;
   padding-left: 20px;
 `;
-
+*/
 const UserImage2 = styled.img`
   src: url(${myImage});
   width: 140px;
@@ -83,9 +100,9 @@ function UserInfoSetting() {
     <InsertForm>
       <h1>계정 설정</h1>
       <div>이메일 *</div>
-      <Input />
+      <Input value='VeryVerySexyBrainGuys@VVS.VVS' />
       <div>이름 *</div>
-      <Input />
+      <Input value='강희석' />
       <div>휴대전화 번호</div>
       <Input autoFocus placeholder='번호를 입력해주세요.(숫자만)'></Input>
       <div>성별</div>
@@ -99,7 +116,8 @@ function UserInfoSetting() {
       <div>프로필 사진</div>
       <UserImage2 />
       <Button>이미지 업로드</Button>
-      <Button>설정 저장하기</Button>
+      <br></br>
+      <SubmitButton>설정 저장하기</SubmitButton>
     </InsertForm>
   );
 }
