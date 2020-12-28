@@ -18,13 +18,19 @@ cursor: pointer;
 }
 `
 
-function UserModal() {
+function UserModal( {setLogin, setUserModalButtonOn} ) {
+    
+    const logoutHandler = () => {
+        setLogin(false)
+        setUserModalButtonOn(false)
+    }
+
     return (
         <Modal>
             <Link to='/mypage'>
                 <div className="modal-item">마이페이지</div>
             </Link>
-            <div className="modal-item">로그아웃</div>
+            <div onClick={logoutHandler} className="modal-item">로그아웃</div>
         </Modal>
     )
 }

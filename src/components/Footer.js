@@ -7,8 +7,6 @@ margin-top: 30px;
 background-color: rgb(89, 175, 204);
 height: 70px;
 width: 100%;
-
-
 `
 
 function Footer() {
