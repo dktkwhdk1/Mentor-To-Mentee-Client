@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import UserInfoSetting from './UserInfoSetting';
+import MenteeSetting from './MenteeSetting';
 import styled, { css } from 'styled-components';
+// import PasswordSetting from './PasswordSetting';
 
 const MyPageTemplate = styled.div`
   display: flex;
@@ -51,7 +53,7 @@ const SettingSelector = styled.div`
   }
 `;
 
-function MyPage() {
+function MyPage({ isMentor }) {
   const [openUserSetting, setUserSetting] = useState(true);
   const [openMenteeSetting, setMenteeSetting] = useState(false);
   const [openPasswordSetting, setPasswordSetting] = useState(false);
@@ -73,16 +75,29 @@ function MyPage() {
         >
           계정 설정
         </div>
-        <div
-          className='mentee'
-          onClick={() => {
-            setUserSetting(false);
-            setPasswordSetting(false);
-            setMenteeSetting(true);
-          }}
-        >
-          멘티 설정
-        </div>
+        {isMentor ? (
+          <div
+            className='mentee'
+            onClick={() => {
+              setUserSetting(false);
+              setPasswordSetting(false);
+              setMenteeSetting(true);
+            }}
+          >
+            멘티/멘토 설정
+          </div>
+        ) : (
+          <div
+            className='mentee'
+            onClick={() => {
+              setUserSetting(false);
+              setPasswordSetting(false);
+              setMenteeSetting(true);
+            }}
+          >
+            멘티 설정
+          </div>
+        )}
         <div
           className='password'
           onClick={() => {
@@ -94,7 +109,9 @@ function MyPage() {
           비밀번호 설정
         </div>
       </SettingSelector>
-      <UserInfoSetting />
+      {openUserSetting && <UserInfoSetting />}
+      {openMenteeSetting && <MenteeSetting />}
+      {/* {openPasswordSetting && <PasswordSetting />} */}
     </MyPageTemplate>
   );
 }
