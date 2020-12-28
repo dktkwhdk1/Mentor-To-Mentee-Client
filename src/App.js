@@ -6,7 +6,6 @@ import {
   Route,
   // Link
 } from 'react-router-dom';
-
 import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
@@ -14,6 +13,7 @@ import MyPage from './components/MyPage';
 import ApplyMentor from './components/ApplyMentor';
 import MyQuestion from './components/MyQuestion';
 import QuestionAndAnswer from './components/QuestionAndAnswer';
+import MentorProfile from './components/MentorProfile';
 
 function App() {
   // Login 버튼 클릭시 모달창열기
@@ -32,45 +32,48 @@ function App() {
           loginButtonOn={loginButtonOn}
           setLoginButtonOn={setLoginButtonOn}
         />
-
-        <Switch>
-          <Route path='/' exact={true}>
-            <Main
-              loginButtonOn={loginButtonOn}
-              setLoginButtonOn={setLoginButtonOn}
+        <Header />
+        <main className='main'>
+          <Switch>
+            <Route path='/mentorprofile' component={MentorProfile} />
+            <Route path='/' exact={true}>
+              <Main
+                loginButtonOn={loginButtonOn}
+                setLoginButtonOn={setLoginButtonOn}
+              />
+            </Route>
+            <Route
+              path='/myQuestion'
+              component={() => {
+                return (
+                  <MyQuestion
+                    mentorName={mentorName}
+                    mentorCompany={mentorCompany}
+                    mentorJob={mentorJob}
+                  />
+                );
+              }}
             />
-          </Route>
-          <Route
-            path='/myQuestion'
-            component={() => {
-              return (
-                <MyQuestion
-                  mentorName={mentorName}
-                  mentorCompany={mentorCompany}
-                  mentorJob={mentorJob}
-                />
-              );
-            }}
-          />
-          <Route
-            path='/myPage'
-            component={() => <MyPage isMentor={isMentor} />}
-          />
-          <Route path='/applymentor' component={ApplyMentor} />
-          <Route
-            path='/QuestionAndAnswer'
-            component={() => {
-              return (
-                <QuestionAndAnswer
-                  mentorName={mentorName}
-                  mentorCompany={mentorCompany}
-                  mentorJob={mentorJob}
-                  mentorIntroduction={mentorIntroduction}
-                />
-              );
-            }}
-          />
-        </Switch>
+            <Route
+              path='/myPage'
+              component={() => <MyPage isMentor={isMentor} />}
+            />
+            <Route path='/applymentor' component={ApplyMentor} />
+            <Route
+              path='/QuestionAndAnswer'
+              component={() => {
+                return (
+                  <QuestionAndAnswer
+                    mentorName={mentorName}
+                    mentorCompany={mentorCompany}
+                    mentorJob={mentorJob}
+                    mentorIntroduction={mentorIntroduction}
+                  />
+                );
+              }}
+            />
+          </Switch>
+        </main>
 
         <Footer />
       </div>
@@ -79,3 +82,19 @@ function App() {
 }
 
 export default App;
+/*
+<Switch>
+  <Route path='/mentorprofile'>
+    <MentorProfile />
+  </Route>
+  <Route path='/mypage'>
+    <MyPage />
+  </Route>
+  <Route path='/applymentor'>
+    <ApplyMentor />
+  </Route>
+  <Route path='/'>
+    <Main />
+  </Route>
+</Switch>;
+*/

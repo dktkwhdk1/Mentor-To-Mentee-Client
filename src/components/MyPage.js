@@ -3,6 +3,7 @@ import UserInfoSetting from './UserInfoSetting';
 import MenteeSetting from './MenteeSetting';
 import PasswordSetting from './PasswordSetting';
 import styled, { css } from 'styled-components';
+// import PasswordSetting from './PasswordSetting';
 
 const MyPageTemplate = styled.div`
   display: flex;
