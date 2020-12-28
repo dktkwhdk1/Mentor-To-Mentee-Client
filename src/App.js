@@ -12,32 +12,29 @@ import Main from './components/Main';
 import Footer from './components/Footer';
 import MyPage from './components/MyPage'
 import ApplyMentor from './components/ApplyMentor';
-import AskQuestion from './components/AskQuestion';
+import MentorProfile from './components/MentorProfile';
 
 function App() {
-  // Login 버튼 클릭시 모달창열기
-  const [loginButtonOn, setLoginButtonOn] = useState(false);
 
   return (
     <Router>
       <div className='App'>
-        <Header loginButtonOn={loginButtonOn} setLoginButtonOn={setLoginButtonOn} />
+        <Header />
 
         <main className="main">
           <Switch>
+            <Route path="/mentorprofile">
+              <MentorProfile />
+            </Route>
             <Route path="/mypage">
               <MyPage />
             </Route>
             <Route path="/applymentor">
               <ApplyMentor />
             </Route>
-            <Route path="/askquestion">
-              <AskQuestion />
-            </Route>
             <Route path="/">
-              <Main loginButtonOn={loginButtonOn} setLoginButtonOn={setLoginButtonOn} />
+              <Main />
             </Route>
-
           </Switch>
         </main>
 

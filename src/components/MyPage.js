@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import UserInfoSetting from './UserInfoSetting';
 import MenteeSetting from './MenteeSetting';
 import styled, { css } from 'styled-components';
-import PasswordSetting from './PasswordSetting';
+// import PasswordSetting from './PasswordSetting';
 
 const MyPageTemplate = styled.div`
   display: flex;
@@ -111,7 +111,7 @@ function MyPage({ isMentor }) {
       </SettingSelector>
       {openUserSetting && <UserInfoSetting />}
       {openMenteeSetting && <MenteeSetting />}
-      {openPasswordSetting && <PasswordSetting />}
+      {/* {openPasswordSetting && <PasswordSetting />} */}
     </MyPageTemplate>
   );
 }

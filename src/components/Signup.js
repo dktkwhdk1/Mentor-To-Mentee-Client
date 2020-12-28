@@ -13,6 +13,7 @@ top: 30%;
 left: 30%;
 margin: auto;
 padding-bottom: 30px;
+z-index: 1;
 
 display: flex;
 flex-direction: column;
@@ -61,6 +62,12 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
     const [emailValue, setEmailValue] = useState("이메일을 입력해주세요")
     const [passwordValue, setPasswordValue] = useState("비밀번호를 입력해주세요")
 
+    // 회원가입 모달창 닫기
+    const exitModal = () => {
+        setSignupButtonOn(false)
+    }
+
+
     //이메일버튼 눌렀을때, 입력 폼 띄워주는 기능
     const handleEmailLogin = () => {
         setEmailButtonOn(true)
@@ -107,6 +114,7 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
             }
 
             <h5 onClick={handleLoginButton} className="text-link">이미 계정이 있으시다면? 로그인</h5>
+            <h5 onClick={exitModal} className="text-link">닫기</h5>
         </Modal>
 
     )

@@ -3,8 +3,9 @@ import styled from 'styled-components';
 // import './AskQuestion.css'
 
 const QuestionForm = styled.form`
-margin: auto;
-width: 400px;
+
+margin: 50px;
+
 text-align: left;
 display: flex;
 flex-direction: column;
