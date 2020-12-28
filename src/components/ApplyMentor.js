@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const ApplyMentorDiv = styled.div`
 text-align: center;
-height: 600px;
+// height: 750px;
 
 .mentor-img img {
     width: 500px;
