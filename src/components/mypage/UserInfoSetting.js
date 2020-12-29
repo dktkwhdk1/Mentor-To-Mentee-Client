@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import myImage from '../images.png';
+import myImage from '../../images.png';
 
 const InsertForm = styled.form`
   background: #f8f9fa;

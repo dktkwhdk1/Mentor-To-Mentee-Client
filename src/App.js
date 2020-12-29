@@ -1,23 +1,27 @@
 import './App.css';
 import React, { useState } from 'react';
+import {useSelector, useDispatch} from 'react-redux'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   // Link
 } from 'react-router-dom';
-import Header from './components/Header';
-import Main from './components/Main';
+import Header from './components/header/Header';
+import Main from './components/main/Main';
 import Footer from './components/Footer';
-import MyPage from './components/MyPage';
+import MyPage from './components/mypage/MyPage';
 import ApplyMentor from './components/ApplyMentor';
-import MyQuestion from './components/MyQuestion';
-import QuestionAndAnswer from './components/QuestionAndAnswer';
-import MentorProfile from './components/MentorProfile';
+import MyQuestion from './components/main/Main';
+import QuestionAndAnswer from './components/myquestion/QuestionAndAnswer';
+import MentorProfile from './components/mentor-profile/MentorProfile';
 
 function App() {
   // Login 버튼 클릭시 모달창열기
   const [loginButtonOn, setLoginButtonOn] = useState(false);
+  const userData = useSelector(state => state.userInfoReducer)
+  console.log('userData', userData)
+
   const isMentor = true;
   const mentorName = '김코딩';
   const mentorCompany = '뱅크샐러드';
@@ -32,7 +36,6 @@ function App() {
           loginButtonOn={loginButtonOn}
           setLoginButtonOn={setLoginButtonOn}
         />
-        <Header />
         <main className='main'>
           <Switch>
             <Route path='/mentorprofile' component={MentorProfile} />
@@ -82,19 +85,3 @@ function App() {
 }
 
 export default App;
-/*
-<Switch>
-  <Route path='/mentorprofile'>
-    <MentorProfile />
-  </Route>
-  <Route path='/mypage'>
-    <MyPage />
-  </Route>
-  <Route path='/applymentor'>
-    <ApplyMentor />
-  </Route>
-  <Route path='/'>
-    <Main />
-  </Route>
-</Switch>;
-*/
