@@ -6,14 +6,14 @@ import {
   Route,
   // Link
 } from 'react-router-dom';
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
-import MyPage from './components/MyPage';
-import ApplyMentor from './components/ApplyMentor';
-import MyQuestion from './components/MyQuestion';
-import QuestionAndAnswer from './components/QuestionAndAnswer';
-import MentorProfile from './components/MentorProfile';
+import Header from './components/header/Header';
+import Main from './components/main/Main';
+import Footer from './components/footer';
+import MyPage from './components/mypage/MyPage.js';
+import ApplyMentor from './components/header/ApplyMentor';
+import MyQuestion from './components/myquestion/MyQuestion';
+import QuestionAndAnswer from './components/myquestion/QuestionAndAnswer';
+import MentorProfile from './components/mentor-profile/MentorProfile';
 
 function App() {
   // Login 버튼 클릭시 모달창열기
@@ -32,7 +32,6 @@ function App() {
           loginButtonOn={loginButtonOn}
           setLoginButtonOn={setLoginButtonOn}
         />
-        <Header />
         <main className='main'>
           <Switch>
             <Route path='/mentorprofile' component={MentorProfile} />
