@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import myImage from '../../images.png';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserInfo } from '../../modules/userInfoSetting';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
   background: #f8f9fa;
@@ -96,20 +101,49 @@ const UserImage2 = styled.img`
 `;
 
 function UserInfoSetting() {
+  const userInfo = useSelector(state => ({ ...state.userInfoSetting }));
+  if (!userInfo.mobile) {
+    // 상태에 저장된 폰 번호가 없음
+    // axios.get('https://localhost4000/getmypage')
+    console.log('상태에 저장된 폰 번호가 없음');
+  }
+  const [mobile, setMobile] = useState('');
+  const [gender, setGender] = useState('');
+
+  const dispatch = useDispatch();
+  const onSubmitHandler = e => {
+    e.preventDefault();
+    alert('설정 저장이 완료되었습니다.');
+    /*
+    axios
+      .post('https://localhost4000/postmypage', {
+        mobile: userInfo.mobile,
+        gender: userInfo.gender,
+      })
+      .then((res) => console.log(res));*/
+    dispatch(setUserInfo({ mobile, gender }));
+  };
+
   return (
     <InsertForm>
       <h1>계정 설정</h1>
       <div>이메일 *</div>
-      <Input value='VeryVerySexyBrainGuys@VVS.VVS' />
+      <Input value={userInfo.email} readOnly />
       <div>이름 *</div>
-      <Input value='강희석' />
+      <Input value={userInfo.username} readOnly />
       <div>휴대전화 번호</div>
-      <Input autoFocus placeholder='번호를 입력해주세요.(숫자만)'></Input>
+      <Input
+        type='text'
+        placeholder='번호를 입력해주세요.(숫자만)'
+        onChange={e => setMobile(e.target.value)}
+        value={userInfo.mobile}
+      ></Input>
       <div>성별</div>
-      <Select>
-        <option value='1' selected>
-          성별을 선택해주세요
-        </option>
+      <Select
+        onChange={e => setGender(e.target.value)}
+        defaultValue={userInfo.gender}
+      >
+        <option value='1'>성별을 선택해주세요</option>
         <option value='2'>남자</option>
         <option value='3'>여자</option>
       </Select>
@@ -117,7 +151,7 @@ function UserInfoSetting() {
       <UserImage2 />
       <Button>이미지 업로드</Button>
       <br></br>
-      <SubmitButton>설정 저장하기</SubmitButton>
+      <SubmitButton onClick={onSubmitHandler}>설정 저장하기</SubmitButton>
     </InsertForm>
   );
 }

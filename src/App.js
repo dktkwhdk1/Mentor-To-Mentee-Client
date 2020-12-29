@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import Header from './components/header/Header';
 import Main from './components/main/Main';
-import Footer from './components/Footer';
+import Footer from './components/footer';
 import MyPage from './components/mypage/MyPage';
 import ApplyMentor from './components/ApplyMentor';
 import MyQuestion from './components/main/Main';
@@ -17,6 +17,7 @@ import QuestionAndAnswer from './components/myquestion/QuestionAndAnswer';
 import MentorProfile from './components/mentor-profile/MentorProfile';
 
 function App() {
+  const [loginButtonOn, setLoginButtonOn] = useState(false);
   const isMentor = true;
   const mentorName = '김코딩';
   const mentorCompany = '뱅크샐러드';
@@ -27,7 +28,10 @@ function App() {
   return (
     <Router>
       <div className='App'>
-        <Header/>
+      <Header
+          loginButtonOn={loginButtonOn}
+          setLoginButtonOn={setLoginButtonOn}
+        />
         <main className='main'>
           <Switch>
             <Route path='/mentorprofile' component={MentorProfile} />

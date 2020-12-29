@@ -80,15 +80,9 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
     }
 
     //회원가입 폼에 입력된 값을 가져오는 기능
-    const handleNameInput = (event) => {
-        setUsername(event.target.value)
-    }
-    const handleEmailInput = (event) => {
-        setEmail(event.target.value)
-    }
-    const handlePasswordInput = (event) => {
-        setPassword(event.target.value)
-    }
+    const handleNameInput = (event) => {setUsername(event.target.value)}
+    const handleEmailInput = (event) => {setEmail(event.target.value)}
+    const handlePasswordInput = (event) => {setPassword(event.target.value)}
 
 
     //회원가입 요청
@@ -98,6 +92,7 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
             headers: { 'Content-Type': 'application/json'}, withCredentials: true
         })
             .then((res) => console.log(res))
+            .catch(console.log)
     }
 
     return (

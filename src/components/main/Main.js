@@ -39,13 +39,14 @@ function Main() {
     }];
     
     // 멘토 정보 받아와서 store에 저장하기
+    // !미완성
     const dispatch = useDispatch();
     const requestMentorList = () => {
         axios.get('https://localhost:4000/main', {
             headers: { 'Content-Type': 'application/json' }, withCredentials: true
         })
             .then((res) => {
-                dispatch(setMentorList(res.data))
+                dispatch(setMentorList(res.data.data))
             })
     }
 

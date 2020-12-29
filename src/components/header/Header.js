@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import UserModal from './UserModal';
 import Login from './Login';
 import Signup from './Signup';
@@ -34,7 +34,7 @@ const Nav = styled.nav`
     border-radius: 50%;
   }
 `;
-/*
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -50,46 +50,7 @@ const StyledLink = styled(Link)`
 
 function Header({ loginButtonOn, setLoginButtonOn }) {
   //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
-  const [isLogin, setIsLogin] = useState(true);
-
-  const loginHandler = () => {
-    //TODO 로그인 버튼 눌렀을때, 로그인 모달창 띄우기
-    setLoginButtonOn(!loginButtonOn);
-  };
-
-  return (
-    <Nav>
-      <StyledLink to='/'>
-        <h1 className='logo'>Mentor-to-Mentee</h1>
-      </StyledLink>
-      {isLogin ? (
-        <ul className='menu'>
-          <StyledLink to='/myquestion'>
-            <li className='nav-item'>나의 질문</li>
-          </StyledLink>
-          <StyledLink to='/applymentor'>
-            <li className='nav-item'>멘토 지원하기</li>
-          </StyledLink>
-
-          <StyledLink to='/mypage' className='nav-item'>
-            <img src='https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-3.jpg' />
-          </StyledLink>
-        </ul>
-      ) : (
-        <ul className='menu'>
-          <li className='nav-item' onClick={loginHandler}>
-            Login
-          </li>
-        </ul>
-      )}
-    </Nav>
-  );
-  */
-function Header() {
-
-  //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
   const [isLogin, setLogin] = useState(false);
-  const [loginButtonOn, setLoginButtonOn] = useState(false);
   const [userModalButtonOn, setUserModalButtonOn] = useState(false);
   const [signupButtonOn, setSignupButtonOn] = useState(false);
 
@@ -108,18 +69,17 @@ function Header() {
 
   return (
     <Nav>
-      <Link to='/' style={{ color: 'inherit', textDecoration: 'inherit' }}>
+      <StyledLink to='/'>
         <h1 className='logo'>Mentor-to-Mentee</h1>
-      </Link>
+      </StyledLink>
       {isLogin ? (
         <ul className='menu'>
-          <li className='nav-item'>나의 질문</li>
-          <Link
-            to='/applymentor'
-            style={{ color: 'inherit', textDecoration: 'inherit' }}
-          >
+          <StyledLink to='/myquestion'>
+            <li className='nav-item'>나의 질문</li>
+          </StyledLink>
+          <StyledLink to='/applymentor'>
             <li className='nav-item'>멘토 지원하기</li>
-          </Link>
+          </StyledLink>
 
           <div onClick={userModalHandler} className='nav-item'>
             <img
