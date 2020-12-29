@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import MentorSetting from './MentorSetting';
+import { useSelector, useDispatch } from 'react-redux';
+import { setMenteeInfo } from '../../modules/menteeInfoSetting';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
   background: #f8f9fa;
@@ -34,12 +38,12 @@ const Toggle = styled.button`
   &:hover {
     cursor: pointer;
   }
-  ${(props) =>
+  ${props =>
     props.isMentee &&
     css`
       background: #38d9a9;
     `}
-  ${(props) =>
+  ${props =>
     props.isMentor &&
     css`
       background: #38d9a9;
@@ -108,7 +112,36 @@ const SubmitButton = styled.button`
 function MenteeSetting() {
   const [isMentor, setMentor] = useState(false);
   const [isMentee, setMentee] = useState(true);
+  const [school, setSchool] = useState('');
+  const [major, setMajor] = useState('');
+  const [graduate, setGraduate] = useState('');
+  const [grade, setGrade] = useState('');
+  const [spec, setSpec] = useState('');
+  const [etc, setEtc] = useState('');
 
+  const userInfo = useSelector(state => ({ ...state.menteeInfoSetting }));
+  const dispatch = useDispatch();
+  const onSubmitHandler = e => {
+    e.preventDefault();
+    /*
+    axios
+      .post('https://localhost4000/setmentee', {
+        ...userInfo,
+      })
+      .then(res => console.log(res));*/
+
+    dispatch(
+      setMenteeInfo({
+        school,
+        major,
+        graduate,
+        grade,
+        spec,
+        etc,
+      })
+    );
+    console.log(userInfo);
+  };
   // line 146, autoFocus - 페이지 들어가자마자 해당 input에 커서 깜빡임
   return isMentor ? (
     <MentorSetting
@@ -122,7 +155,7 @@ function MenteeSetting() {
       <Toggle
         className='mentee'
         isMentee={isMentee}
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           setMentor(false);
           setMentee(true);
@@ -133,7 +166,7 @@ function MenteeSetting() {
       <Toggle
         className='mentor'
         isMentor={isMentor}
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           setMentor(true);
           setMentee(false);
@@ -143,12 +176,19 @@ function MenteeSetting() {
       </Toggle>
       <h1>멘티 정보</h1>
       <div>학교</div>
-      <Input autoFocus placeholder='학교를 작성해주세요.' />
+      <Input
+        autoFocus
+        placeholder='학교를 작성해주세요.'
+        onChange={e => setSchool(e.target.value)}
+      />
       <div>전공*</div>
-      <Input placeholder='전공을 작성해주세요.' />
+      <Input
+        placeholder='전공을 작성해주세요.'
+        onChange={e => setMajor(e.target.value)}
+      />
       <Graduation>재학/졸업* 학년</Graduation>
       <Graduation>
-        <Select>
+        <Select onChange={e => setGraduate(e.target.value)}>
           <option value='1' selected>
             선택해주세요
           </option>
@@ -156,7 +196,7 @@ function MenteeSetting() {
           <option value='3'>졸업</option>
           <option value='4'>기타</option>
         </Select>
-        <Select>
+        <Select onChange={e => setGrade(e.target.value)}>
           <option value='1' selected>
             재학생만 선택해주세요.
           </option>
@@ -167,10 +207,16 @@ function MenteeSetting() {
         </Select>
       </Graduation>
       <div>스펙</div>
-      <BigInput placeholder='스펙을 작성해주세요.' />
+      <BigInput
+        placeholder='스펙을 작성해주세요.'
+        onChange={e => setSpec(e.target.value)}
+      />
       <div>기타</div>
-      <BigInput placeholder='기타 관심 분야 등 멘토님이 답변에 참고할 만한 사항을 작성해주세요.' />
-      <SubmitButton>수정하기</SubmitButton>
+      <BigInput
+        placeholder='기타 관심 분야 등 멘토님이 답변에 참고할 만한 사항을 작성해주세요.'
+        onChange={e => setEtc(e.target.value)}
+      />
+      <SubmitButton onClick={onSubmitHandler}>수정하기</SubmitButton>
     </InsertForm>
   );
 }

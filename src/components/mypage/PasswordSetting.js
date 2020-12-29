@@ -47,9 +47,9 @@ function PasswordSetting() {
   return (
     <InsertForm>
       <h1>비밀번호 변경</h1>
-      <Input autoFocus placeholder='현재 비밀번호'></Input>
-      <Input placeholder='새 비밀번호'></Input>
-      <Input placeholder='새 비밀번호 확인'></Input>
+      <Input autoFocus placeholder='현재 비밀번호' type='password'></Input>
+      <Input placeholder='새 비밀번호' type='password'></Input>
+      <Input placeholder='새 비밀번호 확인' type='password'></Input>
       <SubmitButton>비밀번호 변경</SubmitButton>
     </InsertForm>
   );
