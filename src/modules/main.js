@@ -10,7 +10,7 @@ export const setMentorList = ({data}) => ({
 
 /* 초기 상태 선언 */
 const initialState = {
-    data: []
+    data: ''
 }
 
 /* 리듀서 선언 */

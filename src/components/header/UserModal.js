@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom"
+import axios from 'axios'
 
 const Modal = styled.div`
 position: absolute;
@@ -18,9 +19,14 @@ cursor: pointer;
 }
 `
 
-function UserModal( {setLogin, setUserModalButtonOn} ) {
-    
+function UserModal({ setLogin, setUserModalButtonOn }) {
+
     const logoutHandler = () => {
+        axios.post("https://localhost:4000/signout", '', {
+            withCredentials: true
+        })
+            .then((res) => {
+            })
         setLogin(false)
         setUserModalButtonOn(false)
     }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import {setEmail, setPassword, setToken} from '../../modules/login'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios';
 
@@ -76,11 +75,9 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
 
     // (Redux) 로그인 폼에 입력된 값을 store에 저장한다
     const handleEmailInput = (event) => {
-        dispatch(setEmail(event.target.value))
     }
 
     const handlePasswordInput = (event) => {
-        dispatch(setPassword(event.target.value))
     }
 
     
@@ -93,7 +90,6 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
             loginData,
             { headers: { 'Content-Type': 'application/json' }, withCredentials: true })
             .then((res) =>{
-                dispatch(setToken(res.data.data))
             })
     }
     // 헤더에 엑세스 토큰 담아서 보낸다. -> 유저정보 받는다 

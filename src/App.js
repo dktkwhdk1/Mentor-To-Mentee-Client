@@ -17,11 +17,6 @@ import QuestionAndAnswer from './components/myquestion/QuestionAndAnswer';
 import MentorProfile from './components/mentor-profile/MentorProfile';
 
 function App() {
-  // Login 버튼 클릭시 모달창열기
-  const [loginButtonOn, setLoginButtonOn] = useState(false);
-  const userData = useSelector(state => state.userInfoReducer)
-  console.log('userData', userData)
-
   const isMentor = true;
   const mentorName = '김코딩';
   const mentorCompany = '뱅크샐러드';
@@ -32,18 +27,12 @@ function App() {
   return (
     <Router>
       <div className='App'>
-        <Header
-          loginButtonOn={loginButtonOn}
-          setLoginButtonOn={setLoginButtonOn}
-        />
+        <Header/>
         <main className='main'>
           <Switch>
             <Route path='/mentorprofile' component={MentorProfile} />
             <Route path='/' exact={true}>
-              <Main
-                loginButtonOn={loginButtonOn}
-                setLoginButtonOn={setLoginButtonOn}
-              />
+              <Main />
             </Route>
             <Route
               path='/myQuestion'

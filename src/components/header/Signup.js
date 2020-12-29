@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 //styled component
 const Modal = styled.div`
@@ -58,15 +59,14 @@ padding-left: 10px;
 
 function Signup({ setLoginButtonOn, setSignupButtonOn }) {
     const [emailButtonOn, setEmailButtonOn] = useState(false)
-    const [nameValue, setNameValue] = useState("이름을 입력해주세요")
-    const [emailValue, setEmailValue] = useState("이메일을 입력해주세요")
-    const [passwordValue, setPasswordValue] = useState("비밀번호를 입력해주세요")
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     // 회원가입 모달창 닫기
     const exitModal = () => {
         setSignupButtonOn(false)
     }
-
 
     //이메일버튼 눌렀을때, 입력 폼 띄워주는 기능
     const handleEmailLogin = () => {
@@ -80,18 +80,25 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
     }
 
     //회원가입 폼에 입력된 값을 가져오는 기능
-    // Todo 리덕스 Action 적용
     const handleNameInput = (event) => {
-        setNameValue(event.target.value)
+        setUsername(event.target.value)
     }
     const handleEmailInput = (event) => {
-        setEmailValue(event.target.value)
+        setEmail(event.target.value)
     }
     const handlePasswordInput = (event) => {
-        setPasswordValue(event.target.value)
+        setPassword(event.target.value)
     }
 
 
+    //회원가입 요청
+    const signUpData = { username, email, password }
+    const requsetSignUp = () => {
+        axios.post('https://localhost:4000/emailSignUp', signUpData, {
+            headers: { 'Content-Type': 'application/json'}, withCredentials: true
+        })
+            .then((res) => console.log(res))
+    }
 
     return (
         <Modal>
@@ -105,11 +112,11 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
             {emailButtonOn ?
                 <div className="modal-form">
                     <div className="inputs">
-                        <Input type="text" placeholder={nameValue} className="modal-item"></Input>
-                        <Input type="text" placeholder={emailValue} className="modal-item"></Input>
-                        <Input type="text" placeholder={passwordValue} className="modal-item"></Input>
+                        <Input onChange={handleNameInput} type="text" placeholder='이름을 입력해주세요' className="modal-item"></Input>
+                        <Input onChange={handleEmailInput} type="text" placeholder="이메일을 입력해주세요" className="modal-item"></Input>
+                        <Input onChange={handlePasswordInput} type="text" placeholder="비밀번호를 입력해주세요" className="modal-item"></Input>
                     </div>
-                    <Input type="submit" value="회원가입" className="modal-item modal-submit"></Input>
+                    <Input onClick={requsetSignUp} type="submit" value="회원가입" className="modal-item modal-submit"></Input>
                 </div> : ''
             }
 

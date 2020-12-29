@@ -86,8 +86,8 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
   );
   */
 function Header() {
-  //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
 
+  //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
   const [isLogin, setLogin] = useState(false);
   const [loginButtonOn, setLoginButtonOn] = useState(false);
   const [userModalButtonOn, setUserModalButtonOn] = useState(false);
@@ -96,6 +96,9 @@ function Header() {
   //로그인 버튼 눌렀을때, 로그인 모달창 띄우기
   const renderLoginModal = () => {
     setLoginButtonOn(!loginButtonOn);
+
+    //!회원가입 창 떠있는 상태에서 로그인 버튼 눌렀을때 모달이 겹치는 문제때문에 코드 한 줄 추가했어요
+    setSignupButtonOn(false)
   };
 
   // 우측상단 아이콘 클릭하면 마이페이지, 로그아웃 모달띄우기
