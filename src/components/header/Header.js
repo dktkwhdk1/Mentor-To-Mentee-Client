@@ -57,6 +57,9 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
   //로그인 버튼 눌렀을때, 로그인 모달창 띄우기
   const renderLoginModal = () => {
     setLoginButtonOn(!loginButtonOn);
+
+    //!회원가입 창 떠있는 상태에서 로그인 버튼 눌렀을때 모달이 겹치는 문제때문에 코드 한 줄 추가했어요
+    setSignupButtonOn(false)
   };
 
   // 우측상단 아이콘 클릭하면 마이페이지, 로그아웃 모달띄우기

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import ReceivedQuestion from '../ReceivedQuestion';
+import ReceivedQuestion from '../myquestion/ReceivedQuestion';
 import { Link } from 'react-router-dom';
 
 const MyQuestionTemplate = styled.div`

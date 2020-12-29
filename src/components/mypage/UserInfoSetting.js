@@ -4,6 +4,7 @@ import myImage from '../../images.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserInfo } from '../../modules/userInfoSetting';
 import axios from 'axios';
+
 axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`

@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
+import {useSelector, useDispatch} from 'react-redux'
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,14 +10,13 @@ import {
 import Header from './components/header/Header';
 import Main from './components/main/Main';
 import Footer from './components/footer';
-import MyPage from './components/mypage/MyPage.js';
-import ApplyMentor from './components/header/ApplyMentor';
-import MyQuestion from './components/myquestion/MyQuestion';
+import MyPage from './components/mypage/MyPage';
+import ApplyMentor from './components/ApplyMentor';
+import MyQuestion from './components/main/Main';
 import QuestionAndAnswer from './components/myquestion/QuestionAndAnswer';
 import MentorProfile from './components/mentor-profile/MentorProfile';
 
 function App() {
-  // Login 버튼 클릭시 모달창열기
   const [loginButtonOn, setLoginButtonOn] = useState(false);
   const isMentor = true;
   const mentorName = '김코딩';
@@ -28,7 +28,7 @@ function App() {
   return (
     <Router>
       <div className='App'>
-        <Header
+      <Header
           loginButtonOn={loginButtonOn}
           setLoginButtonOn={setLoginButtonOn}
         />
@@ -36,10 +36,7 @@ function App() {
           <Switch>
             <Route path='/mentorprofile' component={MentorProfile} />
             <Route path='/' exact={true}>
-              <Main
-                loginButtonOn={loginButtonOn}
-                setLoginButtonOn={setLoginButtonOn}
-              />
+              <Main />
             </Route>
             <Route
               path='/myQuestion'
@@ -81,19 +78,3 @@ function App() {
 }
 
 export default App;
-/*
-<Switch>
-  <Route path='/mentorprofile'>
-    <MentorProfile />
-  </Route>
-  <Route path='/mypage'>
-    <MyPage />
-  </Route>
-  <Route path='/applymentor'>
-    <ApplyMentor />
-  </Route>
-  <Route path='/'>
-    <Main />
-  </Route>
-</Switch>;
-*/

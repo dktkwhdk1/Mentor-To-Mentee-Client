@@ -5,7 +5,6 @@ import { setAccessToken } from '../../modules/login';
 import { setUserInfo } from '../../modules/userInfoSetting';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-
 const Modal = styled.div`
   width: 400px;
   height: auto;
@@ -18,18 +17,15 @@ const Modal = styled.div`
   margin: auto;
   padding-bottom: 30px;
   z-index: 1;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
   .modal-item {
     position: relative;
     top: 10%;
     margin: 5px;
     display: block;
   }
-
   .modal-submit {
     background-color: rgb(106, 165, 231);
     width: 300px;
@@ -37,7 +33,6 @@ const Modal = styled.div`
     border-radius: 7px;
     cursor: pointer;
   }
-
   .text-link {
     color: gray;
     text-decoration: underline;
@@ -58,7 +53,6 @@ const Input = styled.input`
   padding: 0px;
   padding-left: 10px;
 `;
-
 function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
   const [emailButtonOn, setEmailButtonOn] = useState(false);
   //테스트용 강제로그인 기능
@@ -76,7 +70,6 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
     setLoginButtonOn(false);
     setSignupButtonOn(true);
   };
-
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -106,7 +99,6 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
       })
       .catch(err => console.log(err));
   };
-
   return (
     <Modal>
       <h2>로그인</h2>
@@ -120,12 +112,11 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
           (테스트용) 강제로그인
         </Button>
       </div>
-
       {emailButtonOn ? (
         <div className='modal-form'>
           <div className='inputs'>
             <Input
-              type='text'
+              type='email'
               placeholder='이메일을 입력해주세요'
               className='modal-item'
               onChange={e => setEmail(e.target.value)}
@@ -149,12 +140,10 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
       ) : (
         ''
       )}
-
       <h5 onClick={handleSignupButton} className='text-link'>
         계정이 없으시다면? 회원가입
       </h5>
     </Modal>
   );
 }
-
 export default Login;
