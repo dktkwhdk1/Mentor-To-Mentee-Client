@@ -112,34 +112,37 @@ const SubmitButton = styled.button`
 function MenteeSetting() {
   const [isMentor, setMentor] = useState(false);
   const [isMentee, setMentee] = useState(true);
-  const [school, setSchool] = useState('');
-  const [major, setMajor] = useState('');
-  const [graduate, setGraduate] = useState('');
-  const [grade, setGrade] = useState('');
-  const [spec, setSpec] = useState('');
-  const [etc, setEtc] = useState('');
-
+  const [menteeInfo, setMenteeInfoState] = useState({
+    school: '',
+    major: '',
+    graduate: '1',
+    grade: '1',
+    spec: '',
+    etc: '',
+  });
   const userInfo = useSelector(state => ({ ...state.menteeInfoSetting }));
+  if (!menteeInfo.school) {
+    console.log('상태에 저장된 학교 정보가 없음, 받아와서 상태에 저장하세요');
+    //axios.get('https://localhost:4000/getmentee');
+  } else {
+    console.log(userInfo);
+  }
   const dispatch = useDispatch();
+  const inputFormHandler = e => {
+    setMenteeInfoState({ ...menteeInfo, [e.target.name]: e.target.value });
+  };
   const onSubmitHandler = e => {
     e.preventDefault();
     /*
     axios
-      .post('https://localhost4000/setmentee', {
-        ...userInfo,
+      .post('https://localhost:4000/setmentee', {
+        ...menteeInfo
       })
       .then(res => console.log(res));*/
 
-    dispatch(
-      setMenteeInfo({
-        school,
-        major,
-        graduate,
-        grade,
-        spec,
-        etc,
-      })
-    );
+    // then 안에 넣어야함
+    alert('설정 저장이 완료되었습니다.');
+    dispatch(setMenteeInfo({ ...menteeInfo }));
     console.log(userInfo);
   };
   // line 146, autoFocus - 페이지 들어가자마자 해당 input에 커서 깜빡임
@@ -179,27 +182,35 @@ function MenteeSetting() {
       <Input
         autoFocus
         placeholder='학교를 작성해주세요.'
-        onChange={e => setSchool(e.target.value)}
+        name='school'
+        value={menteeInfo.school}
+        onChange={inputFormHandler}
       />
       <div>전공*</div>
       <Input
         placeholder='전공을 작성해주세요.'
-        onChange={e => setMajor(e.target.value)}
+        name='major'
+        value={menteeInfo.major}
+        onChange={inputFormHandler}
       />
       <Graduation>재학/졸업* 학년</Graduation>
       <Graduation>
-        <Select onChange={e => setGraduate(e.target.value)}>
-          <option value='1' selected>
-            선택해주세요
-          </option>
+        <Select
+          name='graduate'
+          value={menteeInfo.graduate}
+          onChange={inputFormHandler}
+        >
+          <option value='1'>선택해주세요</option>
           <option value='2'>재학</option>
           <option value='3'>졸업</option>
           <option value='4'>기타</option>
         </Select>
-        <Select onChange={e => setGrade(e.target.value)}>
-          <option value='1' selected>
-            재학생만 선택해주세요.
-          </option>
+        <Select
+          name='grade'
+          value={menteeInfo.grade}
+          onChange={inputFormHandler}
+        >
+          <option value='1'>재학생만 선택해주세요.</option>
           <option value='2'>1학년</option>
           <option value='3'>2학년</option>
           <option value='4'>3학년</option>
@@ -209,12 +220,16 @@ function MenteeSetting() {
       <div>스펙</div>
       <BigInput
         placeholder='스펙을 작성해주세요.'
-        onChange={e => setSpec(e.target.value)}
+        name='spec'
+        value={menteeInfo.spec}
+        onChange={inputFormHandler}
       />
       <div>기타</div>
       <BigInput
         placeholder='기타 관심 분야 등 멘토님이 답변에 참고할 만한 사항을 작성해주세요.'
-        onChange={e => setEtc(e.target.value)}
+        name='etc'
+        value={menteeInfo.etc}
+        onChange={inputFormHandler}
       />
       <SubmitButton onClick={onSubmitHandler}>수정하기</SubmitButton>
     </InsertForm>

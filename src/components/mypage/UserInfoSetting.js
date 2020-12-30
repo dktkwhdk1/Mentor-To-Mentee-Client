@@ -102,46 +102,71 @@ const UserImage2 = styled.img`
 
 function UserInfoSetting() {
   const userInfo = useSelector(state => ({ ...state.userInfoSetting }));
-  if (!userInfo.mobile) {
-    // 상태에 저장된 폰 번호가 없음
-    // axios.get('https://localhost4000/getmypage')
+  const [accoutInfo, setAccountInfo] = useState({
+    email: '',
+    username: '',
+    mobile: '',
+    gender: '1',
+  });
+  const dispatch = useDispatch();
+  if (!accoutInfo.mobile && !userInfo.mobile) {
+    // 상태에 저장된 폰 번호가 없음, if문 안에 조건을 이 두개 다 안 넣으면 get을 ㅈㄴ보냄
+    // 이렇게 해도 두번을 보내네..
+
+    // 항상 모든 로그인의 처음에 get 으로 정보를 받아야함
+    axios
+      .get(
+        `https://localhost:4000/userInfoSetting/pageload?email=${userInfo.email}`
+      )
+      .then(res => {
+        console.log(res);
+        // 여기서 이 res.data를 상태에 저장
+      });
     console.log('상태에 저장된 폰 번호가 없음');
   }
-  const [mobile, setMobile] = useState('');
-  const [gender, setGender] = useState('');
+  useEffect(() => {
+    setAccountInfo({ ...userInfo });
+    return () => {
+      console.log('UserInfoSetting Component Clean');
+    };
+  }, []);
 
-  const dispatch = useDispatch();
+  const inputFormHandler = e => {
+    setAccountInfo({ ...accoutInfo, [e.target.name]: e.target.value });
+  };
   const onSubmitHandler = e => {
     e.preventDefault();
     alert('설정 저장이 완료되었습니다.');
-    /*
     axios
-      .post('https://localhost4000/postmypage', {
-        mobile: userInfo.mobile,
-        gender: userInfo.gender,
+      .post('https://localhost:4000/userInfoSetting/setAccount', {
+        ...accoutInfo,
       })
-      .then((res) => console.log(res));*/
-    dispatch(setUserInfo({ mobile, gender }));
+      .then(res => {
+        console.log(res);
+      });
+    dispatch(setUserInfo({ ...userInfo, ...accoutInfo }));
   };
 
   return (
     <InsertForm>
       <h1>계정 설정</h1>
       <div>이메일 *</div>
-      <Input value={userInfo.email} readOnly />
+      <Input value={accoutInfo.email} readOnly />
       <div>이름 *</div>
-      <Input value={userInfo.username} readOnly />
+      <Input value={accoutInfo.username} readOnly />
       <div>휴대전화 번호</div>
       <Input
         type='text'
         placeholder='번호를 입력해주세요.(숫자만)'
-        onChange={e => setMobile(e.target.value)}
-        value={userInfo.mobile}
+        name='mobile'
+        value={accoutInfo.mobile}
+        onChange={inputFormHandler}
       ></Input>
       <div>성별</div>
       <Select
-        onChange={e => setGender(e.target.value)}
-        defaultValue={userInfo.gender}
+        name='gender'
+        value={accoutInfo.gender}
+        onChange={inputFormHandler}
       >
         <option value='1'>성별을 선택해주세요</option>
         <option value='2'>남자</option>

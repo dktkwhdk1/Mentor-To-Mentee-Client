@@ -8,7 +8,10 @@ export const setMenteeInfo = menteeInfo => ({
 });
 
 // 멘티 정보 설정
-export default function menteeInfoSetting(state = {}, action) {
+export default function menteeInfoSetting(
+  state = { graduate: '1', grade: '1' },
+  action
+) {
   switch (action.type) {
     case SET_MENTEE:
       return {
