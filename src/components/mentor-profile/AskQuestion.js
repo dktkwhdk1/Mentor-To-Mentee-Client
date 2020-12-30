@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
 
 const QuestionForm = styled.form`
 margin: 50px;
@@ -25,10 +25,9 @@ input {
 }
 `
 
-function AskQuestion() {
+function AskQuestion({ mentor }) {
     const [brief, setBrief] = useState('');
     const [question, setQuestion] = useState('');
-
     const handleBriefInput = (event) => {
         setBrief(event.target.value)
     }
@@ -37,15 +36,18 @@ function AskQuestion() {
     }
 
     // 멘티 아이디는 로그인 유저의 멘티아이디 주면되고, 멘토아이디는 지금 들어와있는 프로필페이지에 멘토id 넘겨줘야함. 
-    const questionData = {brief, question}
-    
+    const questionData = { brief, question }
+    const user = useSelector(state => state.userInfoSetting)
+    console.log(user)
+
+
     const requestQuestion = (event) => {
         event.preventDefault();
         axios.post('https://localhost:4000/question', questionData, {
             headers: { 'Content-Type': 'application/json' }, withCredentials: true
         })
         .then((res) => console.log(res))
-        //질문하고 나서 질문 상세 페이지로 넘어가기
+        //TODO 질문하고 나서 질문 상세 페이지로 넘어가기
     }
 
     return (

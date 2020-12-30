@@ -57,7 +57,6 @@ function MentorProfile({match}) {
         }
     }
     const mentor = getMentor();
-    console.log(mentor)
 
     const handleAskButton = () => {
         setAskButtonOn(!isAskButtonOn)
@@ -99,7 +98,7 @@ function MentorProfile({match}) {
                 </Introduction>
             </div>
 
-            {isAskButtonOn ? <AskQuestion /> : ''}
+            {isAskButtonOn ? <AskQuestion mentor={mentor}/> : ''}
         </Profile>
     )
 }
