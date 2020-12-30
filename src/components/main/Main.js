@@ -50,7 +50,7 @@ function Main() {
             <h2>멘토 리스트</h2>
             <div className="cards-container">
                 {mentorList.map((mentorData) => {
-                    return <Card className="card" mentorData={mentorData} />
+                    return <Card key={mentorData.id || mentorData.username} className="card" mentorData={mentorData} />
                 })}
             </div>
         </MainDiv>
