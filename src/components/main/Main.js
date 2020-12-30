@@ -1,60 +1,70 @@
-import React, { useEffect, useState } from 'react'
-import Card from './Card'
-import styled from 'styled-components'
-import { setMentorListAction } from '../../modules/main'
-import { useDispatch } from 'react-redux'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import Card from './Card';
+import styled from 'styled-components';
+import { setMentorListAction } from '../../modules/main';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 //styled component
 const MainDiv = styled.main`
-margin: 30px 0px;
+  margin: 30px 0px;
 
-h2 {
+  h2 {
     text-align: center;
-}
+  }
 
-.cards-container {
+  .cards-container {
     display: flex;
     justify-content: space-around;
-    align-content: flex-end ;   
+    align-content: flex-end;
     flex-wrap: wrap;
-}
+  }
 
-.card {
+  .card {
     margin: 30px;
-}
-`
+  }
+`;
 
 function Main() {
-    const [mentorList, setMentorList] = useState([])
-    const dispatch = useDispatch();
+  const [mentorList, setMentorList] = useState([]);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const requestMentorList = () => {
+      axios
+        .get('https://localhost:4000/main', {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        })
+        .then(res => {
+          setMentorList(res.data.data); // hook으로 mentorList 저장
+          dispatch(setMentorListAction(res.data.data)); // 스토어에 저장
+        });
+    };
 
-    useEffect(() => {
-        const requestMentorList = () => {
-            axios.get('https://localhost:4000/main', {
-                headers: { 'Content-Type': 'application/json' }, withCredentials: true
-            })
-                .then((res) => {
-                    setMentorList(res.data.data) // hook으로 mentorList 저장
-                    dispatch(setMentorListAction(res.data.data)) // 스토어에 저장
-                })
-        }
+    requestMentorList();
+    return () => {
+      console.log('MainComponent clean');
+    };
+  }, []);
 
-        requestMentorList();
-    }, [])
+  //Todo 모달 영역 밖 클릭시 모달 닫히는 기능 구현 https://velog.io/@seungdeng17/%EB%AA%A8%EB%8B%AC-%EC%98%81%EC%97%AD-%EB%B0%96-%ED%81%B4%EB%A6%AD%EC%8B%9C-%EC%89%BD%EA%B2%8C-%EB%8B%AB%EA%B8%B0
 
-    //Todo 모달 영역 밖 클릭시 모달 닫히는 기능 구현 https://velog.io/@seungdeng17/%EB%AA%A8%EB%8B%AC-%EC%98%81%EC%97%AD-%EB%B0%96-%ED%81%B4%EB%A6%AD%EC%8B%9C-%EC%89%BD%EA%B2%8C-%EB%8B%AB%EA%B8%B0
-
-    return (
-        <MainDiv>
-            <h2>멘토 리스트</h2>
-            <div className="cards-container">
-                {mentorList.map((mentorData) => {
-                    return <Card key={mentorData.id || mentorData.username} className="card" mentorData={mentorData} />
-                })}
-            </div>
-        </MainDiv>
-    )
+  return (
+    <MainDiv>
+      <h2>멘토 리스트</h2>
+      <div className='cards-container'>
+        {mentorList.map(mentorData => {
+          return (
+            <Card
+              key={mentorData.id || mentorData.username}
+              className='card'
+              mentorData={mentorData}
+            />
+          );
+        })}
+      </div>
+    </MainDiv>
+  );
 }
 
-export default Main
+export default Main;
