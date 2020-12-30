@@ -35,19 +35,19 @@ font-size: 12px;
 
 function Card({mentorData}) {
     return (
-        <Link to="/mentorprofile" style={{color: 'inherit', textDecoration: 'inherit'}}>
+        <Link to={`/mentorprofile/${mentorData.username}`} style={{color: 'inherit', textDecoration: 'inherit'}}>
             <CardItem>
                 <div className="mentor-profile">
-                    <img className="mentor-img" src={mentorData.user.images} />
+                    <img className="mentor-img" src={mentorData.images || "https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg"} />
                     <div className="name">
-                        <span className="mentor-name">{mentorData.user.username}</span>
+                        <span className="mentor-name">{mentorData.username}</span>
                         <span className="mentor-text">멘토</span>
                     </div>
                     <div className="job">
                         <div className="mentor-company">{mentorData.company}</div>
                         <div>{mentorData.department}</div>
                     </div>
-                    <div className="mentor-email">{mentorData.user.email}</div>
+                    <div className="mentor-email">{mentorData.email || 'dev@code.com'}</div>
                 </div>
             </CardItem>
         </Link>

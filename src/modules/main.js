@@ -3,14 +3,14 @@ const SET_MENTOR_LIST = "SET_MENTOR_LIST"
 
 
 /* 액션 생성함수 만들기 */
-export const setMentorList = ({data}) => ({
+export const setMentorListAction = (mentorData) => ({
     type: SET_MENTOR_LIST,
-    data
+    mentorData
 })
 
 /* 초기 상태 선언 */
 const initialState = {
-    data: ''
+    mentorData: []
 }
 
 /* 리듀서 선언 */
@@ -19,9 +19,9 @@ export default function mentorListReducer(state = initialState, action) {
         case SET_MENTOR_LIST:
             return {
                 ...state,
-                data: action.data
+                mentorData: action.mentorData
             }
-        default:
-            return state;
+            default:
+                return state;
     }
 };

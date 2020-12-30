@@ -34,7 +34,7 @@ function App() {
         />
         <main className='main'>
           <Switch>
-            <Route path='/mentorprofile' component={MentorProfile} />
+            <Route path={`/mentorprofile/:username`} component={MentorProfile} />
             <Route path='/' exact={true}>
               <Main />
             </Route>
