@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import MentorSetting from './MentorSetting';
 import { useSelector, useDispatch } from 'react-redux';
-import { setMenteeInfo } from '../../modules/menteeInfoSetting';
+import { setMenteeInfo } from '../../modules/roleInfoSetting';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
@@ -110,6 +110,12 @@ const SubmitButton = styled.button`
 `;
 
 function MenteeSetting() {
+  const userInfo = useSelector(state => ({
+    ...state.roleInfoSetting.mentee,
+    email: state.userInfoSetting.email,
+  }));
+  const dispatch = useDispatch();
+
   const [isMentor, setMentor] = useState(false);
   const [isMentee, setMentee] = useState(true);
   const [menteeInfo, setMenteeInfoState] = useState({
@@ -120,14 +126,12 @@ function MenteeSetting() {
     spec: '',
     etc: '',
   });
-  const userInfo = useSelector(state => ({ ...state.menteeInfoSetting }));
   if (!menteeInfo.school) {
     console.log('상태에 저장된 학교 정보가 없음, 받아와서 상태에 저장하세요');
     //axios.get('https://localhost:4000/getmentee');
   } else {
-    console.log(userInfo);
+    //console.log(userInfo);
   }
-  const dispatch = useDispatch();
   const inputFormHandler = e => {
     setMenteeInfoState({ ...menteeInfo, [e.target.name]: e.target.value });
   };

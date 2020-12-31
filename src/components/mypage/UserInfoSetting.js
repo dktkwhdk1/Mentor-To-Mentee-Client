@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import myImage from '../../images.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserInfo } from '../../modules/userInfoSetting';
 import axios from 'axios';
@@ -85,45 +84,62 @@ const SubmitButton = styled.button`
     cursor: pointer;
   }
 `;
-/*
+
 const UserImage1 = styled.div`
-  background-image: url(${myImage});
-  width: 180px;
-  height: 180px;
-  padding-left: 20px;
+  border: 1px solid #dee2e6;
+  width: 160px;
+  height: 160px;
+  margin-left: 20px;
+  margin-bottom: 3px;
 `;
-*/
+
 const UserImage2 = styled.img`
-  src: url(${myImage});
-  width: 140px;
-  height: 140px;
+  width: 160px;
+  height: 160px;
   padding-left: 20px;
 `;
 
 function UserInfoSetting() {
   const userInfo = useSelector(state => ({ ...state.userInfoSetting }));
+  const dispatch = useDispatch();
+
   const [accoutInfo, setAccountInfo] = useState({
     email: '',
     username: '',
     mobile: '',
     gender: '1',
+    image: '',
+    selectedFile: '',
   });
-  const dispatch = useDispatch();
+  /* 이렇게 하면 요청 보내고 받은거로 상태 업데이트 -> 렌더 -> 또 요청 보내기 이렇게 됨
   if (!accoutInfo.mobile && !userInfo.mobile) {
     // 상태에 저장된 폰 번호가 없음, if문 안에 조건을 이 두개 다 안 넣으면 get을 ㅈㄴ보냄
     // 이렇게 해도 두번을 보내네..
 
     // 항상 모든 로그인의 처음에 get 으로 정보를 받아야함
+    // 그니까 if문은 !accountInfo.mobile 만 남겨놓고 디스패치로 리덕스 스토어 업데이트 해야함
+    console.log('asdfdsfa');
     axios
       .get(
         `https://localhost:4000/userInfoSetting/pageload?email=${userInfo.email}`
       )
       .then(res => {
-        console.log(res);
-        // 여기서 이 res.data를 상태에 저장
+        const data = res.data.data;
+        
+        dispatch(
+          setUserInfo({
+            email: data.email,
+            username: data.username,
+            mobile: data.mobile,
+            gender: data.gender,
+          })
+        );
+        
       });
-    console.log('상태에 저장된 폰 번호가 없음');
   }
+  */
+  // useEffect로 렌더하면서 리덕스 스토어에서 가져온 userInfo를 현재 컴포넌트 로컬 상태에 저장
+
   useEffect(() => {
     setAccountInfo({ ...userInfo });
     return () => {
@@ -134,8 +150,7 @@ function UserInfoSetting() {
   const inputFormHandler = e => {
     setAccountInfo({ ...accoutInfo, [e.target.name]: e.target.value });
   };
-  const onSubmitHandler = e => {
-    e.preventDefault();
+  const onSubmitHandler = () => {
     alert('설정 저장이 완료되었습니다.');
     axios
       .post('https://localhost:4000/userInfoSetting/setAccount', {
@@ -143,8 +158,33 @@ function UserInfoSetting() {
       })
       .then(res => {
         console.log(res);
+        dispatch(setUserInfo({ ...userInfo, ...accoutInfo }));
       });
-    dispatch(setUserInfo({ ...userInfo, ...accoutInfo }));
+  };
+
+  const fileChangedHandler = event => {
+    setAccountInfo({ ...accoutInfo, selectedFile: event.target.files[0] });
+  };
+
+  const fileUploadHandler = () => {
+    const data = new FormData();
+    if (accoutInfo.selectedFile) {
+      data.append(
+        'profileImage',
+        accoutInfo.selectedFile,
+        accoutInfo.selectedFile.name
+      );
+      axios
+        .post('https://localhost:4000/imageUpload', data, {
+          headers: {
+            accept: 'application/json',
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+          },
+        })
+        .then(res => {
+          setAccountInfo({ ...accoutInfo, image: res.data.location });
+        });
+    }
   };
 
   return (
@@ -173,10 +213,22 @@ function UserInfoSetting() {
         <option value='3'>여자</option>
       </Select>
       <div>프로필 사진</div>
-      <UserImage2 />
-      <Button>이미지 업로드</Button>
+      {accoutInfo.image ? (
+        <UserImage2 src={accoutInfo.image} alt='' />
+      ) : (
+        <UserImage1>이미지를 넣어주세요</UserImage1>
+      )}
+      <Input type='file' onChange={fileChangedHandler}></Input>
       <br></br>
-      <SubmitButton onClick={onSubmitHandler}>설정 저장하기</SubmitButton>
+      <SubmitButton
+        onClick={e => {
+          e.preventDefault();
+          fileUploadHandler();
+          onSubmitHandler();
+        }}
+      >
+        설정 저장하기
+      </SubmitButton>
     </InsertForm>
   );
 }
