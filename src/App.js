@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import {useSelector, useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
@@ -28,18 +28,21 @@ function App() {
   return (
     <Router>
       <div className='App'>
-      <Header
+        <Header
           loginButtonOn={loginButtonOn}
           setLoginButtonOn={setLoginButtonOn}
         />
         <main className='main'>
           <Switch>
-            <Route path={`/mentorprofile/:username`} component={MentorProfile} />
+            <Route
+              path={`/mentorprofile/:username`}
+              component={MentorProfile}
+            />
             <Route path='/' exact={true}>
               <Main />
             </Route>
             <Route
-              path='/myQuestion'
+              path='/myquestion'
               component={() => {
                 return (
                   <MyQuestion
