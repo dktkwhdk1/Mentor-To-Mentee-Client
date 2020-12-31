@@ -56,10 +56,7 @@ const Input = styled.input`
 function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
   const [emailButtonOn, setEmailButtonOn] = useState(false);
   //테스트용 강제로그인 기능
-  const handleForcedLogin = () => {
-    setLogin(true);
-    setLoginButtonOn(false);
-  };
+
   //이메일버튼 눌렀을때, 입력 폼 띄워주는 기능
   const handleEmailLogin = () => {
     setEmailButtonOn(true);
@@ -107,9 +104,6 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
         <Button className='modal-item'>네이버 아이디로 로그인</Button>
         <Button onClick={handleEmailLogin} className='modal-item'>
           이메일로 로그인
-        </Button>
-        <Button onClick={handleForcedLogin} className='modal-item'>
-          (테스트용) 강제로그인
         </Button>
       </div>
       {emailButtonOn ? (

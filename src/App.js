@@ -12,7 +12,7 @@ import Main from './components/main/Main';
 import Footer from './components/footer';
 import MyPage from './components/mypage/MyPage';
 import ApplyMentor from './components/ApplyMentor';
-import MyQuestion from './components/main/Main';
+import MyQuestion from './components/myquestion/MyQuestion';
 import QuestionAndAnswer from './components/myquestion/QuestionAndAnswer';
 import MentorProfile from './components/mentor-profile/MentorProfile';
 

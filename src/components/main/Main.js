@@ -62,6 +62,24 @@ function Main() {
             />
           );
         })}
+        {mentorList.map(mentorData => {
+          return (
+            <Card
+              key={mentorData.id || mentorData.username}
+              className='card'
+              mentorData={mentorData}
+            />
+          );
+        })}
+        {mentorList.map(mentorData => {
+          return (
+            <Card
+              key={mentorData.id || mentorData.username}
+              className='card'
+              mentorData={mentorData}
+            />
+          );
+        })}
       </div>
     </MainDiv>
   );
