@@ -31,21 +31,21 @@ const SettingSelector = styled.div`
     }
   }
   .userinfo {
-    ${(props) =>
+    ${props =>
       props.openUserSetting &&
       css`
         background: #e9ecef;
       `}
   }
   .mentee {
-    ${(props) =>
+    ${props =>
       props.openMenteeSetting &&
       css`
         background: #e9ecef;
       `}
   }
   .password {
-    ${(props) =>
+    ${props =>
       props.openPasswordSetting &&
       css`
         background: #e9ecef;
