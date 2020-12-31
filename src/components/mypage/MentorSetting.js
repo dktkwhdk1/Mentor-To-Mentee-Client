@@ -104,28 +104,29 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
     description: '',
     career: '',
   });
-  if (!mentorInfo.company) {
-    console.log('컴포넌트의 상태에 회사정보 없음');
-    axios
-      .get(
-        `https://localhost:4000/mentorInfoSetting/pageload?email=${userInfo.mentorEmail}`
-      )
-      .then(res => {
-        const data = res.data.data;
-        setMentorInfoState({
-          company: data.company,
-          department: data.department,
-          position: data.position,
-          job: data.job,
-          description: data.description,
-          career: data.career,
-        });
-      });
-  } else {
-    //console.log(userInfo);
-    //console.log(mentorInfo);
-  }
   useEffect(() => {
+    if (!userInfo.company) {
+      console.log('컴포넌트의 상태에 회사정보 없음');
+      axios
+        .get(
+          `https://localhost:4000/mentorInfoSetting/pageload?email=${userInfo.mentorEmail}`
+        )
+        .then(res => {
+          const data = res.data.data;
+          console.log(data);
+          dispatch(
+            setMentorInfo({
+              ...userInfo,
+              company: data.company,
+              department: data.department,
+              position: data.position,
+              job: data.job,
+              description: data.description,
+              career: data.career,
+            })
+          );
+        });
+    }
     setMentorInfo({ ...userInfo });
     return () => {
       console.log('MentorInfoSetting Component Clean');

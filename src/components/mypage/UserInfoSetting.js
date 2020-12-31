@@ -108,7 +108,6 @@ const UserImage1 = styled.div`
   width: 160px;
   height: 160px;
   margin-left: 20px;
-  margin-bottom: 10px;
 `;
 
 const UserImage2 = styled.img`
@@ -120,7 +119,6 @@ const UserImage2 = styled.img`
 
 function UserInfoSetting() {
   const userInfo = useSelector(state => ({ ...state.userInfoSetting }));
-  console.log(userInfo);
   const dispatch = useDispatch();
 
   const [accoutInfo, setAccountInfo] = useState({
@@ -131,17 +129,19 @@ function UserInfoSetting() {
     image: '',
     selectedFile: '',
   });
+  console.log('render accountInfo : ', accoutInfo);
+  console.log('render userInfo(redux) : ', userInfo);
 
   useEffect(() => {
+    console.log('useeffect');
     if (!userInfo.mobile) {
-      console.log('123123');
+      console.log('useeffect & get 요청');
       axios
         .get(
           `https://localhost:4000/userInfoSetting/pageload?email=${userInfo.email}`
         )
         .then(res => {
           const data = res.data.data;
-          console.log(data);
 
           dispatch(
             setUserInfo({
@@ -165,15 +165,14 @@ function UserInfoSetting() {
   const inputFormHandler = e => {
     setAccountInfo({ ...accoutInfo, [e.target.name]: e.target.value });
   };
-  const onSubmitHandler = () => {
+  const onSubmitHandler = e => {
     alert('설정 저장이 완료되었습니다.');
+    e.preventDefault();
     axios
       .post('https://localhost:4000/userInfoSetting/setAccount', {
         ...accoutInfo,
       })
-      .then(res => {
-        console.log(res);
-        console.log(accoutInfo);
+      .then(() => {
         dispatch(setUserInfo({ ...userInfo, ...accoutInfo }));
       });
   };
@@ -181,7 +180,6 @@ function UserInfoSetting() {
   const fileUploadHandler = () => {
     const data = new FormData();
     if (accoutInfo.selectedFile) {
-      console.log('good');
       data.append(
         'profileImage',
         accoutInfo.selectedFile,
@@ -201,9 +199,15 @@ function UserInfoSetting() {
   };
 
   const fileChangedHandler = e => {
-    setAccountInfo({ ...accoutInfo, selectedFile: e.target.files[0] });
-    fileUploadHandler();
+    setAccountInfo({
+      ...accoutInfo,
+      image: '',
+      selectedFile: e.target.files[0],
+    });
   };
+  if (accoutInfo.selectedFile && !accoutInfo.image) {
+    fileUploadHandler();
+  }
 
   return (
     <InsertForm>
@@ -237,7 +241,7 @@ function UserInfoSetting() {
         <UserImage1>이미지를 넣어주세요</UserImage1>
       )}
       <br />
-      <FileInput for='input-file'>
+      <FileInput htmlFor='input-file'>
         {accoutInfo.image ? '이미지 수정하기' : '이미지 업로드'}
         <input
           id='input-file'
@@ -246,14 +250,7 @@ function UserInfoSetting() {
           style={{ display: 'none' }}
         />
       </FileInput>
-      <SubmitButton
-        onClick={e => {
-          e.preventDefault();
-          onSubmitHandler();
-        }}
-      >
-        설정 저장하기
-      </SubmitButton>
+      <SubmitButton onClick={onSubmitHandler}>설정 저장하기</SubmitButton>
     </InsertForm>
   );
 }
