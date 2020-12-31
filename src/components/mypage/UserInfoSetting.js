@@ -46,7 +46,7 @@ const FileInput = styled.label`
   margin-left: 20px;
   margin-bottom: 10px;
   padding: 6px 25px;
-  background-color: #ff6600;
+  background-color: #a4a4a4;
   border-radius: 4px;
   color: white;
   cursor: pointer;
