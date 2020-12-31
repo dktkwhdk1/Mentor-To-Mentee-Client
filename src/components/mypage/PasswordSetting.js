@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
   background: #f8f9fa;
@@ -44,13 +47,53 @@ const Input = styled.input`
 `;
 
 function PasswordSetting() {
+  const email = useSelector(state => state.userInfoSetting.email);
+  const [passwordState, setPasswordState] = useState({
+    currentPassword: '',
+    newPassword: '',
+    passwordConfirm: '',
+  });
+  const inputFormHandler = e => {
+    setPasswordState({ ...passwordState, [e.target.name]: e.target.value });
+  };
+  const onSubmitHandler = e => {
+    e.preventDefault();
+    axios
+      .post('https://localhost:4000/setPassword', {
+        ...passwordState,
+        email,
+      })
+      .then(res => {
+        alert('설정 저장이 완료되었습니다.');
+        console.log(res);
+      });
+  };
   return (
     <InsertForm>
       <h1>비밀번호 변경</h1>
-      <Input autoFocus placeholder='현재 비밀번호' type='password'></Input>
-      <Input placeholder='새 비밀번호' type='password'></Input>
-      <Input placeholder='새 비밀번호 확인' type='password'></Input>
-      <SubmitButton>비밀번호 변경</SubmitButton>
+      <Input
+        autoFocus
+        placeholder='현재 비밀번호'
+        type='password'
+        name='currentPassword'
+        value={passwordState.currentPassword}
+        onChange={inputFormHandler}
+      ></Input>
+      <Input
+        placeholder='새 비밀번호'
+        type='password'
+        name='newPassword'
+        value={passwordState.newPassword}
+        onChange={inputFormHandler}
+      ></Input>
+      <Input
+        placeholder='새 비밀번호 확인'
+        type='password'
+        name='passwordConfirm'
+        value={passwordState.passwordConfirm}
+        onChange={inputFormHandler}
+      ></Input>
+      <SubmitButton onClick={onSubmitHandler}>비밀번호 변경</SubmitButton>
     </InsertForm>
   );
 }

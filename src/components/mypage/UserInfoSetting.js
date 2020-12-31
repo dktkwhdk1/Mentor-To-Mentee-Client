@@ -39,6 +39,19 @@ const Input = styled.input`
   }
 `;
 
+const FileInput = styled.label`
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  font-size: 14px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  padding: 6px 25px;
+  background-color: #ff6600;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+`;
+
 const Select = styled.select`
   border-radius: 4px;
   border: 1px solid #dee2e6;
@@ -53,8 +66,11 @@ const Select = styled.select`
     color: black;
     min-height: 20px;
   }
+  &:hover {
+    cursor: pointer;
+  }
 `;
-
+/*
 const Button = styled.button`
   margin-left: 20px;
   margin-top: 10px;
@@ -68,6 +84,7 @@ const Button = styled.button`
     cursor: pointer;
   }
 `;
+*/
 
 const SubmitButton = styled.button`
   border-radius: 4px;
@@ -75,6 +92,7 @@ const SubmitButton = styled.button`
   width: 91.5%;
   font-size: 12px;
   padding: 10px;
+  margin-top: 10px;
   margin-left: 20px;
   margin-bottom: 15px;
   background: #38d9a9;
@@ -90,17 +108,19 @@ const UserImage1 = styled.div`
   width: 160px;
   height: 160px;
   margin-left: 20px;
-  margin-bottom: 3px;
+  margin-bottom: 10px;
 `;
 
 const UserImage2 = styled.img`
   width: 160px;
   height: 160px;
   padding-left: 20px;
+  margin-bottom: 10px;
 `;
 
 function UserInfoSetting() {
   const userInfo = useSelector(state => ({ ...state.userInfoSetting }));
+  console.log(userInfo);
   const dispatch = useDispatch();
 
   const [accoutInfo, setAccountInfo] = useState({
@@ -111,36 +131,31 @@ function UserInfoSetting() {
     image: '',
     selectedFile: '',
   });
-  /* 이렇게 하면 요청 보내고 받은거로 상태 업데이트 -> 렌더 -> 또 요청 보내기 이렇게 됨
-  if (!accoutInfo.mobile && !userInfo.mobile) {
-    // 상태에 저장된 폰 번호가 없음, if문 안에 조건을 이 두개 다 안 넣으면 get을 ㅈㄴ보냄
-    // 이렇게 해도 두번을 보내네..
-
-    // 항상 모든 로그인의 처음에 get 으로 정보를 받아야함
-    // 그니까 if문은 !accountInfo.mobile 만 남겨놓고 디스패치로 리덕스 스토어 업데이트 해야함
-    console.log('asdfdsfa');
-    axios
-      .get(
-        `https://localhost:4000/userInfoSetting/pageload?email=${userInfo.email}`
-      )
-      .then(res => {
-        const data = res.data.data;
-        
-        dispatch(
-          setUserInfo({
-            email: data.email,
-            username: data.username,
-            mobile: data.mobile,
-            gender: data.gender,
-          })
-        );
-        
-      });
-  }
-  */
-  // useEffect로 렌더하면서 리덕스 스토어에서 가져온 userInfo를 현재 컴포넌트 로컬 상태에 저장
 
   useEffect(() => {
+    if (!userInfo.mobile) {
+      console.log('123123');
+      axios
+        .get(
+          `https://localhost:4000/userInfoSetting/pageload?email=${userInfo.email}`
+        )
+        .then(res => {
+          const data = res.data.data;
+          console.log(data);
+
+          dispatch(
+            setUserInfo({
+              ...userInfo,
+              email: data.email,
+              username: data.username,
+              mobile: data.mobile,
+              gender: data.gender,
+              image: data.image,
+              selectedFile: data.selectedFile,
+            })
+          );
+        });
+    }
     setAccountInfo({ ...userInfo });
     return () => {
       console.log('UserInfoSetting Component Clean');
@@ -158,17 +173,15 @@ function UserInfoSetting() {
       })
       .then(res => {
         console.log(res);
+        console.log(accoutInfo);
         dispatch(setUserInfo({ ...userInfo, ...accoutInfo }));
       });
-  };
-
-  const fileChangedHandler = event => {
-    setAccountInfo({ ...accoutInfo, selectedFile: event.target.files[0] });
   };
 
   const fileUploadHandler = () => {
     const data = new FormData();
     if (accoutInfo.selectedFile) {
+      console.log('good');
       data.append(
         'profileImage',
         accoutInfo.selectedFile,
@@ -185,6 +198,11 @@ function UserInfoSetting() {
           setAccountInfo({ ...accoutInfo, image: res.data.location });
         });
     }
+  };
+
+  const fileChangedHandler = e => {
+    setAccountInfo({ ...accoutInfo, selectedFile: e.target.files[0] });
+    fileUploadHandler();
   };
 
   return (
@@ -218,12 +236,19 @@ function UserInfoSetting() {
       ) : (
         <UserImage1>이미지를 넣어주세요</UserImage1>
       )}
-      <Input type='file' onChange={fileChangedHandler}></Input>
-      <br></br>
+      <br />
+      <FileInput for='input-file'>
+        {accoutInfo.image ? '이미지 수정하기' : '이미지 업로드'}
+        <input
+          id='input-file'
+          type='file'
+          onChange={fileChangedHandler}
+          style={{ display: 'none' }}
+        />
+      </FileInput>
       <SubmitButton
         onClick={e => {
           e.preventDefault();
-          fileUploadHandler();
           onSubmitHandler();
         }}
       >
