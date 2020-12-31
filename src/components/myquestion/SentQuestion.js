@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ const StyledLink = styled(Link)`
   }
 `;
 const QuestionForm = styled.form`
-//   width: 620px;
+  width: 620px;
 //   height: 910px;
 `;
 const Info = styled.div`
@@ -91,24 +91,31 @@ const AnswerBlock = styled.div`
   .answer {
     border: 1px solid #dee2e6;
     border-radius: 16px;
-    background: red;
     color: white;
     width: 80px;
-
+    padding: 5px;
     text-align: center;
   }
-  .today {
+
+  .answer-state-true {
+    background: green;
+  }
+  .answer-state-false {
+    background: red;
+    cursor: pointer;
+  }
+  .createdAt {
     padding-left: 320px;
   }
 `;
 
-function SentQuestion( {sentQuestionList} ) {
+function SentQuestion({ sentQuestionList }) {
     const dummyData = [
         {
             id: 1,
             brief: '프론트엔드, 백엔드의 기술 스택이 궁금합니다.',
             question: '뱅크샐러드의 프론트엔드, 백엔드 개발에 사용되는 기술 스택이 무엇인지 궁금합니다!',
-            answer: '비밀입니다 ㅋㅋ',
+            answer: null,
             mentorId: 3,
             menteeId: 1,
             createdAt: '2020-12-29 15:42:26',
@@ -147,11 +154,8 @@ function SentQuestion( {sentQuestionList} ) {
             mentorImage: 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
         }
     ]
-    //질문정보
-
 
     const VVSCount = 2;
-
 
     return (
         <QuestionForm>
@@ -179,10 +183,19 @@ function SentQuestion( {sentQuestionList} ) {
 
 
 const Question = ({ sentQuestion }) => {
-    const [answerState, setAnswerState] = useState('답변대기중'); 
-    //! 답변 제출되면 setAnswerState('답변완료')
-    const { brief, question, createdAt, mentorName, mentorCompany, mentorJob, mentorImage } = sentQuestion
+    const [answerState, setAnswerState] = useState(false)
+    const { brief, question, createdAt, mentorName, mentorCompany, mentorJob, mentorImage, answer } = sentQuestion
+
+    const answerStateHandler = () => {
+        if (answer) {
+          console.log(answer)
+          setAnswerState(true)
+        }
+      }
     
+      useEffect(() => {
+        answerStateHandler();
+      }, [])
 
     return (
         <div>
@@ -209,8 +222,12 @@ const Question = ({ sentQuestion }) => {
                 </div>
             </QuestionBlock>
             <AnswerBlock>
-                <div className='answer'>{answerState}</div>
-                <div className='today'>{createdAt}</div>
+                {answerState ? 
+                <div className='answer answer-state-true'>답변 완료</div>
+                :
+                <div className='answer answer-state-false'>답변 대기중</div>
+                }
+                <div className='createdAt'>{createdAt}</div>
             </AnswerBlock>
         </div>
     )
