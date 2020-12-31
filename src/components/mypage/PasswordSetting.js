@@ -66,6 +66,11 @@ function PasswordSetting() {
       .then(res => {
         alert('설정 저장이 완료되었습니다.');
         console.log(res);
+        setPasswordState({
+          currentPassword: '',
+          newPassword: '',
+          passwordConfirm: '',
+        });
       });
   };
   return (
