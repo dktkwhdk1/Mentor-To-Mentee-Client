@@ -1,102 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import ReceivedQuestion from './ReceivedQuestion';
-import { Link } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux'
+import { setSentQuestionAction } from '../../modules/myQuestion'
+import SentQuestion from './SentQuestion'
+import axios from 'axios';
 
 const MyQuestionTemplate = styled.div`
   display: flex;
   position: relative;
   justify-content: center;
   padding-top: 30px;
-`;
-
-const QuestionForm = styled.form`
-  width: 620px;
-  height: 910px;
-`;
-
-const Info = styled.div`
-  color: #8f8f94;
-`;
-
-const Infoblock = styled.div`
-  display: flex;
-  padding-top: 10px;
-`;
-
-const SummaryInfo = styled.div`
-  border: 1px solid #dee2e6;
-  margin-right: 5px;
-  padding: 3px;
-  display: flex;
-`;
-
-const Number = styled.span`
-  padding-left: 5px;
-  color: red;
-`;
-
-const MentorInfoBlock = styled.div`
-  border: 1px solid #dee2e6;
-  margin-top: 20px;
-  padding: 20px;
-  display: flex;
-
-  .mentor-name {
-    font-size: 22px;
-    padding-top: 5px;
-    .mentor-company {
-      font-size: 18px;
-      padding-top: 8px;
-      color: #8f8f94;
-    }
-    .mentor {
-      padding-left: 4px;
-      padding-top: 9px;
-      font-size: 16px;
-      color: #8f8f94;
-    }
-    .mentor-job {
-      font-size: 18px;
-      padding-left: 4px;
-      color: #8f8f94;
-    }
-  }
-
-  .mentor-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 15px;
-    border: 1px solid #dee2e6;
-  }
-`;
-
-const QuestionBlock = styled.div`
-  border: 1px solid #dee2e6;
-  padding-left: 20px;
-  padding-top: 10px;
-  padding-bottom: 20px;
-`;
-
-const AnswerBlock = styled.div`
-  border: 1px solid #dee2e6;
-  padding-left: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  display: flex;
-  .answer {
-    border: 1px solid #dee2e6;
-    border-radius: 16px;
-    background: red;
-    color: white;
-    width: 80px;
-
-    text-align: center;
-  }
-  .today {
-    padding-left: 320px;
-  }
+  // height: 1200px;
 `;
 
 const SettingSelector = styled.div`
@@ -120,43 +36,91 @@ const SettingSelector = styled.div`
   }
   .sent {
     ${(props) =>
-      props.openSentQuestion &&
-      css`
+    props.openSentQuestion &&
+    css`
         background: #e9ecef;
       `}
   }
   .received {
     ${(props) =>
-      props.openReceivedQuestion &&
-      css`
+    props.openReceivedQuestion &&
+    css`
         background: #e9ecef;
       `}
   }
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
+const MyQuestion = () => {
 
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-`;
-
-const MyQuestion = ({ mentorName, mentorCompany, mentorJob }) => {
-  const mentorImageSource =
-    'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg';
-  const questionCount = 1;
-  const VVSCount = 2;
-  const today = new Date().toLocaleString();
-  const [answerState, setAnswerState] = useState('답변대기중'); //! 답변 제출되면 setAnswerState('답변완료')
-
+  //받은 데이터에 답변이 있으면 답변완료, 없으면 답변 대기중
   const [openReceivedQuestion, setReveivedQuestion] = useState(false);
   const [openSentQuestion, setSentQuestion] = useState(true);
+
+  const userEmail = useSelector(state => state.userInfoSetting.email)
+  const [sentQuestionList, setSentQuestionList] = useState('')
+  const [receivedQuestionList, setReceivedQuestionList] = useState('')
+  const dispatch = useDispatch()
+
+  // 렌더할때 나의 질문 가져오기
+  useEffect(() => {
+    const requestQuestion = () => {
+      axios.post('https://localhost:4000/myquestion', { userEmail }, {
+        headers: { 'Content-Type': 'application/json' }, withCredentials: true
+      })
+        .then((res) => {
+          console.log('나의 질문리스트 데이터',res.data.data)
+          setSentQuestionList(res.data.data.sentQuestion)
+          setReceivedQuestionList(res.data.data.receivedQuestion)
+          dispatch(setSentQuestionAction(res.data.data))
+        })
+    }
+
+    requestQuestion();
+  }, [])
+
+
+  /*
+  요청 한번에 둘다받아오기. 
+  
+  내가 보낸 질문 ::  
+  userEmail을 참조하여
+  qa 테이블에서 user의 menteeid가 일치하는 모든 데이터 전송받아야함
+  data: {
+    sentQuestion: {
+      "id": "아이디"
+      "brief" : "질문 제목",
+      "question" : "질문",
+      "answer" : "답변",
+      "mentorId" : "멘토 id",
+      "menteeId" : "멘티 id",
+      "createdAt" : "질문이 작성된 시간",
+      "updatedAt" : "답변이 작성된 시간",
+    }
+  }
+  --> 클릭하면 해당 멘토의 정보, 프로필 로딩하고 + 질문과 답변 같이 로딩  -> 질문답변 상세페이지임
+
+  내가 받은 질문 ::
+  userEmail을 참조하여
+  qa 테이블에서 user의 mentorid가 일치하는 모든 데이터 전송받아야함
+  data: {
+    receivedQuestion: [
+      {
+        "id" : "아이디"
+        "brief" : "질문 제목",
+        "question" : "질문",
+        "answer" : "답변",
+        "mentor" : "멘토 id",
+        "menti" : "멘티 id",
+        "createdAt" : "질문이 작성된 시간",
+        "updatedAt" : "답변이 작성된 시간",
+      },
+      ...
+    ],
+    답변이 없으면 답변하기 버튼 활성화,
+    답변이 있으면 답변완료 띄우기
+
+    답변하기 버튼 누르면 입력 폼과 답변 전송 버튼 띄우기
+  */
 
   return (
     <MyQuestionTemplate>
@@ -185,53 +149,10 @@ const MyQuestion = ({ mentorName, mentorCompany, mentorJob }) => {
         </div>
       </SettingSelector>
       {openSentQuestion ? (
-        <QuestionForm>
-          <h1>질문 및 답변</h1>
-          <Info>
-            VVS는 질문권을 의미합니다. 최초 3개가 충전되며, 멘토에게 답변을 받고
-            고맙습니다를 작성하시면 1개씩 자동 충전됩니다.
-          </Info>
-          <Infoblock>
-            <SummaryInfo>
-              VVS
-              <Number>{VVSCount}개</Number>
-            </SummaryInfo>
-            <SummaryInfo>
-              질문
-              <Number>{questionCount}개</Number>
-            </SummaryInfo>
-          </Infoblock>
-          <MentorInfoBlock>
-            <img
-              className='mentor-img'
-              src={mentorImageSource}
-              alt='image error'
-            />
-            <div className='mentor-name'>
-              {mentorName}
-              <span className='mentor'>멘토</span>
-              <br />
-              <span className='mentor-company'>{mentorCompany} •</span>
-              <span className='mentor-job'>{mentorJob}</span>
-            </div>
-          </MentorInfoBlock>
-          <QuestionBlock>
-            <StyledLink to='/QuestionAndAnswer'>
-              <h2>프론트엔드, 백엔드의 기술 스택이 궁금합니다.</h2>
-            </StyledLink>
-            <div>
-              뱅크샐러드의 프론트엔드, 백엔드 개발에 사용되는 기술 스택이
-              무엇인지 궁금합니다!
-            </div>
-          </QuestionBlock>
-          <AnswerBlock>
-            <div className='answer'>{answerState}</div>
-            <div className='today'>{today}</div>
-          </AnswerBlock>
-        </QuestionForm>
+        <SentQuestion sentQuestionList={sentQuestionList}/> 
       ) : (
-        <ReceivedQuestion />
-      )}
+          <ReceivedQuestion />
+        )}
     </MyQuestionTemplate>
   );
 };

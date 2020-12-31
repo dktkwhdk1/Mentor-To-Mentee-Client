@@ -36,11 +36,14 @@ function AskQuestion({ mentor }) {
     }
 
     // 멘티 아이디는 로그인 유저의 멘티아이디 주면되고, 멘토아이디는 지금 들어와있는 프로필페이지에 멘토id 넘겨줘야함. 
-    const questionData = { brief, question }
     const user = useSelector(state => state.userInfoSetting)
-    console.log(user)
-
-
+    const questionData = { 
+        email: user.email,
+        mentorEmail: mentor.email,
+        brief, 
+        question 
+    }
+    
     const requestQuestion = (event) => {
         event.preventDefault();
         axios.post('https://localhost:4000/question', questionData, {
