@@ -115,6 +115,7 @@ function MenteeSetting() {
     menteeEmail: state.userInfoSetting.email,
   }));
   const dispatch = useDispatch();
+
   const [isMentor, setMentor] = useState(false);
   const [isMentee, setMentee] = useState(true);
   const [menteeInfo, setMenteeInfoState] = useState({
@@ -124,29 +125,40 @@ function MenteeSetting() {
     grade: '1',
     menteeDescription: '',
   });
+  console.log('render(redux) : ', userInfo);
+  console.log('render(local) : ', menteeInfo);
   useEffect(() => {
+    console.log('useEffect');
     if (!userInfo.uni) {
-      console.log('상태에 저장된 학교 정보가 없음, 받아와서 상태에 저장하세요');
+      console.log('useEffect & get 요청');
       axios
         .get(
           `https://localhost:4000/menteeInfoSetting/pageload?email=${userInfo.menteeEmail}`
         )
         .then(res => {
           const data = res.data.data;
-          console.log(data);
+          setMenteeInfoState({
+            ...menteeInfo,
+            uni: data.uni || '',
+            major: data.major || '',
+            graduation: data.graduation || '',
+            grade: data.grade || '',
+            menteeDescription: data.menteeDescription || '',
+          });
           dispatch(
             setMenteeInfo({
               ...userInfo,
-              uni: data.uni,
-              major: data.major,
-              graduation: data.graduation,
-              grade: data.grade,
-              menteeDescription: data.menteeDescription,
+              uni: data.uni || '',
+              major: data.major || '',
+              graduation: data.graduation || '',
+              grade: data.grade || '',
+              menteeDescription: data.menteeDescription || '',
             })
           );
         });
     }
-    setMenteeInfoState({ ...userInfo });
+    console.log('useEffect안에서의 userInfo(리덕스상태): ', userInfo);
+    setMenteeInfoState({ ...menteeInfo, ...userInfo });
     return () => {
       console.log('MenteeInfoSetting Component Clean');
     };

@@ -115,21 +115,29 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
         )
         .then(res => {
           const data = res.data.data;
-          console.log(data);
+          setMentorInfoState({
+            ...mentorInfo,
+            company: data.company || '',
+            department: data.department || '',
+            position: data.position || '',
+            job: data.job || '',
+            description: data.description || '',
+            career: data.career || '',
+          });
           dispatch(
             setMentorInfo({
               ...userInfo,
-              company: data.company,
-              department: data.department,
-              position: data.position,
-              job: data.job,
-              description: data.description,
-              career: data.career,
+              company: data.company || '',
+              department: data.department || '',
+              position: data.position || '',
+              job: data.job || '',
+              description: data.description || '',
+              career: data.career || '',
             })
           );
         });
     }
-    setMentorInfoState({ ...userInfo });
+    setMentorInfoState({ ...mentorInfo, ...userInfo });
     return () => {
       console.log('MentorInfoSetting Component Clean');
     };

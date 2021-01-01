@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const QandATemplate = styled.div`
   display: flex;
@@ -98,6 +99,12 @@ const QuestionAndAnswer = ({
   const mentorImageSource =
     'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg';
 
+  const mentorInfo = useSelector(state => state.myQuestionReducer.sentQuestion);
+  const menteeInfo = useSelector(
+    state => state.myQuestionReducer.receivedQuestion
+  );
+  console.log(mentorInfo);
+  console.log(menteeInfo);
   const today = new Date().toLocaleString(); // createdAt
   return (
     <QandATemplate>

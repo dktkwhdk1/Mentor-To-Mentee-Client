@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import QuestionAndAnswer from './QuestionAndAnswer';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -18,7 +19,7 @@ const StyledLink = styled(Link)`
 `;
 const QuestionForm = styled.form`
   width: 620px;
-//   height: 910px;
+  height: 910px;
 `;
 const Info = styled.div`
   color: #8f8f94;
@@ -26,7 +27,6 @@ const Info = styled.div`
 
 const Infoblock = styled.div`
   display: flex;
-  padding-top: 10px;
 `;
 
 const SummaryInfo = styled.div`
@@ -95,10 +95,10 @@ const AnswerBlock = styled.div`
     border-radius: 16px;
     color: white;
     width: 80px;
-    padding: 5px;  
+    padding: 5px;
     text-align: center;
   }
-  
+
   .answer-state-true {
     background: green;
   }
@@ -113,85 +113,42 @@ const AnswerBlock = styled.div`
 `;
 
 const AnswerForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
-display: flex;
-flex-direction: column;
-align-items: flex-end;
+  .answer-text {
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    width: 93.2%;
+    height: 100px;
+  }
+  .submit {
+    margin-top: 10px;
+    background-color: rgb(106, 165, 231);
+    width: 100px;
+  }
+`;
 
-.answer-text {
-  border: 1px solid #dee2e6;
-  padding: 20px;
-  width: 93.2%;
-  height: 100px;
-}
-.submit {
-  margin-top: 10px;
-  background-color: rgb(106,165,231); 
-  width: 100px;
-}
-`
 function ReceivedQuestion({ receivedQuestionList }) {
-  const dummyData = [
-    {
-      id: 1,
-      brief: '프론트엔드, 백엔드의 기술 스택이 궁금합니다.',
-      question: '뱅크샐러드의 프론트엔드, 백엔드 개발에 사용되는 기술 스택이 무엇인지 궁금합니다!',
-      answer: null,
-      mentorId: 3,
-      menteeId: 1,
-      createdAt: '2020-12-29 15:42:26',
-      updatedAt: '2020-12-29 15:42:26',
-      menteeName: '조영권',
-      menteeMajor: '영어영문학과',
-      menteeGrade: '2학년',
-      menteeGraduation: '재학',
-      menteeImage: 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
-    },
-    {
-      id: 2,
-      brief: '취업하려면 어떻게해야되나요?',
-      question: '궁금쓰',
-      answer: '알아서 잘 하세요',
-      mentorId: 2,
-      menteeId: 5,
-      createdAt: '2020-12-22 15:42:26',
-      updatedAt: '2020-12-22 15:42:26',
-      menteeName: '강희석',
-      menteeMajor: '컴퓨터공학과',
-      menteeGrade: '3학년',
-      menteeGraduation: '재학',
-      menteeImage: 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
-    },
-    {
-      id: 3,
-      brief: '질문잇슴다',
-      question: '개발 잘하는 법좀 알려주세요',
-      answer: '졸라 하면 됨',
-      mentorId: 4,
-      menteeId: 1,
-      createdAt: '2020-12-25 15:42:26',
-      updatedAt: '2020-12-25 15:42:26',
-      menteeName: '김코딩',
-      menteeMajor: '생명공학과',
-      menteeGrade: '2학년',
-      menteeGraduation: '졸업',
-      menteeImage: 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
-    }
-  ]
   return (
     <QuestionForm>
       <h1>질문 및 답변</h1>
-      <div>받은 질문이 없습니다.</div>
-      <Infoblock>
-        <SummaryInfo>질문
-            <Number>{dummyData.length}개</Number>
-        </SummaryInfo>
-      </Infoblock>
-
-      {dummyData.map((question) => {
-        return <Question receivedQuestion={question} />
-      })}
-
+      {receivedQuestionList.length ? (
+        <>
+          <Infoblock>
+            <SummaryInfo>
+              질문
+              <Number>{receivedQuestionList.length}개</Number>
+            </SummaryInfo>
+          </Infoblock>
+          {receivedQuestionList.map((question, idx) => {
+            return <Question key={idx} receivedQuestion={question} />;
+          })}
+        </>
+      ) : (
+        <div>받은 질문이 없습니다.</div>
+      )}
     </QuestionForm>
   );
 }
@@ -201,47 +158,64 @@ const Question = ({ receivedQuestion }) => {
   const [answerButtonOn, setAnswerButtonOn] = useState(false);
   const [answerText, setAnswerText] = useState('');
   const user = useSelector(state => state.userInfoSetting);
-  const { brief, question, createdAt, menteeName, menteeMajor, menteeGrade, menteeGraduation, menteeImage, answer, id } = receivedQuestion
+  const {
+    brief,
+    question,
+    createdAt,
+    menteeName,
+    menteeMajor,
+    menteeGrade,
+    menteeGraduation,
+    menteeImage,
+    answer,
+    id,
+  } = receivedQuestion;
 
   const answerStateHandler = () => {
     if (answer) {
-      console.log(answer)
-      setAnswerState(true)
+      console.log(answer);
+      setAnswerState(true);
     }
-  }
+  };
 
   useEffect(() => {
     answerStateHandler();
-  }, [])
+  }, []);
 
   const answerButtonHandler = () => {
-    setAnswerButtonOn(!answerButtonOn)
-  }
+    setAnswerButtonOn(!answerButtonOn);
+  };
 
-  const answerInputHandler = (event) => {
-    setAnswerText(event.target.value)
-  }
-  console.log(user)
+  const answerInputHandler = event => {
+    setAnswerText(event.target.value);
+  };
+  console.log(user);
   const submitData = {
     id,
     mentorEmail: user.email,
     answer: answerText,
-  }
+  };
 
-  const requestSubmitAnswer = (event) => {
+  const requestSubmitAnswer = event => {
     event.preventDefault();
-    axios.post('https://localhost:4000/answer??', submitData, {
-      headers: { 'Content-Type': 'application/json' }, withCredentials: true
-    })
-    .then((res) => console.log(res))
-  }
+    axios
+      .post('https://localhost:4000/answer??', submitData, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then(res => console.log(res));
+  };
 
   return (
     <div>
       <MenteeInfoBlock>
         <img
           className='mentee-img'
-          src={menteeImage}
+          src={
+            menteeImage
+              ? menteeImage
+              : 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
+          }
           alt='image error'
         />
         <div className='mentee-name'>
@@ -256,28 +230,38 @@ const Question = ({ receivedQuestion }) => {
         <StyledLink to='/QuestionAndAnswer'>
           <h2>{brief}</h2>
         </StyledLink>
-        <div>
-          {question}
-        </div>
+        <div>{question}</div>
       </QuestionBlock>
       <AnswerBlock>
-        {answerState ?
+        {answerState ? (
           <div className='answer answer-state-true'>답변 완료</div>
-          :
-          <div onClick={answerButtonHandler} className='answer answer-state-false'>답변 하기</div>
-        }
+        ) : (
+          <div
+            onClick={answerButtonHandler}
+            className='answer answer-state-false'
+          >
+            답변 하기
+          </div>
+        )}
         <div className='createdAt'>{createdAt}</div>
       </AnswerBlock>
-      {answerButtonOn ?
+      {answerButtonOn ? (
         <AnswerForm>
-          <textarea className="answer-text" placeholder='답변 내용을 입력해주세요' onChange={answerInputHandler}></textarea>
-          <input onClick={requestSubmitAnswer} type="submit" className="submit" />
+          <textarea
+            className='answer-text'
+            placeholder='답변 내용을 입력해주세요'
+            onChange={answerInputHandler}
+          ></textarea>
+          <input
+            onClick={requestSubmitAnswer}
+            type='submit'
+            className='submit'
+          />
         </AnswerForm>
-        : ''
-      }
-
-
+      ) : (
+        ''
+      )}
     </div>
-  )
-}
+  );
+};
 export default ReceivedQuestion;

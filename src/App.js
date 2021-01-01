@@ -54,7 +54,7 @@ function App() {
               }}
             />
             <Route
-              path='/myPage'
+              path='/mypage'
               component={() => <MyPage isMentor={isMentor} />}
             />
             <Route path='/applymentor' component={ApplyMentor} />

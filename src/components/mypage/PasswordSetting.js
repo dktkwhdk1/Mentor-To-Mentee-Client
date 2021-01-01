@@ -8,6 +8,7 @@ const InsertForm = styled.form`
   background: #f8f9fa;
   width: 484px;
   height: 500px;
+  margin-bottom: 100px;
 
   h1 {
     padding-left: 20px;
