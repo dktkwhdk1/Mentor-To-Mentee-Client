@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { setAccessToken } from '../../modules/login';
+import { setAccessToken, setLogin } from '../../modules/login';
 import { setUserInfo } from '../../modules/userInfoSetting';
 import axios from 'axios';
+
 axios.defaults.withCredentials = true;
 const Modal = styled.div`
   width: 400px;
@@ -53,7 +54,7 @@ const Input = styled.input`
   padding: 0px;
   padding-left: 10px;
 `;
-function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
+function Login({ setLoginButtonOn, setSignupButtonOn }) {
   const [emailButtonOn, setEmailButtonOn] = useState(false);
   //테스트용 강제로그인 기능
 
@@ -68,6 +69,7 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
     setSignupButtonOn(true);
   };
   const dispatch = useDispatch();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const onSubmitHandler = e => {
@@ -87,8 +89,8 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
           .then(res => {
             const userInfo = res.data.data;
             if (userInfo.email === email) {
-              setLogin(true);
               setLoginButtonOn(false);
+              dispatch(setLogin(true)) // 스토어에 로그인 상태 저장
               dispatch(setUserInfo(userInfo)); // 스토어에 유저 정보(이름과 이메일) 저장
             }
           })
@@ -96,11 +98,17 @@ function Login({ setLogin, setLoginButtonOn, setSignupButtonOn }) {
       })
       .catch(err => console.log(err));
   };
+
+  const googleLoginHandler = () => {
+    window.location.href =
+        'https://accounts.google.com/o/oauth2/v2/auth?client_id=635734640302-i2pj1ili5dasjmdptsbunq4l7k56lgqd.apps.googleusercontent.com&redirect_uri=https://localhost:4000/googleCallback&response_type=code&scope=openid%20profile%20email';
+  }
+
   return (
     <Modal>
       <h2>로그인</h2>
       <div className='buttons'>
-        <Button className='modal-item'>구글 아이디로 로그인</Button>
+        <Button onClick={googleLoginHandler} className='modal-item'>구글 아이디로 로그인</Button>
         <Button className='modal-item'>네이버 아이디로 로그인</Button>
         <Button onClick={handleEmailLogin} className='modal-item'>
           이메일로 로그인

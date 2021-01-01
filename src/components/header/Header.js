@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import UserModal from './UserModal';
 import Login from './Login';
 import Signup from './Signup';
+import {useSelector} from 'react-redux'
 
 const Nav = styled.nav`
   background-color: rgb(89, 175, 204);
@@ -50,10 +51,11 @@ const StyledLink = styled(Link)`
 
 function Header({ loginButtonOn, setLoginButtonOn }) {
   //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
-  const [isLogin, setLogin] = useState(false);
+  // const [isLogin, setLogin] = useState(false);
   const [userModalButtonOn, setUserModalButtonOn] = useState(false);
   const [signupButtonOn, setSignupButtonOn] = useState(false);
-
+  const isLogin = useSelector(state => state.isLoginReducer.isLogin)
+  console.log(isLogin)
   //로그인 버튼 눌렀을때, 로그인 모달창 띄우기
   const renderLoginModal = () => {
     setLoginButtonOn(!loginButtonOn);
@@ -91,7 +93,6 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
           {userModalButtonOn ? (
             <UserModal
               setUserModalButtonOn={setUserModalButtonOn}
-              setLogin={setLogin}
             ></UserModal>
           ) : (
             ''
@@ -115,7 +116,6 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
       )}
       {loginButtonOn ? (
         <Login
-          setLogin={setLogin}
           setLoginButtonOn={setLoginButtonOn}
           signupButtonOn={signupButtonOn}
           setSignupButtonOn={setSignupButtonOn}
