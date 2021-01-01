@@ -149,6 +149,7 @@ const Question = ({ sentQuestion }) => {
     brief,
     question,
     createdAt,
+    mentorId,
     mentorName,
     mentorCompany,
     mentorJob,
@@ -188,7 +189,7 @@ const Question = ({ sentQuestion }) => {
         </div>
       </MentorInfoBlock>
       <QuestionBlock>
-        <StyledLink to='/QuestionAndAnswer'>
+        <StyledLink to={`/QuestionAndAnswer/${mentorId}`}>
           <h2>{brief}</h2>
         </StyledLink>
         <div>{question}</div>

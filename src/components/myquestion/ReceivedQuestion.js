@@ -165,7 +165,7 @@ const Question = ({ receivedQuestion }) => {
     menteeName,
     menteeMajor,
     menteeGrade,
-    menteeGraduation,
+    menteeId,
     menteeImage,
     answer,
     id,
@@ -227,7 +227,7 @@ const Question = ({ receivedQuestion }) => {
         </div>
       </MenteeInfoBlock>
       <QuestionBlock>
-        <StyledLink to='/QuestionAndAnswer'>
+        <StyledLink to={`/QuestionAndAnswer/${menteeId}`}>
           <h2>{brief}</h2>
         </StyledLink>
         <div>{question}</div>

@@ -68,15 +68,18 @@ const MyQuestion = () => {
         .get(`https://localhost:4000/getQuestion?email=${userEmail}`)
         .then(res => {
           console.log('나의 질문리스트 데이터', res.data.data);
-          const data = res.data.data;
-          setSentQuestionList([...data.sentQuestion]);
-          setReceivedQuestionList([...data.receivedQuestion]);
-          dispatch(
-            setSentQuestionAction({
-              sentQuestion: data.sentQuestion,
-              receivedQuestion: data.receivedQuestion,
-            })
-          );
+          if (res.data) {
+            const data = res.data.data;
+
+            setSentQuestionList([...data.sentQuestion]);
+            setReceivedQuestionList([...data.receivedQuestion]);
+            dispatch(
+              setSentQuestionAction({
+                sentQuestion: data.sentQuestion,
+                receivedQuestion: data.receivedQuestion,
+              })
+            );
+          }
         });
     };
     requestQuestion();

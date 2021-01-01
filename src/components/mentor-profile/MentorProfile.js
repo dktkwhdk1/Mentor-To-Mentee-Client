@@ -52,7 +52,10 @@ function MentorProfile({ match }) {
   const [isAskButtonOn, setAskButtonOn] = useState(false);
 
   //TODO mentorList에서 params로 가져온 username과 일치하는 데이터 뽑아내서 변수로저장.
-  const mentorList = useSelector(state => state.mentorListReducer.mentorData);
+  const mentorList = useSelector(state => {
+    console.log(state);
+    return state.mentorListReducer.mentorData;
+  });
 
   const getMentor = () => {
     for (let mentor of mentorList) {

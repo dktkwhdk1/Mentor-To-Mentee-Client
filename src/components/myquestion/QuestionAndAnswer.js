@@ -90,54 +90,67 @@ const QuestionBlock = styled.div`
   padding-bottom: 20px;
 `;
 
-const QuestionAndAnswer = ({
-  mentorName,
-  mentorCompany,
-  mentorJob,
-  mentorIntroduction,
-}) => {
-  const mentorImageSource =
-    'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg';
-
-  const mentorInfo = useSelector(state => state.myQuestionReducer.sentQuestion);
-  const menteeInfo = useSelector(
-    state => state.myQuestionReducer.receivedQuestion
+const QuestionAndAnswer = ({ match }) => {
+  const questionInfo = new Array();
+  const mentorInfo = new Object();
+  const questionState = useSelector(
+    state => state.myQuestionReducer.sentQuestion
   );
-  console.log(mentorInfo);
-  console.log(menteeInfo);
-  const today = new Date().toLocaleString(); // createdAt
+  questionState.forEach(ele => {
+    if (ele.mentorId === Number(match.params.id)) {
+      mentorInfo.mentorName = ele.mentorName;
+      mentorInfo.mentorCompany = ele.mentorCompany;
+      mentorInfo.mentorJob = ele.mentorJob;
+      mentorInfo.mentorIntroduction = ele.mentorDescription;
+      mentorInfo.mentorImage = ele.mentorImage;
+      questionInfo.push({
+        brief: ele.brief,
+        question: ele.question,
+        created: ele.createdAt,
+        updated: ele.updatedAt,
+      });
+    }
+  });
   return (
     <QandATemplate>
       <Form>
-        <img className='mentor-img' src={mentorImageSource} alt='image error' />
+        <img
+          className='mentor-img'
+          src={mentorInfo.mentorImage}
+          alt='image error'
+        />
         <MentorInfo>
-          <h2 className='name'>{mentorName}</h2>
+          <h2 className='name'>{mentorInfo.mentorName}</h2>
           <div className='mentorlogo'>멘토</div>
         </MentorInfo>
         <div>
-          {mentorCompany} • {mentorJob}
+          {mentorInfo.mentorCompany} • {mentorInfo.mentorJob}
         </div>
         <br />
-        <div className='introduction'>{mentorIntroduction}</div>
+        <div className='introduction'>{mentorInfo.mentorIntroduction}</div>
         <br />
         <button className='askquestion'>멘토에게 질문하기</button>
         <br />
         <div className='middle'>------- 나의 질문 및 답변 -------</div>
-        <QuestionHeader>
-          <div className='head'>질문</div>
-          <div className='today'>{today}</div>
-        </QuestionHeader>
-        <QuestionBlock>
-          <h2>프론트엔드, 백엔드의 기술 스택이 궁금합니다.</h2>
-          <div>
-            뱅크샐러드의 프론트엔드, 백엔드 개발에 사용되는 기술 스택이 무엇인지
-            궁금합니다!
-          </div>
-        </QuestionBlock>
-        <div className='etc'>
-          답변받지 못하면 <span className='date'>01월 10일 오전 9시</span>에
-          질문이 자동 취소됩니다.
-        </div>
+        {questionInfo.map(question => {
+          return (
+            <>
+              <QuestionHeader>
+                <div className='head'>질문</div>
+                <div className='today'>{question.created}</div>
+              </QuestionHeader>
+              <QuestionBlock>
+                <h2>{question.brief}</h2>
+                <div>{question.question}</div>
+              </QuestionBlock>
+              <div className='etc'>
+                답변받지 못하면 <span className='date'>{question.created}</span>
+                에 질문이 자동 취소됩니다.
+              </div>
+              <br />
+            </>
+          );
+        })}
       </Form>
     </QandATemplate>
   );
