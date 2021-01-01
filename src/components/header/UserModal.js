@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom"
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { setAccessToken } from '../../modules/login'
+import { setAccessToken, setLogin } from '../../modules/login'
 
 const Modal = styled.div`
 position: absolute;
@@ -21,9 +21,10 @@ cursor: pointer;
 }
 `
 
-function UserModal({ setLogin, setUserModalButtonOn }) {
+function UserModal({ setUserModalButtonOn }) {
     let accessToken = useSelector(state => state.login.token)
     const userEmail = useSelector(state => state.userInfoSetting.email)
+
     const dispatch = useDispatch();
 
     const logoutHandler = async () => {
