@@ -8,6 +8,7 @@ const InsertForm = styled.form`
   background: #f8f9fa;
   width: 484px;
   height: 500px;
+  margin-bottom: 100px;
 
   h1 {
     padding-left: 20px;
@@ -66,6 +67,11 @@ function PasswordSetting() {
       .then(res => {
         alert('설정 저장이 완료되었습니다.');
         console.log(res);
+        setPasswordState({
+          currentPassword: '',
+          newPassword: '',
+          passwordConfirm: '',
+        });
       });
   };
   return (

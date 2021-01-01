@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import MentorSetting from './MentorSetting';
 import { useSelector, useDispatch } from 'react-redux';
@@ -64,7 +64,7 @@ const BigInput = styled.textarea`
   border-radius: 4px;
   border: 1px solid #dee2e6;
   width: 87%;
-  height: 100px;
+  height: 230px;
   font-size: 12px;
   padding: 10px;
   margin-left: 20px;
@@ -112,42 +112,72 @@ const SubmitButton = styled.button`
 function MenteeSetting() {
   const userInfo = useSelector(state => ({
     ...state.roleInfoSetting.mentee,
-    email: state.userInfoSetting.email,
+    menteeEmail: state.userInfoSetting.email,
   }));
   const dispatch = useDispatch();
 
   const [isMentor, setMentor] = useState(false);
   const [isMentee, setMentee] = useState(true);
   const [menteeInfo, setMenteeInfoState] = useState({
-    school: '',
+    uni: '',
     major: '',
-    graduate: '1',
+    graduation: '1',
     grade: '1',
-    spec: '',
-    etc: '',
+    menteeDescription: '',
   });
-  if (!menteeInfo.school) {
-    console.log('상태에 저장된 학교 정보가 없음, 받아와서 상태에 저장하세요');
-    //axios.get('https://localhost:4000/getmentee');
-  } else {
-    //console.log(userInfo);
-  }
+  console.log('render(redux) : ', userInfo);
+  console.log('render(local) : ', menteeInfo);
+  useEffect(() => {
+    console.log('useEffect');
+    if (!userInfo.uni) {
+      console.log('useEffect & get 요청');
+      axios
+        .get(
+          `https://localhost:4000/menteeInfoSetting/pageload?email=${userInfo.menteeEmail}`
+        )
+        .then(res => {
+          const data = res.data.data;
+          setMenteeInfoState({
+            ...menteeInfo,
+            uni: data.uni || '',
+            major: data.major || '',
+            graduation: data.graduation || '',
+            grade: data.grade || '',
+            menteeDescription: data.menteeDescription || '',
+          });
+          dispatch(
+            setMenteeInfo({
+              ...userInfo,
+              uni: data.uni || '',
+              major: data.major || '',
+              graduation: data.graduation || '',
+              grade: data.grade || '',
+              menteeDescription: data.menteeDescription || '',
+            })
+          );
+        });
+    }
+    console.log('useEffect안에서의 userInfo(리덕스상태): ', userInfo);
+    setMenteeInfoState({ ...menteeInfo, ...userInfo });
+    return () => {
+      console.log('MenteeInfoSetting Component Clean');
+    };
+  }, []);
   const inputFormHandler = e => {
     setMenteeInfoState({ ...menteeInfo, [e.target.name]: e.target.value });
   };
   const onSubmitHandler = e => {
     e.preventDefault();
-    /*
     axios
-      .post('https://localhost:4000/setmentee', {
-        ...menteeInfo
+      .post('https://localhost:4000/menteeInfoSetting/setMentee', {
+        ...menteeInfo,
+        menteeEmail: userInfo.menteeEmail,
       })
-      .then(res => console.log(res));*/
-
-    // then 안에 넣어야함
-    alert('설정 저장이 완료되었습니다.');
-    dispatch(setMenteeInfo({ ...menteeInfo }));
-    console.log(userInfo);
+      .then(res => {
+        alert('설정 저장이 완료되었습니다.');
+        console.log(res);
+        dispatch(setMenteeInfo({ ...menteeInfo }));
+      });
   };
   // line 146, autoFocus - 페이지 들어가자마자 해당 input에 커서 깜빡임
   return isMentor ? (
@@ -186,8 +216,8 @@ function MenteeSetting() {
       <Input
         autoFocus
         placeholder='학교를 작성해주세요.'
-        name='school'
-        value={menteeInfo.school}
+        name='uni'
+        value={menteeInfo.uni}
         onChange={inputFormHandler}
       />
       <div>전공*</div>
@@ -200,8 +230,8 @@ function MenteeSetting() {
       <Graduation>재학/졸업* 학년</Graduation>
       <Graduation>
         <Select
-          name='graduate'
-          value={menteeInfo.graduate}
+          name='graduation'
+          value={menteeInfo.graduation}
           onChange={inputFormHandler}
         >
           <option value='1'>선택해주세요</option>
@@ -221,18 +251,11 @@ function MenteeSetting() {
           <option value='5'>4학년</option>
         </Select>
       </Graduation>
-      <div>스펙</div>
+      <div>멘티 소개</div>
       <BigInput
-        placeholder='스펙을 작성해주세요.'
-        name='spec'
-        value={menteeInfo.spec}
-        onChange={inputFormHandler}
-      />
-      <div>기타</div>
-      <BigInput
-        placeholder='기타 관심 분야 등 멘토님이 답변에 참고할 만한 사항을 작성해주세요.'
-        name='etc'
-        value={menteeInfo.etc}
+        placeholder='스펙, 관심 분야 등 멘토님이 답변에 참고할 만한 사항을 작성해주세요.'
+        name='menteeDescription'
+        value={menteeInfo.menteeDescription}
         onChange={inputFormHandler}
       />
       <SubmitButton onClick={onSubmitHandler}>수정하기</SubmitButton>

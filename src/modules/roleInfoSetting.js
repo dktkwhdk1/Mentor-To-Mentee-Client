@@ -12,7 +12,7 @@ export const setMentorInfo = mentorInfo => ({
 });
 
 export default function roleInfoSetting(
-  state = { mentee: { graduate: '1', grade: '1' }, mentor: { company: '' } },
+  state = { mentee: { graduation: '1', grade: '1' }, mentor: { company: '' } },
   action
 ) {
   switch (action.type) {

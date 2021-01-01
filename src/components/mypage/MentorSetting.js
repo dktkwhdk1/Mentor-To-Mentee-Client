@@ -105,7 +105,9 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
     career: '',
   });
   useEffect(() => {
+    console.log('useeffect');
     if (!userInfo.company) {
+      console.log('useeffect');
       console.log('컴포넌트의 상태에 회사정보 없음');
       axios
         .get(
@@ -113,21 +115,29 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
         )
         .then(res => {
           const data = res.data.data;
-          console.log(data);
+          setMentorInfoState({
+            ...mentorInfo,
+            company: data.company || '',
+            department: data.department || '',
+            position: data.position || '',
+            job: data.job || '',
+            description: data.description || '',
+            career: data.career || '',
+          });
           dispatch(
             setMentorInfo({
               ...userInfo,
-              company: data.company,
-              department: data.department,
-              position: data.position,
-              job: data.job,
-              description: data.description,
-              career: data.career,
+              company: data.company || '',
+              department: data.department || '',
+              position: data.position || '',
+              job: data.job || '',
+              description: data.description || '',
+              career: data.career || '',
             })
           );
         });
     }
-    setMentorInfo({ ...userInfo });
+    setMentorInfoState({ ...mentorInfo, ...userInfo });
     return () => {
       console.log('MentorInfoSetting Component Clean');
     };

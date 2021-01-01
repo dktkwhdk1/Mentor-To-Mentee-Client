@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -16,7 +17,7 @@ const StyledLink = styled(Link)`
 `;
 const QuestionForm = styled.form`
   width: 620px;
-//   height: 910px;
+  //   height: 910px;
 `;
 const Info = styled.div`
   color: #8f8f94;
@@ -110,127 +111,99 @@ const AnswerBlock = styled.div`
 `;
 
 function SentQuestion({ sentQuestionList }) {
-    const dummyData = [
-        {
-            id: 1,
-            brief: '프론트엔드, 백엔드의 기술 스택이 궁금합니다.',
-            question: '뱅크샐러드의 프론트엔드, 백엔드 개발에 사용되는 기술 스택이 무엇인지 궁금합니다!',
-            answer: null,
-            mentorId: 3,
-            menteeId: 1,
-            createdAt: '2020-12-29 15:42:26',
-            updatedAt: '2020-12-29 15:42:26',
-            mentorName: '조영권',
-            mentorCompany: '카카오',
-            mentorJob: '개발자',
-            mentorImage: 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
-        },
-        {
-            id: 2,
-            brief: '취업하려면 어떻게해야되나요?',
-            question: '궁금쓰',
-            answer: '알아서 잘 하세요',
-            mentorId: 2,
-            menteeId: 5,
-            createdAt: '2020-12-22 15:42:26',
-            updatedAt: '2020-12-22 15:42:26',
-            mentorName: '강희석',
-            mentorCompany: '네이버',
-            mentorJob: '개발자',
-            mentorImage: 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
-        },
-        {
-            id: 3,
-            brief: '질문잇슴다',
-            question: '개발 잘하는 법좀 알려주세요',
-            answer: '졸라 하면 됨',
-            mentorId: 4,
-            menteeId: 1,
-            createdAt: '2020-12-25 15:42:26',
-            updatedAt: '2020-12-25 15:42:26',
-            mentorName: '김코딩',
-            mentorCompany: '쿠팡',
-            mentorJob: '개발자',
-            mentorImage: 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
-        }
-    ]
-
-    const VVSCount = 2;
-
-    return (
-        <QuestionForm>
-            <h1>질문 및 답변</h1>
-            <Info>
-                VVS는 질문권을 의미합니다. 최초 3개가 충전되며, 멘토에게 답변을 받고
-                고맙습니다를 작성하시면 1개씩 자동 충전됩니다.
+  const VVSCount = 2;
+  console.log(sentQuestionList);
+  return (
+    <QuestionForm>
+      <h1>질문 및 답변</h1>
+      {sentQuestionList.length ? (
+        <>
+          <Info>
+            VVS는 질문권을 의미합니다. 최초 3개가 충전되며, 멘토에게 답변을 받고
+            고맙습니다를 작성하시면 1개씩 자동 충전됩니다.
           </Info>
-            <Infoblock>
-                <SummaryInfo>VVS
-                    <Number>{VVSCount}개</Number>
-                </SummaryInfo>
-                <SummaryInfo>질문
-                    <Number>{dummyData.length}개</Number>
-                </SummaryInfo>
-            </Infoblock>
-
-            {dummyData.map((question) => {
-                return <Question sentQuestion={question} />
-            })}
-        </QuestionForm>
-    )
-
+          <Infoblock>
+            <SummaryInfo>
+              VVS
+              <Number>{VVSCount}개</Number>
+            </SummaryInfo>
+            <SummaryInfo>
+              질문
+              <Number>{sentQuestionList.length}개</Number>
+            </SummaryInfo>
+          </Infoblock>
+          {sentQuestionList.map((question, idx) => {
+            return <Question key={idx} sentQuestion={question} />;
+          })}
+        </>
+      ) : (
+        <div>보낸 질문이 없습니다.</div>
+      )}
+    </QuestionForm>
+  );
 }
-
 
 const Question = ({ sentQuestion }) => {
-    const [answerState, setAnswerState] = useState(false)
-    const { brief, question, createdAt, mentorName, mentorCompany, mentorJob, mentorImage, answer } = sentQuestion
+  const [answerState, setAnswerState] = useState(false);
+  const {
+    brief,
+    question,
+    createdAt,
+    mentorId,
+    mentorName,
+    mentorCompany,
+    mentorJob,
+    mentorImage,
+    answer,
+  } = sentQuestion;
 
-    const answerStateHandler = () => {
-        if (answer) {
-          console.log(answer)
-          setAnswerState(true)
-        }
-      }
-    
-      useEffect(() => {
-        answerStateHandler();
-      }, [])
+  const answerStateHandler = () => {
+    if (answer) {
+      console.log(answer);
+      setAnswerState(true);
+    }
+  };
 
-    return (
-        <div>
-            <MentorInfoBlock>
-                <img
-                    className='mentor-img'
-                    src={mentorImage}
-                    alt='image error'
-                />
-                <div className='mentor-name'>
-                    {mentorName}
-                    <span className='mentor'>멘토</span>
-                    <br />
-                    <span className='mentor-company'>{mentorCompany} •</span>
-                    <span className='mentor-job'>{mentorJob}</span>
-                </div>
-            </MentorInfoBlock>
-            <QuestionBlock>
-                <StyledLink to='/QuestionAndAnswer'>
-                    <h2>{brief}</h2>
-                </StyledLink>
-                <div>
-                    {question}
-                </div>
-            </QuestionBlock>
-            <AnswerBlock>
-                {answerState ? 
-                <div className='answer answer-state-true'>답변 완료</div>
-                :
-                <div className='answer answer-state-false'>답변 대기중</div>
-                }
-                <div className='createdAt'>{createdAt}</div>
-            </AnswerBlock>
+  useEffect(() => {
+    answerStateHandler();
+  }, []);
+
+  return (
+    <div>
+      <MentorInfoBlock>
+        <img
+          className='mentor-img'
+          src={
+            mentorImage
+              ? mentorImage
+              : 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
+          }
+          alt='image error'
+        />
+        <div className='mentor-name'>
+          {mentorName}
+          <span className='mentor'>멘토</span>
+          <br />
+          <span className='mentor-company'>{mentorCompany} •</span>
+          <span className='mentor-job'>{mentorJob}</span>
         </div>
-    )
-}
+      </MentorInfoBlock>
+      <QuestionBlock>
+        <StyledLink to={`/QuestionAndAnswer/${mentorId}`}>
+          <h2>{brief}</h2>
+        </StyledLink>
+        <div>{question}</div>
+      </QuestionBlock>
+      <AnswerBlock>
+        {answerState ? (
+          <div className='answer answer-state-true'>답변 완료</div>
+        ) : (
+          <div className='answer answer-state-false'>답변 대기중</div>
+        )}
+        <div className='createdAt'>{createdAt}</div>
+      </AnswerBlock>
+    </div>
+  );
+};
 
-export default SentQuestion
+export default SentQuestion;
