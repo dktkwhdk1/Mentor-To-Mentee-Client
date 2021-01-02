@@ -16,8 +16,9 @@ const StyledLink = styled(Link)`
   }
 `;
 const QuestionForm = styled.form`
+  margin-left: 50px;
   width: 620px;
-  //   height: 910px;
+  min-height: 400px;
 `;
 const Info = styled.div`
   color: #8f8f94;
@@ -81,6 +82,12 @@ const QuestionBlock = styled.div`
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 20px;
+  
+  .createdAt {
+    margin-top: 20px;
+    margin-right: 20px;
+    text-align: right;
+  }
 `;
 
 const AnswerBlock = styled.div`
@@ -137,8 +144,8 @@ function SentQuestion({ sentQuestionList }) {
           })}
         </>
       ) : (
-        <div>보낸 질문이 없습니다.</div>
-      )}
+          <div>보낸 질문이 없습니다.</div>
+        )}
     </QuestionForm>
   );
 }
@@ -193,14 +200,14 @@ const Question = ({ sentQuestion }) => {
           <h2>{brief}</h2>
         </StyledLink>
         <div>{question}</div>
+        <div className='createdAt'>{createdAt}</div>
       </QuestionBlock>
       <AnswerBlock>
         {answerState ? (
           <div className='answer answer-state-true'>답변 완료</div>
         ) : (
-          <div className='answer answer-state-false'>답변 대기중</div>
-        )}
-        <div className='createdAt'>{createdAt}</div>
+            <div className='answer answer-state-false'>답변 대기중</div>
+          )}
       </AnswerBlock>
     </div>
   );

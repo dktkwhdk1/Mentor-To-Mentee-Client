@@ -1,28 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import QuestionAndAnswer from './QuestionAndAnswer';
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-`;
 const QuestionForm = styled.form`
+  margin-left: 50px;  
   width: 620px;
-  height: 910px;
-`;
-const Info = styled.div`
-  color: #8f8f94;
+  min-height: 400px;
 `;
 
 const Infoblock = styled.div`
@@ -82,21 +66,25 @@ const QuestionBlock = styled.div`
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 20px;
+  
+  .createdAt {
+    margin-top: 20px;
+    margin-right: 20px;
+    text-align: right;
+  }
 `;
 
 const AnswerBlock = styled.div`
   border: 1px solid #dee2e6;
-  padding-left: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  display: flex;
-  .answer {
+  padding: 20px;
+  .answer-btn {
     border: 1px solid #dee2e6;
     border-radius: 16px;
     color: white;
     width: 80px;
     padding: 5px;
     text-align: center;
+    cursor: pointer;
   }
 
   .answer-state-true {
@@ -104,12 +92,14 @@ const AnswerBlock = styled.div`
   }
   .answer-state-false {
     background: red;
-    cursor: pointer;
   }
 
-  .createdAt {
-    padding-left: 320px;
+  .answer-content {
+    margin-top: 5px;
+    padding: 12px;
   }
+
+
 `;
 
 const AnswerForm = styled.form`
@@ -147,14 +137,13 @@ function ReceivedQuestion({ receivedQuestionList }) {
           })}
         </>
       ) : (
-        <div>받은 질문이 없습니다.</div>
-      )}
+          <div>받은 질문이 없습니다.</div>
+        )}
     </QuestionForm>
   );
 }
 
 const Question = ({ receivedQuestion }) => {
-  const [answerState, setAnswerState] = useState(false);
   const [answerButtonOn, setAnswerButtonOn] = useState(false);
   const [answerText, setAnswerText] = useState('');
   const user = useSelector(state => state.userInfoSetting);
@@ -170,17 +159,6 @@ const Question = ({ receivedQuestion }) => {
     answer,
     id,
   } = receivedQuestion;
-
-  const answerStateHandler = () => {
-    if (answer) {
-      console.log(answer);
-      setAnswerState(true);
-    }
-  };
-
-  useEffect(() => {
-    answerStateHandler();
-  }, []);
 
   const answerButtonHandler = () => {
     setAnswerButtonOn(!answerButtonOn);
@@ -227,25 +205,29 @@ const Question = ({ receivedQuestion }) => {
         </div>
       </MenteeInfoBlock>
       <QuestionBlock>
-        <StyledLink to={`/QuestionAndAnswer/${menteeId}`}>
-          <h2>{brief}</h2>
-        </StyledLink>
+        <h2>{brief}</h2>
         <div>{question}</div>
+        <div className='createdAt'>{createdAt}</div>
       </QuestionBlock>
       <AnswerBlock>
-        {answerState ? (
-          <div className='answer answer-state-true'>답변 완료</div>
+        {answer ? (
+          <div onClick={answerButtonHandler} className='answer-btn answer-state-true'>답변 완료</div>
         ) : (
-          <div
-            onClick={answerButtonHandler}
-            className='answer answer-state-false'
-          >
-            답변 하기
+            <div
+              onClick={answerButtonHandler}
+              className='answer-btn answer-state-false'
+            >
+              답변 하기
+            </div>
+          )}
+        {/* <div className='createdAt'>{createdAt}</div> */}
+        {answerButtonOn ?
+          <div>
+            <div className='answer-content'>{answer}</div>
           </div>
-        )}
-        <div className='createdAt'>{createdAt}</div>
+          : ''}
       </AnswerBlock>
-      {answerButtonOn ? (
+      {!answer && answerButtonOn ? (
         <AnswerForm>
           <textarea
             className='answer-text'
@@ -259,8 +241,8 @@ const Question = ({ receivedQuestion }) => {
           />
         </AnswerForm>
       ) : (
-        ''
-      )}
+          ''
+        )}
     </div>
   );
 };
