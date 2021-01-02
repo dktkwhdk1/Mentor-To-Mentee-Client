@@ -79,9 +79,9 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
           <MdMenu onClick={()=>setSideBarOn(true)} className='nav-item hamburger'/>
         ) : (
          
-            <div className='login-btn' onClick={renderLoginModal}>
+            <h3 className='login-btn' onClick={renderLoginModal}>
               Login
-            </div>
+            </h3>
         )}
 
         {signupButtonOn ? (

@@ -21,9 +21,17 @@ const QuestionForm = styled.form`
   }
 
   .question-submit {
-    background-color: rgb(106, 165, 231);
+    background-color: rgb(37, 37, 37);
+    border: black 1px solid;
+    color: white;
     cursor: pointer;
     border-radius: 5px;
+
+    &:hover {
+      background-color: #b9a186;
+      color: white;
+      border: #b9a186 1px solid;
+  }
   }
 `;
 

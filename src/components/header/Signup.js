@@ -28,11 +28,18 @@ align-items: center;
 }
 
 .modal-submit {
-    background-color: rgb(106, 165, 231);
+    background-color: rgb(37, 37, 37);
+    border: black 1px solid;
+    color: white;
     width: 300px;
     height: 40px;
     border-radius: 7px;
     cursor: pointer;
+
+    &:hover {
+        background-color: #b9a186;
+        border: #b9a186 1px solid;
+    }
 }
 
 .text-link {
@@ -42,11 +49,17 @@ align-items: center;
 }
 `
 const Button = styled.button`
-width: 300px;
 background-color: white;
+width: 300px;
 height: 40px;
 border-radius: 7px;
 cursor: pointer;
+
+&:hover {
+    background-color: #b9a186;
+    color: white;
+    border: #b9a186 1px solid;
+  }
 `
 const Input = styled.input`
 margin: 10px;
@@ -80,16 +93,16 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
     }
 
     //회원가입 폼에 입력된 값을 가져오는 기능
-    const handleNameInput = (event) => {setUsername(event.target.value)}
-    const handleEmailInput = (event) => {setEmail(event.target.value)}
-    const handlePasswordInput = (event) => {setPassword(event.target.value)}
+    const handleNameInput = (event) => { setUsername(event.target.value) }
+    const handleEmailInput = (event) => { setEmail(event.target.value) }
+    const handlePasswordInput = (event) => { setPassword(event.target.value) }
 
 
     //회원가입 요청
     const signUpData = { username, email, password }
     const requsetSignUp = () => {
         axios.post('https://localhost:4000/emailSignUp', signUpData, {
-            headers: { 'Content-Type': 'application/json'}, withCredentials: true
+            headers: { 'Content-Type': 'application/json' }, withCredentials: true
         })
             .then((res) => console.log(res))
             .catch(console.log)
