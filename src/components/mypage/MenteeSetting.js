@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import MentorSetting from './MentorSetting';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMenteeInfo } from '../../modules/roleInfoSetting';
+import Modal from '../ModalMessage';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
@@ -116,6 +117,14 @@ function MenteeSetting() {
   }));
   const dispatch = useDispatch();
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   const [isMentor, setMentor] = useState(false);
   const [isMentee, setMentee] = useState(true);
   const [menteeInfo, setMenteeInfoState] = useState({
@@ -125,12 +134,9 @@ function MenteeSetting() {
     grade: '1',
     menteeDescription: '',
   });
-  console.log('render(redux) : ', userInfo);
-  console.log('render(local) : ', menteeInfo);
+
   useEffect(() => {
-    console.log('useEffect');
     if (!userInfo.uni) {
-      console.log('useEffect & get 요청');
       axios
         .get(
           `https://localhost:4000/menteeInfoSetting/pageload?email=${userInfo.menteeEmail}`
@@ -157,25 +163,19 @@ function MenteeSetting() {
           );
         });
     }
-    console.log('useEffect안에서의 userInfo(리덕스상태): ', userInfo);
     setMenteeInfoState({ ...menteeInfo, ...userInfo });
-    return () => {
-      console.log('MenteeInfoSetting Component Clean');
-    };
+    return;
   }, []);
   const inputFormHandler = e => {
     setMenteeInfoState({ ...menteeInfo, [e.target.name]: e.target.value });
   };
-  const onSubmitHandler = e => {
-    e.preventDefault();
+  const onSubmitHandler = () => {
     axios
       .post('https://localhost:4000/menteeInfoSetting/setMentee', {
         ...menteeInfo,
         menteeEmail: userInfo.menteeEmail,
       })
-      .then(res => {
-        alert('설정 저장이 완료되었습니다.');
-        console.log(res);
+      .then(() => {
         dispatch(setMenteeInfo({ ...menteeInfo }));
       });
   };
@@ -258,7 +258,27 @@ function MenteeSetting() {
         value={menteeInfo.menteeDescription}
         onChange={inputFormHandler}
       />
-      <SubmitButton onClick={onSubmitHandler}>수정하기</SubmitButton>
+      <SubmitButton
+        onClick={e => {
+          e.preventDefault();
+          onSubmitHandler();
+          openModal();
+        }}
+      >
+        수정하기
+      </SubmitButton>
+      {modalVisible ? (
+        <Modal
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal}
+        >
+          멘티 정보 설정이 완료되었습니다.
+        </Modal>
+      ) : (
+        ''
+      )}
     </InsertForm>
   );
 }

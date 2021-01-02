@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import Modal from '../ModalMessage';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
@@ -54,18 +55,25 @@ function PasswordSetting() {
     newPassword: '',
     passwordConfirm: '',
   });
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   const inputFormHandler = e => {
     setPasswordState({ ...passwordState, [e.target.name]: e.target.value });
   };
-  const onSubmitHandler = e => {
-    e.preventDefault();
+  const onSubmitHandler = () => {
     axios
       .post('https://localhost:4000/setPassword', {
         ...passwordState,
         email,
       })
       .then(() => {
-        alert('설정 저장이 완료되었습니다.');
         setPasswordState({
           currentPassword: '',
           newPassword: '',
@@ -98,7 +106,28 @@ function PasswordSetting() {
         value={passwordState.passwordConfirm}
         onChange={inputFormHandler}
       ></Input>
-      <SubmitButton onClick={onSubmitHandler}>비밀번호 변경</SubmitButton>
+      <SubmitButton
+        onClick={e => {
+          e.preventDefault();
+          onSubmitHandler();
+          openModal();
+        }}
+      >
+        비밀번호 변경
+      </SubmitButton>
+      {modalVisible ? (
+        <Modal
+          isPassword={true}
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal}
+        >
+          비밀번호 변경이 완료되었습니다.
+        </Modal>
+      ) : (
+        ''
+      )}
     </InsertForm>
   );
 }

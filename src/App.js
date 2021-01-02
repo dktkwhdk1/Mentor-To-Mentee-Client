@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import Header from './components/header/Header';
 import Main from './components/main/Main';
+import Footer from './components/footer';
 import MyPage from './components/mypage/MyPage';
 import ApplyMentor from './components/ApplyMentor';
 import MyQuestion from './components/myquestion/MyQuestion';
@@ -48,6 +49,7 @@ function App() {
           </Switch>
         </main>
       </div>
+      <Footer />
     </Router>
   );
 }

@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUserInfo } from '../../modules/userInfoSetting';
 import Modal from '../ModalMessage';
 import axios from 'axios';
-
 axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
@@ -71,21 +70,6 @@ const Select = styled.select`
     cursor: pointer;
   }
 `;
-/*
-const Button = styled.button`
-  margin-left: 20px;
-  margin-top: 10px;
-  width: 90px;
-  height: 25px;
-  display: flex;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-*/
 
 const SubmitButton = styled.button`
   border-radius: 4px;
@@ -168,7 +152,7 @@ function UserInfoSetting() {
     setAccountInfo({ ...accoutInfo, [e.target.name]: e.target.value });
   };
   const onSubmitHandler = () => {
-    //alert('설정 저장이 완료되었습니다.');
+    // alert('설정 저장이 완료되었습니다.');
     axios
       .post('https://localhost:4000/userInfoSetting/setAccount', {
         ...accoutInfo,
