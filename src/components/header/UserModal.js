@@ -5,14 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setAccessToken, setLogin } from '../../modules/login';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-
 const Modal = styled.div`
   position: absolute;
   border: 1px solid;
-
   right: 0%;
   top: 12.5%;
-
   .modal-item {
     border: 0.5px solid;
     padding: 15px 40px 15px 8px;
@@ -47,13 +44,11 @@ function UserModal({ setUserModalButtonOn }) {
       headers: { authorization: `Bearer ${accessToken}` },
     });
     let userInfo = res.data.data;
-
     //userinfo가 없으면 리프레시 토큰 요청
     if (!userInfo) {
       let res = axios.get('https://localhost:4000/refreshTokenHandler');
       userInfo = res.data.data.userInfo;
     }
-
     // 정상적으로 인증되었을경우 로그아웃 요청
     if (userInfo.email === userEmail) {
       axios.get('https://localhost:4000/signOut').then(res => {
@@ -63,11 +58,12 @@ function UserModal({ setUserModalButtonOn }) {
       });
     }
   };
-
   return (
     <Modal>
       <StyledLink to='/mypage'>
-        <div className='modal-item'>마이페이지</div>
+        <div onClick={() => setUserModalButtonOn(false)} className='modal-item'>
+          마이페이지
+        </div>
       </StyledLink>
       <StyledLink to='/'>
         <div onClick={logoutHandler} className='modal-item'>

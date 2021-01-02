@@ -21,7 +21,6 @@ const SettingSelector = styled.div`
   height: 120px;
   padding-top: 20px;
   padding-right: 20px;
-
   /*border-radius: 10px;*/
   /*background: #e9ecef;*/
 
