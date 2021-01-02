@@ -18,9 +18,11 @@ const Modal = styled.div`
     cursor: pointer;
   }
 `;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
+
   &:focus,
   &:hover,
   &:visited,
@@ -29,10 +31,13 @@ const StyledLink = styled(Link)`
     text-decoration: none;
   }
 `;
+
 function UserModal({ setUserModalButtonOn }) {
   let accessToken = useSelector(state => state.login.token);
   const userEmail = useSelector(state => state.userInfoSetting.email);
+
   const dispatch = useDispatch();
+
   const logoutHandler = async () => {
     // accessToken을 헤더에 담아서 accessTokenHandler 보내고, userInfo를 받아온다
     let res = await axios.get('https://localhost:4000/accessTokenHandler', {
@@ -56,7 +61,9 @@ function UserModal({ setUserModalButtonOn }) {
   return (
     <Modal>
       <StyledLink to='/mypage'>
-        <div onClick={() => setUserModalButtonOn(false)} className='modal-item'>마이페이지</div>
+        <div onClick={() => setUserModalButtonOn(false)} className='modal-item'>
+          마이페이지
+        </div>
       </StyledLink>
       <StyledLink to='/'>
         <div onClick={logoutHandler} className='modal-item'>
@@ -66,4 +73,5 @@ function UserModal({ setUserModalButtonOn }) {
     </Modal>
   );
 }
+
 export default UserModal;

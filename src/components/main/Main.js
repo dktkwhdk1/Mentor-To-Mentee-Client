@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
+import Footer from '../footer/index';
 import styled from 'styled-components';
 import { setMentorListAction } from '../../modules/main';
 import { useDispatch } from 'react-redux';
@@ -25,6 +26,14 @@ const MainDiv = styled.main`
   }
 `;
 
+const MainImage = styled.div`
+  height: 370px;
+  img {
+    height: 370px;
+    width: 100%;
+  }
+`;
+
 function Main() {
   const [mentorList, setMentorList] = useState([]);
   const dispatch = useDispatch();
@@ -46,28 +55,38 @@ function Main() {
   //Todo 모달 영역 밖 클릭시 모달 닫히는 기능 구현 https://velog.io/@seungdeng17/%EB%AA%A8%EB%8B%AC-%EC%98%81%EC%97%AD-%EB%B0%96-%ED%81%B4%EB%A6%AD%EC%8B%9C-%EC%89%BD%EA%B2%8C-%EB%8B%AB%EA%B8%B0
 
   return (
-    <MainDiv>
-      <div className='cards-container'>
-        {mentorList.map(mentorData => {
-          return (
-            <Card
-              key={mentorData.id || mentorData.username}
-              className='card'
-              mentorData={mentorData}
-            />
-          );
-        })}
-        {mentorList.map(mentorData => {
-          return (
-            <Card
-              key={mentorData.id || mentorData.username}
-              className='card'
-              mentorData={mentorData}
-            />
-          );
-        })}
-      </div>
-    </MainDiv>
+    <>
+      {window.location.pathname === '/' ? (
+        <MainImage>
+          <img src='https://html.nkdev.info/skylith/assets/images/header-blog.jpg' />
+        </MainImage>
+      ) : (
+        ''
+      )}
+      <MainDiv>
+        <div className='cards-container'>
+          {mentorList.map(mentorData => {
+            return (
+              <Card
+                key={mentorData.id || mentorData.username}
+                className='card'
+                mentorData={mentorData}
+              />
+            );
+          })}
+          {mentorList.map(mentorData => {
+            return (
+              <Card
+                key={mentorData.id || mentorData.username}
+                className='card'
+                mentorData={mentorData}
+              />
+            );
+          })}
+        </div>
+      </MainDiv>
+      <Footer />
+    </>
   );
 }
 

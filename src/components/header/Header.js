@@ -49,13 +49,13 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const MainImage = styled.div`
-  height: 370px;
-  img {
-    height: 370px;
-    width: 100%;
-  }
-`;
+// const MainImage = styled.div`
+//   height: 370px;
+//   img {
+//     height: 370px;
+//     width: 100%;
+//   }
+// `;
 
 function Header({ loginButtonOn, setLoginButtonOn }) {
   //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
@@ -134,9 +134,9 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
           ''
         )}
       </Nav>
-      <MainImage>
+      {/* <MainImage>
         <img src='https://html.nkdev.info/skylith/assets/images/header-blog.jpg' />
-      </MainImage>
+      </MainImage> */}
     </>
   );
 }

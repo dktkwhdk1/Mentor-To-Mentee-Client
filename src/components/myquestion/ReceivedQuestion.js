@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 const QuestionForm = styled.form`
-  margin-left: 50px;  
+  margin-left: 50px;
   width: 620px;
   min-height: 400px;
 `;
@@ -66,7 +66,7 @@ const QuestionBlock = styled.div`
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 20px;
-  
+
   .createdAt {
     margin-top: 20px;
     margin-right: 20px;
@@ -98,8 +98,6 @@ const AnswerBlock = styled.div`
     margin-top: 5px;
     padding: 12px;
   }
-
-
 `;
 
 const AnswerForm = styled.form`
@@ -137,8 +135,8 @@ function ReceivedQuestion({ receivedQuestionList }) {
           })}
         </>
       ) : (
-          <div>받은 질문이 없습니다.</div>
-        )}
+        <div>받은 질문이 없습니다.</div>
+      )}
     </QuestionForm>
   );
 }
@@ -211,21 +209,28 @@ const Question = ({ receivedQuestion }) => {
       </QuestionBlock>
       <AnswerBlock>
         {answer ? (
-          <div onClick={answerButtonHandler} className='answer-btn answer-state-true'>답변 완료</div>
+          <div
+            onClick={answerButtonHandler}
+            className='answer-btn answer-state-true'
+          >
+            답변 완료
+          </div>
         ) : (
-            <div
-              onClick={answerButtonHandler}
-              className='answer-btn answer-state-false'
-            >
-              답변 하기
-            </div>
-          )}
+          <div
+            onClick={answerButtonHandler}
+            className='answer-btn answer-state-false'
+          >
+            답변 하기
+          </div>
+        )}
         {/* <div className='createdAt'>{createdAt}</div> */}
-        {answerButtonOn ?
+        {answerButtonOn ? (
           <div>
             <div className='answer-content'>{answer}</div>
           </div>
-          : ''}
+        ) : (
+          ''
+        )}
       </AnswerBlock>
       {!answer && answerButtonOn ? (
         <AnswerForm>
@@ -241,8 +246,8 @@ const Question = ({ receivedQuestion }) => {
           />
         </AnswerForm>
       ) : (
-          ''
-        )}
+        ''
+      )}
     </div>
   );
 };

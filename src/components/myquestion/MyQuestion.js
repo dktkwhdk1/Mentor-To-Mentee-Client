@@ -66,10 +66,8 @@ const MyQuestion = () => {
       axios
         .get(`https://localhost:4000/getQuestion?email=${userEmail}`)
         .then(res => {
-          console.log('나의 질문리스트 데이터', res.data.data);
           if (res.data) {
             const data = res.data.data;
-
             setSentQuestionList([...data.sentQuestion]);
             setReceivedQuestionList([...data.receivedQuestion]);
             dispatch(
@@ -83,7 +81,6 @@ const MyQuestion = () => {
     };
     requestQuestion();
   }, []);
-  
 
   return (
     <MyQuestionTemplate>
