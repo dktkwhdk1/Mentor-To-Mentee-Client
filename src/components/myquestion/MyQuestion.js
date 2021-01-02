@@ -67,10 +67,8 @@ const MyQuestion = () => {
       axios
         .get(`https://localhost:4000/getQuestion?email=${userEmail}`)
         .then(res => {
-          console.log('나의 질문리스트 데이터', res.data.data);
           if (res.data) {
             const data = res.data.data;
-
             setSentQuestionList([...data.sentQuestion]);
             setReceivedQuestionList([...data.receivedQuestion]);
             dispatch(
@@ -84,48 +82,6 @@ const MyQuestion = () => {
     };
     requestQuestion();
   }, []);
-  /*
-  요청 한번에 둘다받아오기. 
-  
-  내가 보낸 질문 ::  
-  userEmail을 참조하여
-  qa 테이블에서 user의 menteeid가 일치하는 모든 데이터 전송받아야함
-  data: {
-    sentQuestion: {
-      "id": "아이디"
-      "brief" : "질문 제목",
-      "question" : "질문",
-      "answer" : "답변",
-      "mentorId" : "멘토 id",
-      "menteeId" : "멘티 id",
-      "createdAt" : "질문이 작성된 시간",
-      "updatedAt" : "답변이 작성된 시간",
-    }
-  }
-  --> 클릭하면 해당 멘토의 정보, 프로필 로딩하고 + 질문과 답변 같이 로딩  -> 질문답변 상세페이지임
-
-  내가 받은 질문 ::
-  userEmail을 참조하여
-  qa 테이블에서 user의 mentorid가 일치하는 모든 데이터 전송받아야함
-  data: {
-    receivedQuestion: [
-      {
-        "id" : "아이디"
-        "brief" : "질문 제목",
-        "question" : "질문",
-        "answer" : "답변",
-        "mentor" : "멘토 id",
-        "menti" : "멘티 id",
-        "createdAt" : "질문이 작성된 시간",
-        "updatedAt" : "답변이 작성된 시간",
-      },
-      ...
-    ],
-    답변이 없으면 답변하기 버튼 활성화,
-    답변이 있으면 답변완료 띄우기
-
-    답변하기 버튼 누르면 입력 폼과 답변 전송 버튼 띄우기
-  */
 
   return (
     <MyQuestionTemplate>

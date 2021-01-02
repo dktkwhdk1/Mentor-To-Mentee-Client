@@ -17,7 +17,7 @@ const StyledLink = styled(Link)`
 `;
 const QuestionForm = styled.form`
   width: 620px;
-  //   height: 910px;
+  height: 700px;
 `;
 const Info = styled.div`
   color: #8f8f94;

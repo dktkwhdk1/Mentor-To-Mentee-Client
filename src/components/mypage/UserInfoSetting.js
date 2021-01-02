@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserInfo } from '../../modules/userInfoSetting';
+import Modal from '../ModalMessage';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -121,6 +122,14 @@ function UserInfoSetting() {
   const userInfo = useSelector(state => ({ ...state.userInfoSetting }));
   const dispatch = useDispatch();
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   const [accoutInfo, setAccountInfo] = useState({
     email: '',
     username: '',
@@ -129,20 +138,15 @@ function UserInfoSetting() {
     image: '',
     selectedFile: '',
   });
-  console.log('render accountInfo : ', accoutInfo);
-  console.log('render userInfo(redux) : ', userInfo);
 
   useEffect(() => {
-    console.log('useeffect');
     if (!userInfo.mobile) {
-      console.log('useeffect & get 요청');
       axios
         .get(
           `https://localhost:4000/userInfoSetting/pageload?email=${userInfo.email}`
         )
         .then(res => {
           const data = res.data.data;
-
           dispatch(
             setUserInfo({
               ...userInfo,
@@ -157,17 +161,14 @@ function UserInfoSetting() {
         });
     }
     setAccountInfo({ ...userInfo });
-    return () => {
-      console.log('UserInfoSetting Component Clean');
-    };
+    return;
   }, []);
 
   const inputFormHandler = e => {
     setAccountInfo({ ...accoutInfo, [e.target.name]: e.target.value });
   };
-  const onSubmitHandler = e => {
-    alert('설정 저장이 완료되었습니다.');
-    e.preventDefault();
+  const onSubmitHandler = () => {
+    //alert('설정 저장이 완료되었습니다.');
     axios
       .post('https://localhost:4000/userInfoSetting/setAccount', {
         ...accoutInfo,
@@ -250,7 +251,27 @@ function UserInfoSetting() {
           style={{ display: 'none' }}
         />
       </FileInput>
-      <SubmitButton onClick={onSubmitHandler}>설정 저장하기</SubmitButton>
+      <SubmitButton
+        onClick={e => {
+          e.preventDefault();
+          onSubmitHandler();
+          openModal();
+        }}
+      >
+        설정 저장하기
+      </SubmitButton>
+      {modalVisible ? (
+        <Modal
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal}
+        >
+          설정 저장이 완료되었습니다.
+        </Modal>
+      ) : (
+        ''
+      )}
     </InsertForm>
   );
 }
