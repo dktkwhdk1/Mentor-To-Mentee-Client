@@ -27,8 +27,8 @@ const MainDiv = styled.main`
 `;
 
 const MainImage = styled.div`
-  height: 370px;
-  img {
+height: 370px;
+img {
     height: 370px;
     width: 100%;
   }
