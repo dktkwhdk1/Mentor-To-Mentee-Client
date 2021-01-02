@@ -4,16 +4,16 @@ import styled from 'styled-components';
 import UserModal from './UserModal';
 import Login from './Login';
 import Signup from './Signup';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux';
 
 const Nav = styled.nav`
-  background-color: rgb(89, 175, 204);
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   h1 {
-    margin: 0 20px;
+    margin: 0 30px;
   }
 
   .menu {
@@ -49,19 +49,27 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const MainImage = styled.div`
+  height: 370px;
+  img {
+    height: 370px;
+    width: 100%;
+  }
+`;
+
 function Header({ loginButtonOn, setLoginButtonOn }) {
   //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
   // const [isLogin, setLogin] = useState(false);
   const [userModalButtonOn, setUserModalButtonOn] = useState(false);
   const [signupButtonOn, setSignupButtonOn] = useState(false);
-  const isLogin = useSelector(state => state.isLoginReducer.isLogin)
-  console.log(isLogin)
+  const isLogin = useSelector(state => state.isLoginReducer.isLogin);
+  console.log(isLogin);
   //로그인 버튼 눌렀을때, 로그인 모달창 띄우기
   const renderLoginModal = () => {
     setLoginButtonOn(!loginButtonOn);
 
     //!회원가입 창 떠있는 상태에서 로그인 버튼 눌렀을때 모달이 겹치는 문제때문에 코드 한 줄 추가했어요
-    setSignupButtonOn(false)
+    setSignupButtonOn(false);
   };
 
   // 우측상단 아이콘 클릭하면 마이페이지, 로그아웃 모달띄우기
@@ -70,60 +78,66 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
   };
 
   return (
-    <Nav>
-      <StyledLink to='/'>
-        <h1 className='logo'>Mentor-to-Mentee</h1>
-      </StyledLink>
-      {isLogin ? (
-        <ul className='menu'>
-          <StyledLink to='/myquestion'>
-            <li className='nav-item'>나의 질문</li>
-          </StyledLink>
-          <StyledLink to='/applymentor'>
-            <li className='nav-item'>멘토 지원하기</li>
-          </StyledLink>
+    <>
+      <Nav>
+        <StyledLink to='/'>
+          <h1 className='logo'>MENTOR TO MENTEE</h1>
+        </StyledLink>
 
-          <div onClick={userModalHandler} className='nav-item'>
-            <img
-              src='https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-3.jpg'
-              alt=''
-            />
-          </div>
+        {isLogin ? (
+          <ul className='menu'>
+            <StyledLink to='/myquestion'>
+              <li className='nav-item'>나의 질문</li>
+            </StyledLink>
+            <StyledLink to='/applymentor'>
+              <li className='nav-item'>멘토 지원하기</li>
+            </StyledLink>
 
-          {userModalButtonOn ? (
-            <UserModal
-              setUserModalButtonOn={setUserModalButtonOn}
-            ></UserModal>
-          ) : (
-            ''
-          )}
-        </ul>
-      ) : (
-        <ul className='menu'>
-          <li className='nav-item' onClick={renderLoginModal}>
-            Login
-          </li>
-        </ul>
-      )}
+            <div onClick={userModalHandler} className='nav-item'>
+              <img
+                src='https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-3.jpg'
+                alt=''
+              />
+            </div>
 
-      {signupButtonOn ? (
-        <Signup
-          setLoginButtonOn={setLoginButtonOn}
-          setSignupButtonOn={setSignupButtonOn}
-        ></Signup>
-      ) : (
-        ''
-      )}
-      {loginButtonOn ? (
-        <Login
-          setLoginButtonOn={setLoginButtonOn}
-          signupButtonOn={signupButtonOn}
-          setSignupButtonOn={setSignupButtonOn}
-        />
-      ) : (
-        ''
-      )}
-    </Nav>
+            {userModalButtonOn ? (
+              <UserModal
+                setUserModalButtonOn={setUserModalButtonOn}
+              ></UserModal>
+            ) : (
+              ''
+            )}
+          </ul>
+        ) : (
+          <ul className='menu'>
+            <li className='nav-item' onClick={renderLoginModal}>
+              Login
+            </li>
+          </ul>
+        )}
+
+        {signupButtonOn ? (
+          <Signup
+            setLoginButtonOn={setLoginButtonOn}
+            setSignupButtonOn={setSignupButtonOn}
+          ></Signup>
+        ) : (
+          ''
+        )}
+        {loginButtonOn ? (
+          <Login
+            setLoginButtonOn={setLoginButtonOn}
+            signupButtonOn={signupButtonOn}
+            setSignupButtonOn={setSignupButtonOn}
+          />
+        ) : (
+          ''
+        )}
+      </Nav>
+      <MainImage>
+        <img src='https://html.nkdev.info/skylith/assets/images/header-blog.jpg' />
+      </MainImage>
+    </>
   );
 }
 

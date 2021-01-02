@@ -4,7 +4,7 @@ import styled from 'styled-components';
 //styled component
 const FooterDiv = styled.footer`
   margin-top: 30px;
-  background-color: rgb(89, 175, 204);
+  background-color: rgb(235, 235, 235);
   height: 70px;
   width: 100%;
 `;

@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import { setMentorListAction } from '../../modules/main';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-//styled component
-const MainDiv = styled.main`
-  margin: 30px 0px;
+axios.defaults.withCredentials = true;
 
-  h2 {
-    text-align: center;
-  }
+const MainDiv = styled.main`
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  margin-top: 2rem;
+  max-width: 1024px;
 
   .cards-container {
     display: flex;
@@ -30,15 +31,10 @@ function Main() {
 
   useEffect(() => {
     const requestMentorList = () => {
-      axios
-        .get('https://localhost:4000/main', {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        })
-        .then(res => {
-          setMentorList(res.data.data); // hook으로 mentorList 저장
-          dispatch(setMentorListAction(res.data.data)); // 스토어에 저장
-        });
+      axios.get('https://localhost:4000/main').then(res => {
+        setMentorList(res.data.data); // hook으로 mentorList 저장
+        dispatch(setMentorListAction(res.data.data)); // 스토어에 저장
+      });
     };
 
     requestMentorList();
@@ -51,17 +47,7 @@ function Main() {
 
   return (
     <MainDiv>
-      <h2>멘토 리스트</h2>
       <div className='cards-container'>
-        {mentorList.map(mentorData => {
-          return (
-            <Card
-              key={mentorData.id || mentorData.username}
-              className='card'
-              mentorData={mentorData}
-            />
-          );
-        })}
         {mentorList.map(mentorData => {
           return (
             <Card
