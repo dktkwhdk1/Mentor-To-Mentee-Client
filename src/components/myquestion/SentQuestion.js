@@ -1,20 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-`;
 
 const QuestionForm = styled.form`
   margin-left: 30px;
@@ -208,9 +194,7 @@ const Question = ({ sentQuestion }) => {
         </div>
       </MentorInfoBlock>
       <QuestionBlock>
-        <StyledLink to={`/QuestionAndAnswer/${mentorId}`}>
-          <h2>{brief}</h2>
-        </StyledLink>
+        <h2>{brief}</h2>
         <div>{question}</div>
         <div className='createdAt'>{questionDate}</div>
       </QuestionBlock>

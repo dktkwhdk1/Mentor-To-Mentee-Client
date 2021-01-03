@@ -112,7 +112,7 @@ const AnswerForm = styled.form`
   .answer-text {
     border: 1px solid #dee2e6;
     padding: 20px;
-    width: 100%;
+    width: 578px;
     height: 120px;
     resize: none; /* 크롬 크기조정 없애기 */
   }
