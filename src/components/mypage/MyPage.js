@@ -3,7 +3,7 @@ import UserInfoSetting from './UserInfoSetting';
 import MenteeSetting from './MenteeSetting';
 import PasswordSetting from './PasswordSetting';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const MyPageTemplate = styled.div`
   display: flex;
@@ -26,19 +26,14 @@ const StyledLink = styled(Link)`
 `;
 
 const SettingSelector = styled.div`
-  width: 120px;
+  width: 200px;
   height: 120px;
-  padding-top: 10px;
-  padding-right: 10px;
-
-  /*border-radius: 10px;*/
-  /*background: #e9ecef;*/
+  padding-right: 30px;
 
   div {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 5px;
-    font-weight: bold;
     text-align: center;
     &:hover {
       cursor: pointer;
@@ -46,23 +41,26 @@ const SettingSelector = styled.div`
   }
   .userinfo {
     ${props =>
-    props.openUserSetting &&
-    css`
+      props.openUserSetting &&
+      css`
         background: #e9ecef;
+        font-weight: bold;
       `}
   }
   .mentee {
     ${props =>
-    props.openMenteeSetting &&
-    css`
+      props.openMenteeSetting &&
+      css`
         background: #e9ecef;
+        font-weight: bold;
       `}
   }
   .password {
     ${props =>
-    props.openPasswordSetting &&
-    css`
+      props.openPasswordSetting &&
+      css`
         background: #e9ecef;
+        font-weight: bold;
       `}
   }
 `;
@@ -89,7 +87,7 @@ function MyPage({ isMentor }) {
             }}
           >
             계정 설정
-        </div>
+          </div>
         </StyledLink>
         {isMentor ? (
           <StyledLink to='/mypage/mentee-mentor'>
@@ -101,23 +99,23 @@ function MyPage({ isMentor }) {
                 setMenteeSetting(true);
               }}
             >
-              멘티/멘토 설정
-          </div>
+              멘티 • 멘토 정보
+            </div>
           </StyledLink>
         ) : (
-            <StyledLink to='/mypage/mentee'>
-              <div
-                className='mentee'
-                onClick={() => {
-                  setUserSetting(false);
-                  setPasswordSetting(false);
-                  setMenteeSetting(true);
-                }}
-              >
-                멘티 설정
+          <StyledLink to='/mypage/mentee'>
+            <div
+              className='mentee'
+              onClick={() => {
+                setUserSetting(false);
+                setPasswordSetting(false);
+                setMenteeSetting(true);
+              }}
+            >
+              멘티 정보
             </div>
-            </StyledLink>
-          )}
+          </StyledLink>
+        )}
         <StyledLink to='/mypage/password'>
           <div
             className='password'
@@ -128,8 +126,7 @@ function MyPage({ isMentor }) {
             }}
           >
             비밀번호 설정
-        </div>
-
+          </div>
         </StyledLink>
       </SettingSelector>
       {openUserSetting && <UserInfoSetting />}

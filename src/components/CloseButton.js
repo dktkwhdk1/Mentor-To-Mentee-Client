@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
+import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
 
 const Close = styled.div`
@@ -9,10 +9,10 @@ const Close = styled.div`
   cursor: pointer;
 `;
 
-function CloseButton() {
+function CloseButton({ close }) {
   return (
-    <Close>
-      <AiOutlineClose></AiOutlineClose>
+    <Close onClick={close}>
+      <MdClose></MdClose>
     </Close>
   );
 }

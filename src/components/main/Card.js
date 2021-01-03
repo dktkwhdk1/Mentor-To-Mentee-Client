@@ -5,11 +5,23 @@ import styled from 'styled-components';
 //styled Component
 export const CardItem = styled.div`
   margin: 15px;
+<<<<<<< HEAD
+  width: 310px;
+  height: 357px;
+=======
   width: 250px;
   height: 300px;
+>>>>>>> c472dd014b55f1780d6593999ad27847ebe84894
   background-color: white;
   border-radius: 4px;
   font-size: 15px;
+
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
+  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 12px 20px 0px;
+  }
 
   .mentor-profile {
     display: flex;
@@ -35,12 +47,22 @@ export const CardItem = styled.div`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
+
 function Card({ mentorData }) {
   return (
-    <Link
-      to={`/mentorprofile/${mentorData.username}`}
-      style={{ color: 'inherit', textDecoration: 'inherit' }}
-    >
+    <StyledLink to={`/mentorprofile/${mentorData.username}`}>
       <CardItem>
         <div className='mentor-profile'>
           <img
@@ -66,7 +88,7 @@ function Card({ mentorData }) {
           </div>
         </div>
       </CardItem>
-    </Link>
+    </StyledLink>
   );
 }
 

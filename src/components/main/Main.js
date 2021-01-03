@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
-import Footer from '../footer/index';
 import styled from 'styled-components';
 import { setMentorListAction } from '../../modules/main';
 import { useDispatch } from 'react-redux';
@@ -82,7 +81,6 @@ function Main() {
           })}
         </div>
       </MainDiv>
-      <Footer />
     </>
   );
 }

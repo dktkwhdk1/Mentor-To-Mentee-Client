@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMentorInfo } from '../../modules/roleInfoSetting';
+import Modal from '../ModalMessage';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
-  background: #f8f9fa;
+  border: 1px solid #dee2e6;
   width: 484px;
   height: 910px;
 
@@ -31,7 +32,6 @@ const Toggle = styled.button`
   height: 30px;
 
   cursor: pointer;
-  color: white;
   border: 1px solid #dee2e6;
   &:hover {
     cursor: pointer;
@@ -44,23 +44,26 @@ const Toggle = styled.button`
   ${props =>
     props.isMentor &&
     css`
-      background: #38d9a9;
+      background: rgb(37, 37, 37);
+      color: white;
     `}
 `;
 
 const SubmitButton = styled.button`
   border-radius: 4px;
-  border: 1px solid #dee2e6;
+  border: 1px solid rgb(37, 37, 37);
   width: 91.5%;
   font-size: 12px;
   padding: 10px;
   margin-left: 20px;
   margin-bottom: 15px;
-  background: #38d9a9;
+  background: rgb(37, 37, 37);
   color: white;
 
   &:hover {
     cursor: pointer;
+    background-color: #b9a186;
+    border: #b9a186 1px solid;
   }
 `;
 
@@ -87,14 +90,19 @@ const Input = styled.input`
 `;
 
 function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
-  const userInfo = useSelector(state => {
-    console.log(state);
-    return {
-      ...state.roleInfoSetting.mentor,
-      mentorEmail: state.userInfoSetting.email,
-    };
-  });
+  const userInfo = useSelector(state => ({
+    ...state.roleInfoSetting.mentor,
+    mentorEmail: state.userInfoSetting.email,
+  }));
   const dispatch = useDispatch();
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   const [mentorInfo, setMentorInfoState] = useState({
     company: '',
@@ -104,11 +112,9 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
     description: '',
     career: '',
   });
+
   useEffect(() => {
-    console.log('useeffect');
     if (!userInfo.company) {
-      console.log('useeffect');
-      console.log('컴포넌트의 상태에 회사정보 없음');
       axios
         .get(
           `https://localhost:4000/mentorInfoSetting/pageload?email=${userInfo.mentorEmail}`
@@ -138,24 +144,19 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
         });
     }
     setMentorInfoState({ ...mentorInfo, ...userInfo });
-    return () => {
-      console.log('MentorInfoSetting Component Clean');
-    };
+    return;
   }, []);
 
   const inputFormHandler = e => {
     setMentorInfoState({ ...mentorInfo, [e.target.name]: e.target.value });
   };
-  const onSubmitHandler = e => {
-    e.preventDefault();
+  const onSubmitHandler = () => {
     axios
       .post('https://localhost:4000/mentorInfoSetting/setMentor', {
         ...mentorInfo,
         mentorEmail: userInfo.mentorEmail,
       })
-      .then(res => {
-        alert('설정 저장이 완료되었습니다.');
-        console.log(res);
+      .then(() => {
         dispatch(setMentorInfo({ ...mentorInfo }));
       });
   };
@@ -186,7 +187,6 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
       <h1>멘토 정보</h1>
       <div>회사명*</div>
       <Input
-        autoFocus
         placeholder='회사명을 작성해주세요.'
         name='company'
         value={mentorInfo.company}
@@ -227,7 +227,27 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
         value={mentorInfo.career}
         onChange={inputFormHandler}
       ></BigInput>
-      <SubmitButton onClick={onSubmitHandler}>수정하기</SubmitButton>
+      <SubmitButton
+        onClick={e => {
+          e.preventDefault();
+          onSubmitHandler();
+          openModal();
+        }}
+      >
+        수정하기
+      </SubmitButton>
+      {modalVisible ? (
+        <Modal
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal}
+        >
+          멘토 정보 설정이 완료되었습니다.
+        </Modal>
+      ) : (
+        ''
+      )}
     </InsertForm>
   );
 }

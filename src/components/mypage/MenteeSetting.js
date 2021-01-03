@@ -3,11 +3,12 @@ import styled, { css } from 'styled-components';
 import MentorSetting from './MentorSetting';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMenteeInfo } from '../../modules/roleInfoSetting';
+import Modal from '../ModalMessage';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
-  background: #f8f9fa;
+  border: 1px solid #dee2e6;
   width: 484px;
   height: 830px;
 
@@ -33,15 +34,19 @@ const Toggle = styled.button`
   height: 30px;
 
   cursor: pointer;
-  color: white;
+  color: black;
   border: 1px solid #dee2e6;
   &:hover {
     cursor: pointer;
+    background: rgb(37, 37, 37);
+    color: white;
   }
+
   ${props =>
     props.isMentee &&
     css`
-      background: #38d9a9;
+      background: rgb(37, 37, 37);
+      color: white;
     `}
   ${props =>
     props.isMentor &&
@@ -95,17 +100,19 @@ const Graduation = styled.div`
 
 const SubmitButton = styled.button`
   border-radius: 4px;
-  border: 1px solid #dee2e6;
+  border: 1px solid rgb(37, 37, 37);
   width: 91.5%;
   font-size: 12px;
   padding: 10px;
   margin-left: 20px;
   margin-bottom: 15px;
-  background: #38d9a9;
+  background: rgb(37, 37, 37);
   color: white;
 
   &:hover {
     cursor: pointer;
+    background-color: #b9a186;
+    border: #b9a186 1px solid;
   }
 `;
 
@@ -116,6 +123,14 @@ function MenteeSetting() {
   }));
   const dispatch = useDispatch();
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   const [isMentor, setMentor] = useState(false);
   const [isMentee, setMentee] = useState(true);
   const [menteeInfo, setMenteeInfoState] = useState({
@@ -125,12 +140,9 @@ function MenteeSetting() {
     grade: '1',
     menteeDescription: '',
   });
-  console.log('render(redux) : ', userInfo);
-  console.log('render(local) : ', menteeInfo);
+
   useEffect(() => {
-    console.log('useEffect');
     if (!userInfo.uni) {
-      console.log('useEffect & get 요청');
       axios
         .get(
           `https://localhost:4000/menteeInfoSetting/pageload?email=${userInfo.menteeEmail}`
@@ -157,25 +169,19 @@ function MenteeSetting() {
           );
         });
     }
-    console.log('useEffect안에서의 userInfo(리덕스상태): ', userInfo);
     setMenteeInfoState({ ...menteeInfo, ...userInfo });
-    return () => {
-      console.log('MenteeInfoSetting Component Clean');
-    };
+    return;
   }, []);
   const inputFormHandler = e => {
     setMenteeInfoState({ ...menteeInfo, [e.target.name]: e.target.value });
   };
-  const onSubmitHandler = e => {
-    e.preventDefault();
+  const onSubmitHandler = () => {
     axios
       .post('https://localhost:4000/menteeInfoSetting/setMentee', {
         ...menteeInfo,
         menteeEmail: userInfo.menteeEmail,
       })
-      .then(res => {
-        alert('설정 저장이 완료되었습니다.');
-        console.log(res);
+      .then(() => {
         dispatch(setMenteeInfo({ ...menteeInfo }));
       });
   };
@@ -215,14 +221,14 @@ function MenteeSetting() {
       <div>학교</div>
       <Input
         autoFocus
-        placeholder='학교를 작성해주세요.'
+        placeholder='Your School'
         name='uni'
         value={menteeInfo.uni}
         onChange={inputFormHandler}
       />
       <div>전공*</div>
       <Input
-        placeholder='전공을 작성해주세요.'
+        placeholder='Your Major'
         name='major'
         value={menteeInfo.major}
         onChange={inputFormHandler}
@@ -258,7 +264,27 @@ function MenteeSetting() {
         value={menteeInfo.menteeDescription}
         onChange={inputFormHandler}
       />
-      <SubmitButton onClick={onSubmitHandler}>수정하기</SubmitButton>
+      <SubmitButton
+        onClick={e => {
+          e.preventDefault();
+          onSubmitHandler();
+          openModal();
+        }}
+      >
+        수정하기
+      </SubmitButton>
+      {modalVisible ? (
+        <Modal
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal}
+        >
+          멘티 정보 설정이 완료되었습니다.
+        </Modal>
+      ) : (
+        ''
+      )}
     </InsertForm>
   );
 }

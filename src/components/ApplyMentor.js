@@ -44,6 +44,17 @@ const Form = styled.form`
   }
 
   .input-submit {
+<<<<<<< HEAD
+    border: rgb(37, 37, 37) 1px solid;
+    background-color: rgb(37, 37, 37);
+    cursor: pointer;
+    height: 35px;
+    color: white;
+    &:hover {
+      background-color: #b9a186;
+      border: #b9a186 1px solid;
+    }
+=======
     background-color: rgb(37, 37, 37);
     border: black 1px solid;
     color: white;
@@ -55,6 +66,7 @@ const Form = styled.form`
       color: white;
       border: #b9a186 1px solid;
   }
+>>>>>>> c472dd014b55f1780d6593999ad27847ebe84894
   }
 `;
 
