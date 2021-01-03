@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const QuestionForm = styled.form`
   margin-left: 50px;
   width: 620px;
-  min-height: 400px;
+  min-height: 600px;
 `;
 
 const Infoblock = styled.div`
@@ -165,7 +165,6 @@ const Question = ({ receivedQuestion }) => {
   const answerInputHandler = event => {
     setAnswerText(event.target.value);
   };
-  console.log(user);
   const submitData = {
     id,
     mentorEmail: user.email,
@@ -175,11 +174,11 @@ const Question = ({ receivedQuestion }) => {
   const requestSubmitAnswer = event => {
     event.preventDefault();
     axios
-      .post('https://localhost:4000/answer??', submitData, {
+      .post('https://localhost:4000/answerQuestion', submitData, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       })
-      .then(res => console.log(res));
+      .then();
   };
 
   return (
@@ -223,7 +222,6 @@ const Question = ({ receivedQuestion }) => {
             답변 하기
           </div>
         )}
-        {/* <div className='createdAt'>{createdAt}</div> */}
         {answerButtonOn ? (
           <div>
             <div className='answer-content'>{answer}</div>

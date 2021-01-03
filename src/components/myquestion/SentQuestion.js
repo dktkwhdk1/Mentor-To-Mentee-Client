@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
+import { useHistory } from 'react-router-dom'
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -18,7 +17,7 @@ const StyledLink = styled(Link)`
 const QuestionForm = styled.form`
   margin-left: 50px;
   width: 620px;
-  min-height: 400px;
+  min-height: 600px;
 `;
 const Info = styled.div`
   color: #8f8f94;
@@ -50,6 +49,11 @@ const MentorInfoBlock = styled.div`
   .mentor-name {
     font-size: 22px;
     padding-top: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
     .mentor-company {
       font-size: 18px;
       padding-top: 8px;
@@ -118,22 +122,12 @@ const AnswerBlock = styled.div`
 `;
 
 function SentQuestion({ sentQuestionList }) {
-  const VVSCount = 2;
-  console.log(sentQuestionList);
   return (
     <QuestionForm>
       <h1>질문 및 답변</h1>
       {sentQuestionList.length ? (
         <>
-          <Info>
-            VVS는 질문권을 의미합니다. 최초 3개가 충전되며, 멘토에게 답변을 받고
-            고맙습니다를 작성하시면 1개씩 자동 충전됩니다.
-          </Info>
           <Infoblock>
-            <SummaryInfo>
-              VVS
-              <Number>{VVSCount}개</Number>
-            </SummaryInfo>
             <SummaryInfo>
               질문
               <Number>{sentQuestionList.length}개</Number>
@@ -152,6 +146,9 @@ function SentQuestion({ sentQuestionList }) {
 
 const Question = ({ sentQuestion }) => {
   const [answerState, setAnswerState] = useState(false);
+  const history = useHistory();
+
+  
   const {
     brief,
     question,
@@ -187,7 +184,7 @@ const Question = ({ sentQuestion }) => {
           }
           alt='image error'
         />
-        <div className='mentor-name'>
+        <div onClick={() => history.push(`/mentorprofile/${mentorId}`)} className='mentor-name'>
           {mentorName}
           <span className='mentor'>멘토</span>
           <br />

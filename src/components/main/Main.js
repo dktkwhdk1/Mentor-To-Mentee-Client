@@ -73,7 +73,7 @@ function Main() {
           {mentorList.map(mentorData => {
             return (
               <Card
-                key={mentorData.id || mentorData.username}
+                key={mentorData.email}
                 className='card'
                 mentorData={mentorData}
               />

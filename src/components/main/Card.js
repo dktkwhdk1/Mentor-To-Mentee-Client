@@ -5,13 +5,8 @@ import styled from 'styled-components';
 //styled Component
 export const CardItem = styled.div`
   margin: 15px;
-<<<<<<< HEAD
   width: 310px;
   height: 357px;
-=======
-  width: 250px;
-  height: 300px;
->>>>>>> c472dd014b55f1780d6593999ad27847ebe84894
   background-color: white;
   border-radius: 4px;
   font-size: 15px;
@@ -43,7 +38,11 @@ export const CardItem = styled.div`
   .mentor-name {
     margin-right: 5px;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 20px;
+  }
+
+  .job {
+    margin-top: 10px;
   }
 `;
 
@@ -62,7 +61,7 @@ const StyledLink = styled(Link)`
 
 function Card({ mentorData }) {
   return (
-    <StyledLink to={`/mentorprofile/${mentorData.username}`}>
+    <StyledLink to={`/mentorprofile/${mentorData.mentorId}`}>
       <CardItem>
         <div className='mentor-profile'>
           <img

@@ -78,7 +78,7 @@ function SideBar({ setSideBarOn }) {
         let userInfo = res.data.data;
         //userinfo가 없으면 리프레시 토큰 요청
         if (!userInfo) {
-            let res = axios.get('https://localhost:4000/refreshTokenHandler');
+            let res = await axios.get('https://localhost:4000/refreshTokenHandler');
             userInfo = res.data.data.userInfo;
         }
         // 정상적으로 인증되었을경우 로그아웃 요청

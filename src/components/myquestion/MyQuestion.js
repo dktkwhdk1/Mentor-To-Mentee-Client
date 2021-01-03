@@ -59,7 +59,6 @@ const MyQuestion = () => {
   const [sentQuestionList, setSentQuestionList] = useState([]);
   const [receivedQuestionList, setReceivedQuestionList] = useState([]);
   const dispatch = useDispatch();
-
   // 렌더할때 나의 질문 가져오기
   useEffect(() => {
     const requestQuestion = () => {
@@ -67,6 +66,7 @@ const MyQuestion = () => {
         .get(`https://localhost:4000/getQuestion?email=${userEmail}`)
         .then(res => {
           if (res.data) {
+            console.log(res.data)
             const data = res.data.data;
             setSentQuestionList([...data.sentQuestion]);
             setReceivedQuestionList([...data.receivedQuestion]);
