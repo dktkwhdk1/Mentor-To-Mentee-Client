@@ -27,9 +27,9 @@ align-items: center;
     top: 10%;
     margin: 5px;
     display: block;
-}
+  }
 
-.modal-submit {
+  .modal-submit {
     background-color: rgb(37, 37, 37);
     border: black 1px solid;
     color: white;
@@ -39,30 +39,30 @@ align-items: center;
     cursor: pointer;
 
     &:hover {
-        background-color: #b9a186;
-        border: #b9a186 1px solid;
+      background-color: #b9a186;
+      border: #b9a186 1px solid;
     }
-}
+  }
 
-.text-link {
+  .text-link {
     color: gray;
     text-decoration: underline;
     cursor: pointer;
-}
-`
+  }
+`;
 const Button = styled.button`
-background-color: white;
-width: 300px;
-height: 40px;
-border-radius: 7px;
-cursor: pointer;
+  background-color: white;
+  width: 300px;
+  height: 40px;
+  border-radius: 7px;
+  cursor: pointer;
 
-&:hover {
+  &:hover {
     background-color: #b9a186;
     color: white;
     border: #b9a186 1px solid;
   }
-`
+`;
 const Input = styled.input`
 margin: 10px;
 width: 285px;
@@ -185,21 +185,6 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
             ) : (
                     ''
                 )}
-            {modalVisible ? (
-                <Modal
-                    isPassword={true}
-                    visible={modalVisible}
-                    closable={true}
-                    maskClosable={true}
-                    onClose={() => {
-                        closeModal();
-                        exitSignup();
-                    }}
-                >회원가입이 완료되었습니다.
-                </Modal>
-            ) : (
-                    ''
-                )}
             {inValid ? (
                 <Modal
                     isPassword={true}
@@ -221,4 +206,4 @@ function Signup({ setLoginButtonOn, setSignupButtonOn }) {
     )
 }
 
-export default Signup
+export default Signup;

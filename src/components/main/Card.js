@@ -71,7 +71,7 @@ function Card({ mentorData }) {
               'https://d2ljmlcsal6xzo.cloudfront.net/assets/fallback/temporary_profile-65c08fd0b2bb95434e40fa62b682df18417765c3b0ac165dcb5b3e9035f01b98.png'
             }
           />
-          <div className="profile-main">
+          <div className='profile-main'>
             <div className='name'>
               <span className='mentor-name'>{mentorData.username}</span>
               <span className='mentor-text'>멘토</span>

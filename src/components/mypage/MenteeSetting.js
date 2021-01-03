@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 const InsertForm = styled.form`
   border: 1px solid #dee2e6;
   width: 484px;
-  height: 830px;
+  height: 770px;
 
   div {
     padding-top: 5px;
@@ -185,7 +185,6 @@ function MenteeSetting() {
         dispatch(setMenteeInfo({ ...menteeInfo }));
       });
   };
-  // line 146, autoFocus - 페이지 들어가자마자 해당 input에 커서 깜빡임
   return isMentor ? (
     <MentorSetting
       isMentee={isMentee}
@@ -220,15 +219,14 @@ function MenteeSetting() {
       <h1>멘티 정보</h1>
       <div>학교</div>
       <Input
-        autoFocus
-        placeholder='Your School'
+        placeholder='학교를 작성해주세요.'
         name='uni'
         value={menteeInfo.uni}
         onChange={inputFormHandler}
       />
       <div>전공*</div>
       <Input
-        placeholder='Your Major'
+        placeholder='전공을 작성해주세요.'
         name='major'
         value={menteeInfo.major}
         onChange={inputFormHandler}

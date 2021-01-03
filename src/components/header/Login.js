@@ -7,7 +7,7 @@ import axios from 'axios';
 import Modal from '../ModalMessage';
 
 axios.defaults.withCredentials = true;
-const LgnModal = styled.div`
+const LoginModal = styled.div`
   width: 400px;
   height: auto;
   border: 1px solid;
@@ -128,7 +128,7 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
   };
 
   return (
-    <LgnModal>
+    <LoginModal>
       <h2>로그인</h2>
       <div className='buttons'>
         <Button className='modal-item'>
@@ -172,7 +172,7 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
       </h5>
       {modalVisible ? (
         <Modal
-          isPassword={true}
+          isMiddle={true}
           visible={modalVisible}
           closable={true}
           maskClosable={true}
@@ -183,7 +183,20 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
       ) : (
           ''
         )}
-    </LgnModal>
+      {/* {modalVisible ? (
+        <Modal
+          isMiddle={true}
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal}
+        >
+          모든 정보를 입력해주세요
+        </Modal>
+      ) : (
+          ''
+        )} */}
+    </LoginModal>
   );
 }
 

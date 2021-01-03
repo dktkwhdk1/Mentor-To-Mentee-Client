@@ -119,7 +119,7 @@ function PasswordSetting() {
       </SubmitButton>
       {modalVisible ? (
         <Modal
-          isPassword={true}
+          isMiddle={true}
           visible={modalVisible}
           closable={true}
           maskClosable={true}

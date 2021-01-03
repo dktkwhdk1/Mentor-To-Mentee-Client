@@ -33,7 +33,7 @@ const QuestionForm = styled.form`
       background-color: #b9a186;
       color: white;
       border: #b9a186 1px solid;
-  }
+    }
   }
 `;
 

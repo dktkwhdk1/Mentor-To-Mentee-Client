@@ -9,7 +9,7 @@ axios.defaults.withCredentials = true;
 const InsertForm = styled.form`
   border: 1px solid #dee2e6;
   width: 484px;
-  height: 910px;
+  height: 895px;
 
   div {
     padding-top: 5px;

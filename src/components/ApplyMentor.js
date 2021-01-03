@@ -79,7 +79,6 @@ function ApplyMentor() {
   const requestApplyMentor = event => {
     event.preventDefault();
     if (isMentor) {
-      console.log('넌 이미 멘토');
       openModal(true);
       setMentorInfo({
         company: '',
