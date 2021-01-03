@@ -2,8 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-//styled Component
-export const CardItem = styled.div`
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
+
+const CardItem = styled.div`
   margin: 15px;
   width: 310px;
   height: 357px;
@@ -43,19 +55,9 @@ export const CardItem = styled.div`
 
   .job {
     margin-top: 10px;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
+    .content {
+      margin-bottom: 5px;
+    }
   }
 `;
 
@@ -77,9 +79,11 @@ function Card({ mentorData }) {
               <span className='mentor-text'>멘토</span>
             </div>
             <div className='job'>
-              <div className='mentor-company'>{mentorData.company}</div>
-              <div>{mentorData.department}</div>
-              <div>{mentorData.job}</div>
+              <div className='mentor-company content'>{mentorData.company}</div>
+              <div className='mentor-department content'>
+                {mentorData.department}
+              </div>
+              <div className='mentor-job content'>{mentorData.job}</div>
             </div>
             <div className='mentor-email'>
               {mentorData.email || 'dev@code.com'}
