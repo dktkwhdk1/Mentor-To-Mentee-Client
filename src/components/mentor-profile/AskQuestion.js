@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import Modal from '../ModalMessage';
+import { useHistory } from 'react-router-dom'
 
 axios.defaults.withCredentials = true;
 
@@ -38,8 +40,17 @@ const QuestionForm = styled.form`
 function AskQuestion({ mentor }) {
   const [brief, setBrief] = useState('');
   const [question, setQuestion] = useState('');
-  const [loginMessage, setLoginMessage] = useState(false);
-  const isLogin = useSelector(state => state.isLoginReducer.isLogin);
+  const [loginMessage, setLoginMessage] = useState(false)
+  const isLogin = useSelector(state => state.isLoginReducer.isLogin)
+  const [modalVisible, setModalVisible] = useState(false);
+  const [isValid, setIsValid] = useState(false)
+  const history = useHistory();
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   const handleBriefInput = event => {
     setBrief(event.target.value);
@@ -55,18 +66,29 @@ function AskQuestion({ mentor }) {
     mentorEmail: mentor.email,
     brief,
     question,
-  };
+  }
 
   const requestQuestion = event => {
     event.preventDefault();
-    axios.post('https://localhost:4000/askQuestion', questionData);
-    //TODO 질문하고 나서 질문 상세 페이지로 넘어가기
+    if (!brief || !question) {
+      setIsValid(true)
+      setModalVisible(true)
+    }
+    else {
+      setIsValid(false)
+      axios
+        .post('https://localhost:4000/askQuestion', questionData)
+        .then(res => {
+          openModal()
+        })
+    }
   };
 
   const loginMessageHandler = event => {
     event.preventDefault();
-    setLoginMessage(true);
-  };
+    setLoginMessage(true)
+    setModalVisible(true)
+  }
   return (
     <QuestionForm>
       <h2>멘토에게 질문하기</h2>
@@ -99,7 +121,45 @@ function AskQuestion({ mentor }) {
         type='submit'
         value='질문 전달하기'
       />
-      {loginMessage ? <div>로그인을 해주세요</div> : ''}
+      {modalVisible ? (
+        <Modal
+          isPassword={true}
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={() => {
+            closeModal();
+            history.push('/myquestion')
+          }}
+        > 멘토에게 질문을 전달하였습니다.
+        </Modal>
+      ) : (
+          ''
+        )}
+      {loginMessage ? (<Modal
+        isPassword={true}
+        visible={modalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={() => {
+          closeModal();
+        }}
+      > 로그인이 필요합니다.
+      </Modal>
+      )
+        : ''}
+      {isValid ? (<Modal
+        isPassword={true}
+        visible={modalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={() => {
+          closeModal();
+        }}
+      > 모든 정보를 입력해주세요.
+      </Modal>
+      )
+        : ''}
     </QuestionForm>
   );
 }

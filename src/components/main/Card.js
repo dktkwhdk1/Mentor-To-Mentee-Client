@@ -38,7 +38,11 @@ export const CardItem = styled.div`
   .mentor-name {
     margin-right: 5px;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 20px;
+  }
+
+  .job {
+    margin-top: 10px;
   }
 `;
 
@@ -57,7 +61,7 @@ const StyledLink = styled(Link)`
 
 function Card({ mentorData }) {
   return (
-    <StyledLink to={`/mentorprofile/${mentorData.username}`}>
+    <StyledLink to={`/mentorprofile/${mentorData.mentorId}`}>
       <CardItem>
         <div className='mentor-profile'>
           <img

@@ -85,14 +85,13 @@ const Introduction = styled.div`
 function MentorProfile({ match }) {
   const [isAskButtonOn, setAskButtonOn] = useState(false);
 
-  //TODO mentorList에서 params로 가져온 username과 일치하는 데이터 뽑아내서 변수로저장.
   const mentorList = useSelector(state => {
     return state.mentorListReducer.mentorData;
   });
-
+  
   const getMentor = () => {
     for (let mentor of mentorList) {
-      if (mentor.username === match.params.username) {
+      if (mentor.mentorId === Number(match.params.mentorId)) {
         return mentor;
       }
     }
@@ -137,16 +136,14 @@ function MentorProfile({ match }) {
             <h2>멘토 소개</h2>
             <div>
               {mentor.description ||
-                '백화점과 디스플레이 회사를 거쳐, 지금은 자동차 회사에 다니고 있습니다. 성격이 전혀 다른 3가지 직무와 회사를 경험한 사람으로서, 제 경험과 노하우가 첫 취업을 준비하시는 분들뿐만 아니라 새로운 도전을 꿈꾸시는 중고신입분들께도 도움이 되었으면 좋겠습니다.'}
+                '아직 소개 내용이 없습니다'}
             </div>
           </div>
           <div className='career'>
             <h2>주요 경력</h2>
             <div>
               {mentor.career ||
-                `현) 현대자동차 글로벌상품지원1팀 매니저<br />
-                        전) LG디스플레이 커머셜마케팅팀 선임<br />
-                        전) 롯데백화점 수원점 파트리더(영업관리자)`}
+                `아직 소개 내용이 없습니다 `}
             </div>
           </div>
         </Introduction>

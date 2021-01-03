@@ -9,7 +9,7 @@ axios.defaults.withCredentials = true;
 const QuestionForm = styled.form`
   margin-left: 30px;
   width: 620px;
-  min-height: 400px;
+  min-height: 600px;
 `;
 
 const Infoblock = styled.div`

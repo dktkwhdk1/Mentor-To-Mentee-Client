@@ -5,11 +5,9 @@ import Modal from './ModalMessage';
 import { setUserInfo } from '../modules/userInfoSetting';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-
 const ApplyMentorDiv = styled.div`
   text-align: center;
   // height: 750px;
-
   .mentor-img img {
     width: 500px;
   }
@@ -18,18 +16,15 @@ const Title = styled.div`
   margin: 60px 0px;
   font-size: 24px;
 `;
-
 const Body = styled.div`
   margin: 30px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-
   div {
     margin: 0px 10px;
   }
 `;
-
 const Form = styled.form`
   width: 400px;
   height: 400px;
@@ -37,14 +32,12 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   .input-item {
     height: 30px;
     padding: 0;
     padding-left: 10px;
     margin: 20px;
   }
-
   .input-submit {
     border: rgb(37, 37, 37) 1px solid;
     background-color: rgb(37, 37, 37);
@@ -57,7 +50,6 @@ const Form = styled.form`
     }
   }
 `;
-
 function ApplyMentor() {
   const [mentorInfo, setMentorInfo] = useState({
     company: '',
@@ -66,7 +58,6 @@ function ApplyMentor() {
     job: '1',
   });
   const dispatch = useDispatch();
-
   const [modalVisible, setModalVisible] = useState({
     visible: false,
     already: false,
@@ -77,14 +68,12 @@ function ApplyMentor() {
   const closeModal = () => {
     setModalVisible({ visible: false, already: false });
   };
-
   //TODO Store에서 user 이메일을 가져온다
   const mentorEmail = useSelector(state => state.userInfoSetting.email);
   const isMentor = useSelector(state => state.userInfoSetting.isMentor);
   const inputFormHandler = e => {
     setMentorInfo({ ...mentorInfo, [e.target.name]: e.target.value });
   };
-
   // 멘토 지원하기 버튼 클릭 시 post 요청
   const mentorData = { ...mentorInfo, mentorEmail };
   const requestApplyMentor = event => {
@@ -98,6 +87,7 @@ function ApplyMentor() {
         job: '1',
       });
     } else {
+      console.log('넌 멘토가 아님');
       axios.post('https://localhost:4000/applyMentor', mentorData).then(() => {
         openModal(false);
         setMentorInfo({
@@ -110,14 +100,12 @@ function ApplyMentor() {
       });
     }
   };
-
   return (
     <ApplyMentorDiv>
       <Title>
         <h2>멘토 지원하기</h2>
         <h4>가치 있는 커리어 경험을 공유해 보세요</h4>
       </Title>
-
       <Body>
         <div className='mentor-img'>
           <img
@@ -199,5 +187,4 @@ function ApplyMentor() {
     </ApplyMentorDiv>
   );
 }
-
 export default ApplyMentor;

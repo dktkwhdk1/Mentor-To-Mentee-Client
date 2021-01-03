@@ -29,7 +29,7 @@ function App() {
         <main className='main'>
           <Switch>
             <Route
-              path={`/mentorprofile/:username`}
+              path={`/mentorprofile/:mentorId`}
               component={MentorProfile}
             />
             <Route path='/' exact={true}>

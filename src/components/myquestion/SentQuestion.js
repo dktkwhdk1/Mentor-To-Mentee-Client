@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom'
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -18,7 +18,7 @@ const StyledLink = styled(Link)`
 const QuestionForm = styled.form`
   margin-left: 30px;
   width: 620px;
-  min-height: 400px;
+  min-height: 600px;
 `;
 
 const Infoblock = styled.div`
@@ -46,6 +46,11 @@ const MentorInfoBlock = styled.div`
   .mentor-name {
     font-size: 22px;
     padding-top: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
     .mentor-company {
       font-size: 18px;
       padding-top: 8px;
@@ -145,6 +150,9 @@ function SentQuestion({ sentQuestionList }) {
 const Question = ({ sentQuestion }) => {
   const [answerButtonOn, setAnswerButtonOn] = useState(false);
   const [answerState, setAnswerState] = useState(false);
+  const history = useHistory();
+
+  
   const {
     brief,
     question,
@@ -189,7 +197,7 @@ const Question = ({ sentQuestion }) => {
           }
           alt='image error'
         />
-        <div className='mentor-name'>
+        <div onClick={() => history.push(`/mentorprofile/${mentorId}`)} className='mentor-name'>
           {mentorName}
           <span className='mentor'>멘토</span>
           <br />

@@ -164,63 +164,14 @@ function Main() {
       ) : (
         ''
       )}
-      {/* {window.location.pathname === '/' ? (
-        <MainVideo>
-          <iframe
-            className='VideoWorker-0'
-            src='https://player.vimeo.com/video/222473595?id=222473595&amp;autopause=0&amp;transparent=0&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;badge=0&amp;byline=0&amp;portrait=0&amp;title=0&amp;background=1'
-            frameborder='0'
-            mozallowfullscreen=''
-            allowfullscreen=''
-            data-ready='true'
-          ></iframe>
-        </MainVideo>
-      ) : (
-        ''
-      )} */}
       <MainDiv>
-        {/* {window.location.pathname === '/' ? (
-          <MainImage>
-            <img src='https://html.nkdev.info/skylith/assets/images/header-blog.jpg' />
-            <div className='background' />
-            <div className='vvs'>Very Very Sexy Brain Guys</div>
-          </MainImage>
-        ) : (
-          //   <div
-          //     className='bg-video bg-video-parallax'
-          //     data-jarallax-video='https://vimeo.com/222473595'
-          //   >
-          //     <div className='bg-video-overlay'></div>
-          //     <div id='jarallax-container-0'>
-          //       <div className='bg-container'></div>
-          //       <iframe
-          //         className='VideoWorker-0'
-          //         src='https://player.vimeo.com/video/222473595?id=222473595&amp;autopause=0&amp;transparent=0&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;badge=0&amp;byline=0&amp;portrait=0&amp;title=0&amp;background=1'
-          //         frameborder='0'
-          //         mozallowfullscreen=''
-          //         allowfullscreen=''
-          //         data-ready='true'
-          //       ></iframe>
-          //     </div>
-          //   </div>
-          //   <MainImage>
-          //     <iframe
-          //       className='VideoWorker-0'
-          //       src='https://player.vimeo.com/video/222473595?id=222473595&amp;autopause=0&amp;transparent=0&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;badge=0&amp;byline=0&amp;portrait=0&amp;title=0&amp;background=1'
-          //       frameborder='0'
-          //       mozallowfullscreen=''
-          //       allowfullscreen=''
-          //       data-ready='true'
-          //     ></iframe>
-          //   </MainImage>
-          ''
-        )} */}
+
         <h1>MENTOR LIST</h1>
         <div className='cards-container'>
           {mentorList.map(mentorData => {
             return (
               <Card
-                key={mentorData.id || mentorData.username}
+                key={mentorData.email}
                 className='card'
                 mentorData={mentorData}
               />
