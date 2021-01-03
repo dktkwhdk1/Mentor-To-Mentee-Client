@@ -7,7 +7,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
-  background: #f8f9fa;
+  border: 1px solid #dee2e6;
   width: 484px;
   height: 760px;
 
@@ -19,7 +19,7 @@ const InsertForm = styled.form`
 
   h1 {
     padding-left: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     padding-right: 10px;
     text-align: center;
   }
@@ -40,16 +40,15 @@ const Input = styled.input`
 `;
 
 const FileInput = styled.label`
-  border-radius: 4px;
   border: 1px solid #dee2e6;
   font-size: 14px;
   margin-left: 20px;
-  margin-bottom: 10px;
   padding: 6px 25px;
-  background-color: #a4a4a4;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
+  background-color: #dee2e6;
+  color: rgb(37, 37, 37);
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Select = styled.select`
@@ -73,18 +72,20 @@ const Select = styled.select`
 
 const SubmitButton = styled.button`
   border-radius: 4px;
-  border: 1px solid #dee2e6;
+  border: 1px solid rgb(37, 37, 37);
   width: 91.5%;
   font-size: 12px;
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 30px;
   margin-left: 20px;
   margin-bottom: 15px;
-  background: #38d9a9;
+  background: rgb(37, 37, 37);
   color: white;
 
   &:hover {
     cursor: pointer;
+    background-color: #b9a186;
+    border: #b9a186 1px solid;
   }
 `;
 
@@ -197,9 +198,9 @@ function UserInfoSetting() {
   return (
     <InsertForm>
       <h1>계정 설정</h1>
-      <div>이메일 *</div>
+      <div>이메일</div>
       <Input value={accoutInfo.email} readOnly />
-      <div>이름 *</div>
+      <div>이름</div>
       <Input value={accoutInfo.username} readOnly />
       <div>휴대전화 번호</div>
       <Input

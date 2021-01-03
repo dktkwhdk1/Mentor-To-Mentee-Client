@@ -8,7 +8,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
-  background: #f8f9fa;
+  border: 1px solid #dee2e6;
   width: 484px;
   height: 830px;
 
@@ -34,15 +34,19 @@ const Toggle = styled.button`
   height: 30px;
 
   cursor: pointer;
-  color: white;
+  color: black;
   border: 1px solid #dee2e6;
   &:hover {
     cursor: pointer;
+    background: rgb(37, 37, 37);
+    color: white;
   }
+
   ${props =>
     props.isMentee &&
     css`
-      background: #38d9a9;
+      background: rgb(37, 37, 37);
+      color: white;
     `}
   ${props =>
     props.isMentor &&
@@ -96,17 +100,19 @@ const Graduation = styled.div`
 
 const SubmitButton = styled.button`
   border-radius: 4px;
-  border: 1px solid #dee2e6;
+  border: 1px solid rgb(37, 37, 37);
   width: 91.5%;
   font-size: 12px;
   padding: 10px;
   margin-left: 20px;
   margin-bottom: 15px;
-  background: #38d9a9;
+  background: rgb(37, 37, 37);
   color: white;
 
   &:hover {
     cursor: pointer;
+    background-color: #b9a186;
+    border: #b9a186 1px solid;
   }
 `;
 
@@ -215,14 +221,14 @@ function MenteeSetting() {
       <div>학교</div>
       <Input
         autoFocus
-        placeholder='학교를 작성해주세요.'
+        placeholder='Your School'
         name='uni'
         value={menteeInfo.uni}
         onChange={inputFormHandler}
       />
       <div>전공*</div>
       <Input
-        placeholder='전공을 작성해주세요.'
+        placeholder='Your Major'
         name='major'
         value={menteeInfo.major}
         onChange={inputFormHandler}

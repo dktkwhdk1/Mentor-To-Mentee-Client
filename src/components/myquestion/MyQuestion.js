@@ -17,10 +17,10 @@ const MyQuestionTemplate = styled.div`
 `;
 
 const SettingSelector = styled.div`
-  width: 120px;
+  width: 200px;
   height: 120px;
   padding-top: 20px;
-  padding-right: 20px;
+  padding-right: 10px;
   /*border-radius: 10px;*/
   /*background: #e9ecef;*/
 

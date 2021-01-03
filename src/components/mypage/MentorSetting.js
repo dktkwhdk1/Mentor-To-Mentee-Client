@@ -7,7 +7,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
-  background: #f8f9fa;
+  border: 1px solid #dee2e6;
   width: 484px;
   height: 910px;
 
@@ -32,7 +32,6 @@ const Toggle = styled.button`
   height: 30px;
 
   cursor: pointer;
-  color: white;
   border: 1px solid #dee2e6;
   &:hover {
     cursor: pointer;
@@ -45,23 +44,26 @@ const Toggle = styled.button`
   ${props =>
     props.isMentor &&
     css`
-      background: #38d9a9;
+      background: rgb(37, 37, 37);
+      color: white;
     `}
 `;
 
 const SubmitButton = styled.button`
   border-radius: 4px;
-  border: 1px solid #dee2e6;
+  border: 1px solid rgb(37, 37, 37);
   width: 91.5%;
   font-size: 12px;
   padding: 10px;
   margin-left: 20px;
   margin-bottom: 15px;
-  background: #38d9a9;
+  background: rgb(37, 37, 37);
   color: white;
 
   &:hover {
     cursor: pointer;
+    background-color: #b9a186;
+    border: #b9a186 1px solid;
   }
 `;
 
@@ -185,7 +187,6 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
       <h1>멘토 정보</h1>
       <div>회사명*</div>
       <Input
-        autoFocus
         placeholder='회사명을 작성해주세요.'
         name='company'
         value={mentorInfo.company}

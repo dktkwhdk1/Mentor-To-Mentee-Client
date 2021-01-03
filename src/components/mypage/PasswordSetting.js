@@ -6,7 +6,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const InsertForm = styled.form`
-  background: #f8f9fa;
+  border: 1px solid #dee2e6;
   width: 484px;
   height: 500px;
   margin-bottom: 100px;
@@ -22,18 +22,20 @@ const InsertForm = styled.form`
 
 const SubmitButton = styled.button`
   border-radius: 4px;
-  border: 1px solid #dee2e6;
+  border: 1px solid rgb(37, 37, 37);
   width: 91.5%;
   height: 50px;
   font-size: 18px;
   padding: 10px;
   margin-left: 20px;
   margin-bottom: 15px;
-  background: #38d9a9;
+  background: rgb(37, 37, 37);
   color: white;
 
   &:hover {
     cursor: pointer;
+    background-color: #b9a186;
+    border: #b9a186 1px solid;
   }
 `;
 

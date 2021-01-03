@@ -44,9 +44,15 @@ const Form = styled.form`
   }
 
   .input-submit {
-    background-color: rgb(106, 165, 231);
+    border: rgb(37, 37, 37) 1px solid;
+    background-color: rgb(37, 37, 37);
     cursor: pointer;
     height: 35px;
+    color: white;
+    &:hover {
+      background-color: #b9a186;
+      border: #b9a186 1px solid;
+    }
   }
 `;
 
