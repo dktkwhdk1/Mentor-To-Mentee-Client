@@ -15,7 +15,6 @@ import ApplyMentor from './components/ApplyMentor';
 import MyQuestion from './components/myquestion/MyQuestion';
 import QuestionAndAnswer from './components/myquestion/QuestionAndAnswer';
 import MentorProfile from './components/mentor-profile/MentorProfile';
-
 function App() {
   const [loginButtonOn, setLoginButtonOn] = useState(false);
   const isMentor = true;

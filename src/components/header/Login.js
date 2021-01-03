@@ -28,11 +28,18 @@ const Modal = styled.div`
     display: block;
   }
   .modal-submit {
-    background-color: rgb(106, 165, 231);
+    background-color: rgb(37, 37, 37);
+    color: white;
     width: 300px;
     height: 40px;
     border-radius: 7px;
+    border: black 1px solid;
     cursor: pointer;
+
+    &:hover {
+      background-color: #b9a186;
+      border: #b9a186 1px solid;
+    }
   }
   .text-link {
     color: gray;
@@ -46,6 +53,11 @@ const Button = styled.button`
   height: 40px;
   border-radius: 7px;
   cursor: pointer;
+  &:hover {
+    background-color: #b9a186;
+    color: white;
+    border: #b9a186 1px solid;
+}
 `;
 const Input = styled.input`
   margin: 10px;

@@ -3,13 +3,18 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 //styled Component
-const CardItem = styled.div`
+export const CardItem = styled.div`
   margin: 15px;
+<<<<<<< HEAD
   width: 310px;
   height: 357px;
+=======
+  width: 250px;
+  height: 300px;
+>>>>>>> c472dd014b55f1780d6593999ad27847ebe84894
   background-color: white;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 15px;
 
   box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
   transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
@@ -21,17 +26,20 @@ const CardItem = styled.div`
   .mentor-profile {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
+    justify-content: center;
     align-items: center;
   }
 
   .mentor-img {
-    margin: 10px;
-    width: 60px;
-    height: 60px;
+    margin-top: 30px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
   }
 
+  .profile-main {
+    margin-top: 30px;
+  }
   .mentor-name {
     margin-right: 5px;
     font-weight: bold;
@@ -64,16 +72,19 @@ function Card({ mentorData }) {
               'https://d2ljmlcsal6xzo.cloudfront.net/assets/fallback/temporary_profile-65c08fd0b2bb95434e40fa62b682df18417765c3b0ac165dcb5b3e9035f01b98.png'
             }
           />
-          <div className='name'>
-            <span className='mentor-name'>{mentorData.username}</span>
-            <span className='mentor-text'>멘토</span>
-          </div>
-          <div className='job'>
-            <div className='mentor-company'>{mentorData.company}</div>
-            <div>{mentorData.department}</div>
-          </div>
-          <div className='mentor-email'>
-            {mentorData.email || 'dev@code.com'}
+          <div className="profile-main">
+            <div className='name'>
+              <span className='mentor-name'>{mentorData.username}</span>
+              <span className='mentor-text'>멘토</span>
+            </div>
+            <div className='job'>
+              <div className='mentor-company'>{mentorData.company}</div>
+              <div>{mentorData.department}</div>
+              <div>{mentorData.job}</div>
+            </div>
+            <div className='mentor-email'>
+              {mentorData.email || 'dev@code.com'}
+            </div>
           </div>
         </div>
       </CardItem>
