@@ -5,13 +5,8 @@ import styled from 'styled-components';
 //styled Component
 export const CardItem = styled.div`
   margin: 15px;
-<<<<<<< HEAD
   width: 310px;
   height: 357px;
-=======
-  width: 250px;
-  height: 300px;
->>>>>>> c472dd014b55f1780d6593999ad27847ebe84894
   background-color: white;
   border-radius: 4px;
   font-size: 15px;
@@ -72,7 +67,7 @@ function Card({ mentorData }) {
               'https://d2ljmlcsal6xzo.cloudfront.net/assets/fallback/temporary_profile-65c08fd0b2bb95434e40fa62b682df18417765c3b0ac165dcb5b3e9035f01b98.png'
             }
           />
-          <div className="profile-main">
+          <div className='profile-main'>
             <div className='name'>
               <span className='mentor-name'>{mentorData.username}</span>
               <span className='mentor-text'>멘토</span>

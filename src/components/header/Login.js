@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setAccessToken, setLogin } from '../../modules/login';
 import { setUserInfo } from '../../modules/userInfoSetting';
+import Modal from '../ModalMessage';
 import axios from 'axios';
-
 axios.defaults.withCredentials = true;
-const Modal = styled.div`
+
+const LoginModal = styled.div`
   width: 400px;
   height: auto;
   border: 1px solid;
@@ -57,7 +58,7 @@ const Button = styled.button`
     background-color: #b9a186;
     color: white;
     border: #b9a186 1px solid;
-}
+  }
 `;
 const Input = styled.input`
   margin: 10px;
@@ -84,6 +85,15 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   const onSubmitHandler = e => {
     e.preventDefault();
     axios
@@ -100,16 +110,13 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
           })
           .then(res => {
             const userInfo = res.data.data;
-            console.log(res);
             if (userInfo.email === email) {
-              setLoginButtonOn(false);
               dispatch(setLogin(true)); // 스토어에 로그인 상태 저장
               dispatch(setUserInfo(userInfo)); // 스토어에 유저 정보(이름과 이메일) 저장
             }
-          })
-          .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
+            openModal();
+          });
+      });
   };
 
   const googleLoginHandler = () => {
@@ -118,7 +125,7 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
   };
 
   return (
-    <Modal>
+    <LoginModal>
       <h2>로그인</h2>
       <div className='buttons'>
         <Button onClick={googleLoginHandler} className='modal-item'>
@@ -160,7 +167,23 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
       <h5 onClick={handleSignupButton} className='text-link'>
         계정이 없으시다면? 회원가입
       </h5>
-    </Modal>
+      {modalVisible ? (
+        <Modal
+          isMiddle={true}
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={() => {
+            setLoginButtonOn(false);
+            closeModal();
+          }}
+        >
+          로그인에 성공하셨습니다.
+        </Modal>
+      ) : (
+        ''
+      )}
+    </LoginModal>
   );
 }
 

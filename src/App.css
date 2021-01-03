@@ -4,8 +4,11 @@ body {
   padding: 0;
   background-color: #f6f6f6;
 }
+* {
+  box-sizing: border-box;
+}
 
-.sidebar{
+.sidebar {
   transition: translate 0.5s ease-in-out;
 }
 /*

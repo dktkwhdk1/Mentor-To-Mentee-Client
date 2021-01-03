@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -15,18 +14,15 @@ const StyledLink = styled(Link)`
     text-decoration: none;
   }
 `;
+
 const QuestionForm = styled.form`
-  margin-left: 50px;
+  margin-left: 30px;
   width: 620px;
   min-height: 400px;
-`;
-const Info = styled.div`
-  color: #8f8f94;
 `;
 
 const Infoblock = styled.div`
   display: flex;
-  padding-top: 10px;
 `;
 
 const SummaryInfo = styled.div`
@@ -95,45 +91,41 @@ const AnswerBlock = styled.div`
   padding-left: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  display: flex;
+
   .answer {
     border: 1px solid #dee2e6;
-    border-radius: 16px;
+    border-radius: 4px;
     color: white;
-    width: 80px;
+    width: 100px;
     padding: 5px;
     text-align: center;
   }
 
   .answer-state-true {
-    background: green;
+    border: 1px solid green;
+    background: #32a859;
+    width: 200px;
+    cursor: pointer;
   }
   .answer-state-false {
-    background: red;
-    cursor: pointer;
+    border: 1px solid red;
+    background: #e54444;
   }
   .createdAt {
     padding-left: 320px;
   }
+  .answer-content {
+    margin-top: 20px;
+  }
 `;
 
 function SentQuestion({ sentQuestionList }) {
-  const VVSCount = 2;
-  console.log(sentQuestionList);
   return (
     <QuestionForm>
       <h1>질문 및 답변</h1>
       {sentQuestionList.length ? (
         <>
-          <Info>
-            VVS는 질문권을 의미합니다. 최초 3개가 충전되며, 멘토에게 답변을 받고
-            고맙습니다를 작성하시면 1개씩 자동 충전됩니다.
-          </Info>
           <Infoblock>
-            <SummaryInfo>
-              VVS
-              <Number>{VVSCount}개</Number>
-            </SummaryInfo>
             <SummaryInfo>
               질문
               <Number>{sentQuestionList.length}개</Number>
@@ -151,6 +143,7 @@ function SentQuestion({ sentQuestionList }) {
 }
 
 const Question = ({ sentQuestion }) => {
+  const [answerButtonOn, setAnswerButtonOn] = useState(false);
   const [answerState, setAnswerState] = useState(false);
   const {
     brief,
@@ -164,11 +157,20 @@ const Question = ({ sentQuestion }) => {
     answer,
   } = sentQuestion;
 
+  let questionDate = '';
+  for (let i = 0; i < createdAt.length; i++) {
+    if (createdAt[i] === 'T') {
+      questionDate += ' ';
+    } else if (createdAt[i] === '.') {
+      break;
+    } else questionDate += createdAt[i];
+  }
+
+  const answerButtonHandler = () => {
+    setAnswerButtonOn(!answerButtonOn);
+  };
   const answerStateHandler = () => {
-    if (answer) {
-      console.log(answer);
-      setAnswerState(true);
-    }
+    if (answer) setAnswerState(true);
   };
 
   useEffect(() => {
@@ -200,13 +202,27 @@ const Question = ({ sentQuestion }) => {
           <h2>{brief}</h2>
         </StyledLink>
         <div>{question}</div>
-        <div className='createdAt'>{createdAt}</div>
+        <div className='createdAt'>{questionDate}</div>
       </QuestionBlock>
       <AnswerBlock>
         {answerState ? (
-          <div className='answer answer-state-true'>답변 완료</div>
+          <>
+            <div
+              className='answer answer-state-true'
+              onClick={answerButtonHandler}
+            >
+              답변이 도착했습니다!
+            </div>
+          </>
         ) : (
           <div className='answer answer-state-false'>답변 대기중</div>
+        )}
+        {answerButtonOn ? (
+          <div>
+            <div className='answer-content'>{answer}</div>
+          </div>
+        ) : (
+          ''
         )}
       </AnswerBlock>
     </div>
