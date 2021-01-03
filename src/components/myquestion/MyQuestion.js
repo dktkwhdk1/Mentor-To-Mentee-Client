@@ -20,7 +20,6 @@ const SettingSelector = styled.div`
   width: 200px;
   height: 120px;
   padding-top: 20px;
-  padding-right: 10px;
   /*border-radius: 10px;*/
   /*background: #e9ecef;*/
 
@@ -111,7 +110,10 @@ const MyQuestion = () => {
       {openSentQuestion ? (
         <SentQuestion sentQuestionList={sentQuestionList} />
       ) : (
-        <ReceivedQuestion receivedQuestionList={receivedQuestionList} />
+        <ReceivedQuestion
+          receivedQuestionList={receivedQuestionList}
+          setReceivedQuestionList={setReceivedQuestionList}
+        />
       )}
     </MyQuestionTemplate>
   );

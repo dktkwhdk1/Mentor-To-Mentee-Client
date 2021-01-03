@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import Modal from '../ModalMessage';
+import { setSentQuestionAction } from '../../modules/myQuestion';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+axios.defaults.withCredentials = true;
 
 const QuestionForm = styled.form`
-  margin-left: 50px;
+  margin-left: 30px;
   width: 620px;
   min-height: 400px;
 `;
@@ -47,7 +50,6 @@ const MenteeInfoBlock = styled.div`
     }
     .mentee-major {
       font-size: 18px;
-      padding-left: 4px;
       color: #8f8f94;
     }
   }
@@ -79,24 +81,26 @@ const AnswerBlock = styled.div`
   padding: 20px;
   .answer-btn {
     border: 1px solid #dee2e6;
-    border-radius: 16px;
+    border-radius: 4px;
     color: white;
-    width: 80px;
+    width: 100px;
     padding: 5px;
     text-align: center;
     cursor: pointer;
   }
 
   .answer-state-true {
-    background: green;
+    border: 1px solid green;
+    background: #32a859;
+    cursor: pointer;
   }
   .answer-state-false {
-    background: red;
+    border: 1px solid red;
+    background: #e54444;
   }
-
   .answer-content {
-    margin-top: 5px;
-    padding: 12px;
+    margin-top: 20px;
+    margin-left: 5px;
   }
 `;
 
@@ -108,17 +112,26 @@ const AnswerForm = styled.form`
   .answer-text {
     border: 1px solid #dee2e6;
     padding: 20px;
-    width: 93.2%;
-    height: 100px;
+    width: 100%;
+    height: 120px;
+    resize: none; /* 크롬 크기조정 없애기 */
   }
   .submit {
     margin-top: 10px;
-    background-color: rgb(106, 165, 231);
-    width: 100px;
+    background: rgb(37, 37, 37);
+    border: 1px solid rgb(37, 37, 37);
+    height: 30px;
+    color: white;
+    width: 150px;
+    &:hover {
+      cursor: pointer;
+      background-color: #b9a186;
+      border: #b9a186 1px solid;
+    }
   }
 `;
 
-function ReceivedQuestion({ receivedQuestionList }) {
+function ReceivedQuestion({ receivedQuestionList, setReceivedQuestionList }) {
   return (
     <QuestionForm>
       <h1>질문 및 답변</h1>
@@ -131,7 +144,13 @@ function ReceivedQuestion({ receivedQuestionList }) {
             </SummaryInfo>
           </Infoblock>
           {receivedQuestionList.map((question, idx) => {
-            return <Question key={idx} receivedQuestion={question} />;
+            return (
+              <Question
+                key={idx}
+                receivedQuestion={question}
+                setReceivedQuestionList={setReceivedQuestionList}
+              />
+            );
           })}
         </>
       ) : (
@@ -141,7 +160,7 @@ function ReceivedQuestion({ receivedQuestionList }) {
   );
 }
 
-const Question = ({ receivedQuestion }) => {
+const Question = ({ receivedQuestion, setReceivedQuestionList }) => {
   const [answerButtonOn, setAnswerButtonOn] = useState(false);
   const [answerText, setAnswerText] = useState('');
   const user = useSelector(state => state.userInfoSetting);
@@ -152,11 +171,20 @@ const Question = ({ receivedQuestion }) => {
     menteeName,
     menteeMajor,
     menteeGrade,
-    menteeId,
     menteeImage,
     answer,
     id,
   } = receivedQuestion;
+  const dispatch = useDispatch();
+
+  let questionDate = '';
+  for (let i = 0; i < createdAt.length; i++) {
+    if (createdAt[i] === 'T') {
+      questionDate += ' ';
+    } else if (createdAt[i] === '.') {
+      break;
+    } else questionDate += createdAt[i];
+  }
 
   const answerButtonHandler = () => {
     setAnswerButtonOn(!answerButtonOn);
@@ -165,21 +193,44 @@ const Question = ({ receivedQuestion }) => {
   const answerInputHandler = event => {
     setAnswerText(event.target.value);
   };
-  console.log(user);
   const submitData = {
     id,
     mentorEmail: user.email,
     answer: answerText,
   };
 
-  const requestSubmitAnswer = event => {
-    event.preventDefault();
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+    answerButtonHandler();
     axios
-      .post('https://localhost:4000/answer??', submitData, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      })
-      .then(res => console.log(res));
+      .get(`https://localhost:4000/getQuestion?email=${user.email}`)
+      .then(res => {
+        if (res.data) {
+          const data = res.data.data;
+          setReceivedQuestionList([...data.receivedQuestion]);
+          dispatch(
+            setSentQuestionAction({
+              sentQuestion: data.sentQuestion,
+              receivedQuestion: data.receivedQuestion,
+            })
+          );
+        }
+      });
+  };
+
+  const requestSubmitAnswer = e => {
+    e.preventDefault();
+    axios
+      .post('https://localhost:4000/answerQuestion', submitData)
+      .then(res => {
+        if (res.status === 200) {
+          openModal();
+        }
+      });
   };
 
   return (
@@ -205,7 +256,7 @@ const Question = ({ receivedQuestion }) => {
       <QuestionBlock>
         <h2>{brief}</h2>
         <div>{question}</div>
-        <div className='createdAt'>{createdAt}</div>
+        <div className='createdAt'>{questionDate}</div>
       </QuestionBlock>
       <AnswerBlock>
         {answer ? (
@@ -224,7 +275,7 @@ const Question = ({ receivedQuestion }) => {
           </div>
         )}
         {/* <div className='createdAt'>{createdAt}</div> */}
-        {answerButtonOn ? (
+        {answer && answerButtonOn ? (
           <div>
             <div className='answer-content'>{answer}</div>
           </div>
@@ -236,14 +287,28 @@ const Question = ({ receivedQuestion }) => {
         <AnswerForm>
           <textarea
             className='answer-text'
-            placeholder='답변 내용을 입력해주세요'
+            placeholder='답변 내용을 입력해주세요.'
             onChange={answerInputHandler}
           ></textarea>
           <input
             onClick={requestSubmitAnswer}
             type='submit'
             className='submit'
+            value={'답변 제출하기'}
           />
+          {modalVisible ? (
+            <Modal
+              isMiddle={true}
+              visible={modalVisible}
+              closable={true}
+              maskClosable={true}
+              onClose={closeModal}
+            >
+              답변을 성공적으로 제출했습니다.
+            </Modal>
+          ) : (
+            ''
+          )}
         </AnswerForm>
       ) : (
         ''
@@ -251,4 +316,5 @@ const Question = ({ receivedQuestion }) => {
     </div>
   );
 };
+
 export default ReceivedQuestion;

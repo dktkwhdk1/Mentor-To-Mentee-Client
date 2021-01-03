@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import Modal from './ModalMessage';
+import { setUserInfo } from '../modules/userInfoSetting';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
@@ -44,7 +46,6 @@ const Form = styled.form`
   }
 
   .input-submit {
-<<<<<<< HEAD
     border: rgb(37, 37, 37) 1px solid;
     background-color: rgb(37, 37, 37);
     cursor: pointer;
@@ -54,19 +55,6 @@ const Form = styled.form`
       background-color: #b9a186;
       border: #b9a186 1px solid;
     }
-=======
-    background-color: rgb(37, 37, 37);
-    border: black 1px solid;
-    color: white;
-    cursor: pointer;
-    height: 35px;
-
-    &:hover {
-      background-color: #b9a186;
-      color: white;
-      border: #b9a186 1px solid;
-  }
->>>>>>> c472dd014b55f1780d6593999ad27847ebe84894
   }
 `;
 
@@ -77,9 +65,22 @@ function ApplyMentor() {
     position: '',
     job: '1',
   });
+  const dispatch = useDispatch();
+
+  const [modalVisible, setModalVisible] = useState({
+    visible: false,
+    already: false,
+  });
+  const openModal = already => {
+    setModalVisible({ visible: true, already });
+  };
+  const closeModal = () => {
+    setModalVisible({ visible: false, already: false });
+  };
+
   //TODO Store에서 user 이메일을 가져온다
   const mentorEmail = useSelector(state => state.userInfoSetting.email);
-  const isMentor = useSelector(state => state.roleInfoSetting.mentor.company);
+  const isMentor = useSelector(state => state.userInfoSetting.isMentor);
   const inputFormHandler = e => {
     setMentorInfo({ ...mentorInfo, [e.target.name]: e.target.value });
   };
@@ -89,7 +90,7 @@ function ApplyMentor() {
   const requestApplyMentor = event => {
     event.preventDefault();
     if (isMentor) {
-      alert('이미 멘토에 지원하셨습니다.');
+      openModal(true);
       setMentorInfo({
         company: '',
         department: '',
@@ -98,13 +99,14 @@ function ApplyMentor() {
       });
     } else {
       axios.post('https://localhost:4000/applyMentor', mentorData).then(() => {
-        alert('멘토 지원이 성공적으로 완료되었습니다.');
+        openModal(false);
         setMentorInfo({
           company: '',
           department: '',
           position: '',
           job: '1',
         });
+        dispatch(setUserInfo({ isMentor: true }));
       });
     }
   };
@@ -167,6 +169,31 @@ function ApplyMentor() {
             value='지원하기'
             className='input-item input-submit'
           />
+          {modalVisible.visible ? (
+            modalVisible.already ? (
+              <Modal
+                visible={modalVisible}
+                closable={true}
+                maskClosable={true}
+                onClose={closeModal}
+                applymentor={true}
+              >
+                이미 멘토에 지원하셨습니다.
+              </Modal>
+            ) : (
+              <Modal
+                visible={modalVisible}
+                closable={true}
+                maskClosable={true}
+                onClose={closeModal}
+                applymentor={true}
+              >
+                멘토 지원이 성공적으로 완료되었습니다.
+              </Modal>
+            )
+          ) : (
+            ''
+          )}
         </Form>
       </Body>
     </ApplyMentorDiv>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import AskQuestion from './AskQuestion';
 import { useSelector } from 'react-redux';
-import CardItem from '../main/Card'
+import CardItem from '../main/Card';
 import { GoCode } from 'react-icons/go';
 
 const Profile = styled.div`
@@ -21,10 +21,9 @@ const Profile = styled.div`
     display: flex;
     margin: 50px;
   }
+`;
 
-  `;
-  
-  const Card = styled.div`
+const Card = styled.div`
   padding: 20px;
   font-size: 15px;
   display: flex;
@@ -58,15 +57,15 @@ const Profile = styled.div`
     background-color: black;
     border: black 1px solid;
     color: white;
-    height:30px;
-    width: 90px; 
+    height: 30px;
+    width: 90px;
     cursor: pointer;
-    
+
     &:hover {
       background-color: #b9a186;
       color: white;
       border: #b9a186 1px solid;
-  }
+    }
   }
 
   .content {
@@ -84,12 +83,10 @@ const Introduction = styled.div`
 `;
 
 function MentorProfile({ match }) {
-  console.log(match.params.username);
   const [isAskButtonOn, setAskButtonOn] = useState(false);
 
   //TODO mentorList에서 params로 가져온 username과 일치하는 데이터 뽑아내서 변수로저장.
   const mentorList = useSelector(state => {
-    console.log(state);
     return state.mentorListReducer.mentorData;
   });
 
@@ -126,9 +123,12 @@ function MentorProfile({ match }) {
               <div>{mentor.department}</div>
               <div>{mentor.job || '과장'}</div>
             </div>
-            <button className="content mentor-btn" onClick={handleAskButton}>질문하기</button>
-            <div className='content mentor-email'>{mentor.email || 'kimcode@nate.com'}</div>
-
+            <button className='content mentor-btn' onClick={handleAskButton}>
+              질문하기
+            </button>
+            <div className='content mentor-email'>
+              {mentor.email || 'kimcode@nate.com'}
+            </div>
           </div>
         </Card>
 

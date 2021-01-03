@@ -11,8 +11,8 @@ const MainDiv = styled.main`
   margin-right: auto;
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
   max-width: 1024px;
+  position: relative;
 
   .cards-container {
     display: flex;
@@ -20,21 +20,118 @@ const MainDiv = styled.main`
     align-content: flex-end;
     flex-wrap: wrap;
   }
-
   .card {
     margin: 30px;
   }
-
   h1 {
+    margin-top: 40px;
     text-align: center;
   }
 `;
 
 const MainImage = styled.div`
-height: 370px;
-img {
-    height: 370px;
+  position: relative;
+  height: 400px;
+
+  img {
+    position: absolute;
+    height: 400px;
     width: 100%;
+  }
+  .background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.7;
+  }
+  .vvs {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    line-height: 400px;
+  }
+  .VideoWorker-0 {
+    position: absolute;
+    width: 100%;
+    height: 400px;
+    border: 0;
+    inset: 0px;
+  }
+`;
+
+const MainVideo = styled.div`
+  position: relative;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-align: center;
+  z-index: 0;
+
+  .VideoWorker-0 {
+    position: absolute;
+    width: 100%;
+    height: 400px;
+    border: 0;
+    inset: 0px;
+    max-width: none;
+    max-height: none;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+`;
+
+const MainVideo2 = styled.div`
+  .bg-video-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .jarallax-container-0 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -100;
+  }
+  .bg-container {
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('https://i.vimeocdn.com/video/641015266_640.jpg');
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1360px;
+    height: 678px;
+    overflow: hidden;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    margin-top: 16px;
+    transform: translate3d(0px, -16px, 0px);
+    display: none;
+  }
+  .VideoWorker-0 {
+    position: absolute;
+    inset: 0px;
+    width: 1205.33px;
+    height: 1078px;
+    max-width: none;
+    max-height: none;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    margin: -184px 0px 0px -234.167px;
+    z-index: -1;
+    transform: translate3d(0px, -35.6px, 0px);
   }
 `;
 
@@ -51,9 +148,7 @@ function Main() {
     };
 
     requestMentorList();
-    return () => {
-      console.log('MainComponent clean');
-    };
+    return;
   }, []);
 
   //Todo 모달 영역 밖 클릭시 모달 닫히는 기능 구현 https://velog.io/@seungdeng17/%EB%AA%A8%EB%8B%AC-%EC%98%81%EC%97%AD-%EB%B0%96-%ED%81%B4%EB%A6%AD%EC%8B%9C-%EC%89%BD%EA%B2%8C-%EB%8B%AB%EA%B8%B0
@@ -63,11 +158,63 @@ function Main() {
       {window.location.pathname === '/' ? (
         <MainImage>
           <img src='https://html.nkdev.info/skylith/assets/images/header-blog.jpg' />
+          <div className='background' />
+          <div className='vvs'>Very Very Sexy Brain Guys</div>
         </MainImage>
       ) : (
-          ''
-        )}
+        ''
+      )}
+      {/* {window.location.pathname === '/' ? (
+        <MainVideo>
+          <iframe
+            className='VideoWorker-0'
+            src='https://player.vimeo.com/video/222473595?id=222473595&amp;autopause=0&amp;transparent=0&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;badge=0&amp;byline=0&amp;portrait=0&amp;title=0&amp;background=1'
+            frameborder='0'
+            mozallowfullscreen=''
+            allowfullscreen=''
+            data-ready='true'
+          ></iframe>
+        </MainVideo>
+      ) : (
+        ''
+      )} */}
       <MainDiv>
+        {/* {window.location.pathname === '/' ? (
+          <MainImage>
+            <img src='https://html.nkdev.info/skylith/assets/images/header-blog.jpg' />
+            <div className='background' />
+            <div className='vvs'>Very Very Sexy Brain Guys</div>
+          </MainImage>
+        ) : (
+          //   <div
+          //     className='bg-video bg-video-parallax'
+          //     data-jarallax-video='https://vimeo.com/222473595'
+          //   >
+          //     <div className='bg-video-overlay'></div>
+          //     <div id='jarallax-container-0'>
+          //       <div className='bg-container'></div>
+          //       <iframe
+          //         className='VideoWorker-0'
+          //         src='https://player.vimeo.com/video/222473595?id=222473595&amp;autopause=0&amp;transparent=0&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;badge=0&amp;byline=0&amp;portrait=0&amp;title=0&amp;background=1'
+          //         frameborder='0'
+          //         mozallowfullscreen=''
+          //         allowfullscreen=''
+          //         data-ready='true'
+          //       ></iframe>
+          //     </div>
+          //   </div>
+          //   <MainImage>
+          //     <iframe
+          //       className='VideoWorker-0'
+          //       src='https://player.vimeo.com/video/222473595?id=222473595&amp;autopause=0&amp;transparent=0&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;badge=0&amp;byline=0&amp;portrait=0&amp;title=0&amp;background=1'
+          //       frameborder='0'
+          //       mozallowfullscreen=''
+          //       allowfullscreen=''
+          //       data-ready='true'
+          //     ></iframe>
+          //   </MainImage>
+          ''
+        )} */}
         <h1>MENTOR LIST</h1>
         <div className='cards-container'>
           {mentorList.map(mentorData => {

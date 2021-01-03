@@ -91,8 +91,8 @@ const SubmitButton = styled.button`
 
 const UserImage1 = styled.div`
   border: 1px solid #dee2e6;
-  width: 160px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   margin-left: 20px;
 `;
 

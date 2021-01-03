@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import CloseButton from './CloseButton';
-// import { MdCheck } from 'react-icons/md';
 
 function Modal({
   className,
@@ -11,7 +10,8 @@ function Modal({
   closable,
   visible,
   children,
-  isPassword,
+  isMiddle,
+  applymentor,
 }) {
   const onMaskClick = e => {
     if (e.target === e.currentTarget) {
@@ -37,7 +37,8 @@ function Modal({
         <ModalInner
           tabIndex='0'
           className='modal-inner'
-          isPassword={isPassword}
+          isMiddle={isMiddle}
+          applymentor={applymentor}
         >
           {closable && <CloseButton close={close} />}
           <div className='message'>{children}</div>
@@ -99,8 +100,15 @@ const ModalInner = styled.div`
     float: left;
   }
   ${props =>
-    props.isPassword &&
+    props.isMiddle &&
     css`
+      padding-top: 8px;
+      padding-left: 30px;
+    `}
+  ${props =>
+    props.applymentor &&
+    css`
+      left: 37%;
       padding-top: 8px;
       padding-left: 30px;
     `}

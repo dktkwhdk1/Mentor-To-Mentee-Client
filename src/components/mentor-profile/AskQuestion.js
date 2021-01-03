@@ -31,17 +31,15 @@ const QuestionForm = styled.form`
       background-color: #b9a186;
       color: white;
       border: #b9a186 1px solid;
-  }
+    }
   }
 `;
 
 function AskQuestion({ mentor }) {
-  console.log(mentor);
   const [brief, setBrief] = useState('');
   const [question, setQuestion] = useState('');
-  const [loginMessage, setLoginMessage] = useState(false)
-  const isLogin = useSelector(state => state.isLoginReducer.isLogin)
-  
+  const [loginMessage, setLoginMessage] = useState(false);
+  const isLogin = useSelector(state => state.isLoginReducer.isLogin);
 
   const handleBriefInput = event => {
     setBrief(event.target.value);
@@ -61,16 +59,14 @@ function AskQuestion({ mentor }) {
 
   const requestQuestion = event => {
     event.preventDefault();
-    axios
-      .post('https://localhost:4000/askQuestion', questionData)
-      .then(res => console.log(res));
+    axios.post('https://localhost:4000/askQuestion', questionData);
     //TODO 질문하고 나서 질문 상세 페이지로 넘어가기
   };
 
   const loginMessageHandler = event => {
     event.preventDefault();
-    setLoginMessage(true)
-  }
+    setLoginMessage(true);
+  };
   return (
     <QuestionForm>
       <h2>멘토에게 질문하기</h2>
@@ -98,12 +94,12 @@ function AskQuestion({ mentor }) {
         rows='10'
       ></textarea>
       <input
-        onClick={isLogin? requestQuestion : loginMessageHandler}
+        onClick={isLogin ? requestQuestion : loginMessageHandler}
         className='question-input question-submit'
         type='submit'
         value='질문 전달하기'
       />
-      {loginMessage? <div>로그인을 해주세요</div> : ''}
+      {loginMessage ? <div>로그인을 해주세요</div> : ''}
     </QuestionForm>
   );
 }
