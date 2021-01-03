@@ -116,7 +116,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-function MenteeSetting() {
+function MenteeSetting({ AreYouMentor }) {
   const userInfo = useSelector(state => ({
     ...state.roleInfoSetting.mentee,
     menteeEmail: state.userInfoSetting.email,
@@ -185,6 +185,7 @@ function MenteeSetting() {
         dispatch(setMenteeInfo({ ...menteeInfo }));
       });
   };
+
   return isMentor ? (
     <MentorSetting
       isMentee={isMentee}
@@ -194,28 +195,34 @@ function MenteeSetting() {
     />
   ) : (
     <InsertForm>
-      <Toggle
-        className='mentee'
-        isMentee={isMentee}
-        onClick={e => {
-          e.preventDefault();
-          setMentor(false);
-          setMentee(true);
-        }}
-      >
-        멘티 정보
-      </Toggle>
-      <Toggle
-        className='mentor'
-        isMentor={isMentor}
-        onClick={e => {
-          e.preventDefault();
-          setMentor(true);
-          setMentee(false);
-        }}
-      >
-        멘토 정보
-      </Toggle>
+      {AreYouMentor ? (
+        <>
+          <Toggle
+            className='mentee'
+            isMentee={isMentee}
+            onClick={e => {
+              e.preventDefault();
+              setMentor(false);
+              setMentee(true);
+            }}
+          >
+            멘티 정보
+          </Toggle>
+          <Toggle
+            className='mentor'
+            isMentor={isMentor}
+            onClick={e => {
+              e.preventDefault();
+              setMentor(true);
+              setMentee(false);
+            }}
+          >
+            멘토 정보
+          </Toggle>
+        </>
+      ) : (
+        ''
+      )}
       <h1>멘티 정보</h1>
       <div>학교</div>
       <Input

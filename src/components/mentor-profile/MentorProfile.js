@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import AskQuestion from './AskQuestion';
 import { useSelector } from 'react-redux';
-import CardItem from '../main/Card';
-import { GoCode } from 'react-icons/go';
+
+const MentorProfileTemplate = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: center;
+  padding-top: 30px;
+`;
 
 const Profile = styled.div`
   ${props =>
     !props.isAskButtonOn &&
     css`
-      margin-bottom: 200px;
+      margin-bottom: 10px;
     `}
-
+  width: 1024px;
   h1 {
-    margin-top: 50px;
+    margin-top: 10px;
     margin-left: 50px;
   }
 
@@ -84,14 +89,16 @@ const Introduction = styled.div`
 
 function MentorProfile({ match }) {
   const [isAskButtonOn, setAskButtonOn] = useState(false);
-
   const mentorList = useSelector(state => {
     return state.mentorListReducer.mentorData;
   });
-  
   const getMentor = () => {
     for (let mentor of mentorList) {
       if (mentor.mentorId === Number(match.params.mentorId)) {
+        if (!mentor.image) {
+          mentor.image =
+            'https://d2ljmlcsal6xzo.cloudfront.net/assets/fallback/temporary_profile-65c08fd0b2bb95434e40fa62b682df18417765c3b0ac165dcb5b3e9035f01b98.png';
+        }
         return mentor;
       }
     }
@@ -103,54 +110,46 @@ function MentorProfile({ match }) {
   };
 
   return (
-    <Profile isAskButtonOn={isAskButtonOn}>
-      <h1>멘토 프로필</h1>
-      <div className='profile-area'>
-        <Card>
-          <img
-            className='mentor-img'
-            src='https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
-            alt=''
-          />
-          <div className='profile-content'>
-            <div className='name content'>
-              <span className='mentor-name'>{mentor.username}</span>
-              <span className='mentor-text'>멘토</span>
+    <MentorProfileTemplate>
+      <Profile isAskButtonOn={isAskButtonOn}>
+        <h1>멘토 프로필</h1>
+        <div className='profile-area'>
+          <Card>
+            <img className='mentor-img' src={mentor.image} alt='' />
+            <div className='profile-content'>
+              <div className='name content'>
+                <span className='mentor-name'>{mentor.username}</span>
+                <span className='mentor-text'>멘토</span>
+              </div>
+              <div className='content job'>
+                <div className='mentor-company'>{mentor.company}</div>
+                <div>{mentor.department}</div>
+                <div>{mentor.job || '과장'}</div>
+              </div>
+              <button className='content mentor-btn' onClick={handleAskButton}>
+                질문하기
+              </button>
+              <div className='content mentor-email'>
+                {mentor.email || 'kimcode@nate.com'}
+              </div>
             </div>
-            <div className='content job'>
-              <div className='mentor-company'>{mentor.company}</div>
-              <div>{mentor.department}</div>
-              <div>{mentor.job || '과장'}</div>
-            </div>
-            <button className='content mentor-btn' onClick={handleAskButton}>
-              질문하기
-            </button>
-            <div className='content mentor-email'>
-              {mentor.email || 'kimcode@nate.com'}
-            </div>
-          </div>
-        </Card>
+          </Card>
 
-        <Introduction className='profile-content'>
-          <div className='intro'>
-            <h2>멘토 소개</h2>
-            <div>
-              {mentor.description ||
-                '아직 소개 내용이 없습니다'}
+          <Introduction className='profile-content'>
+            <div className='intro'>
+              <h2>멘토 소개</h2>
+              <div>{mentor.description || '아직 소개 내용이 없습니다'}</div>
             </div>
-          </div>
-          <div className='career'>
-            <h2>주요 경력</h2>
-            <div>
-              {mentor.career ||
-                `아직 소개 내용이 없습니다 `}
+            <div className='career'>
+              <h2>주요 경력</h2>
+              <div>{mentor.career || `아직 소개 내용이 없습니다 `}</div>
             </div>
-          </div>
-        </Introduction>
-      </div>
+          </Introduction>
+        </div>
 
-      {isAskButtonOn ? <AskQuestion mentor={mentor} /> : ''}
-    </Profile>
+        {isAskButtonOn ? <AskQuestion mentor={mentor} /> : ''}
+      </Profile>
+    </MentorProfileTemplate>
   );
 }
 

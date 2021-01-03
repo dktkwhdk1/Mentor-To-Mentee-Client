@@ -1,24 +1,17 @@
 // 액션 타입 만들기
-// Ducks 패턴을 따를땐 액션의 이름에 접두사를 넣어주세요.
-// 이렇게 하면 다른 모듈과 액션 이름이 중복되는 것을 방지 할 수 있습니다.
 const SET_ACCESSTOKEN = 'login/SET_ACCESSTOKEN';
 const SET_LOGIN = 'login/SET_LOGIN';
 
 // 액션 생성함수 만들기
 export const setAccessToken = token => ({ type: SET_ACCESSTOKEN, token });
-
-export const setLogin = (boolean) => ({
+export const setLogin = boolean => ({
   type: SET_LOGIN,
-  isLogin: boolean
-})
-
-
-//초기상태
+  isLogin: boolean,
+});
 
 const isLogin = {
-  isLogin: false
-}
-
+  isLogin: false,
+};
 
 // 리듀서 선언
 export function login(state = {}, action) {
@@ -31,7 +24,6 @@ export function login(state = {}, action) {
     default:
       return state;
   }
-
 }
 
 export function isLoginReducer(state = isLogin, action) {
@@ -39,7 +31,7 @@ export function isLoginReducer(state = isLogin, action) {
     case SET_LOGIN:
       return {
         ...state,
-        isLogin: action.isLogin
+        isLogin: action.isLogin,
       };
     default:
       return state;

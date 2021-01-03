@@ -53,7 +53,6 @@ const MyQuestion = () => {
   //받은 데이터에 답변이 있으면 답변완료, 없으면 답변 대기중
   const [openReceivedQuestion, setReveivedQuestion] = useState(false);
   const [openSentQuestion, setSentQuestion] = useState(true);
-
   const userEmail = useSelector(state => state.userInfoSetting.email);
   const [sentQuestionList, setSentQuestionList] = useState([]);
   const [receivedQuestionList, setReceivedQuestionList] = useState([]);
@@ -65,7 +64,6 @@ const MyQuestion = () => {
         .get(`https://localhost:4000/getQuestion?email=${userEmail}`)
         .then(res => {
           if (res.data) {
-            console.log(res.data)
             const data = res.data.data;
             setSentQuestionList([...data.sentQuestion]);
             setReceivedQuestionList([...data.receivedQuestion]);

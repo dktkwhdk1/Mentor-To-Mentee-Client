@@ -274,7 +274,6 @@ const Question = ({ receivedQuestion, setReceivedQuestionList }) => {
             답변 하기
           </div>
         )}
-        {/* <div className='createdAt'>{createdAt}</div> */}
         {answer && answerButtonOn ? (
           <div>
             <div className='answer-content'>{answer}</div>

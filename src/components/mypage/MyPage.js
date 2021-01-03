@@ -4,6 +4,7 @@ import MenteeSetting from './MenteeSetting';
 import PasswordSetting from './PasswordSetting';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const MyPageTemplate = styled.div`
   display: flex;
@@ -65,10 +66,11 @@ const SettingSelector = styled.div`
   }
 `;
 
-function MyPage({ isMentor }) {
+function MyPage() {
   const [openUserSetting, setUserSetting] = useState(true);
   const [openMenteeSetting, setMenteeSetting] = useState(false);
   const [openPasswordSetting, setPasswordSetting] = useState(false);
+  const AreYouMentor = useSelector(state => state.userInfoSetting.isMentor);
 
   return (
     <MyPageTemplate>
@@ -89,7 +91,7 @@ function MyPage({ isMentor }) {
             계정 설정
           </div>
         </StyledLink>
-        {isMentor ? (
+        {AreYouMentor ? (
           <StyledLink to='/mypage/mentee-mentor'>
             <div
               className='mentee'
@@ -130,7 +132,7 @@ function MyPage({ isMentor }) {
         </StyledLink>
       </SettingSelector>
       {openUserSetting && <UserInfoSetting />}
-      {openMenteeSetting && <MenteeSetting />}
+      {openMenteeSetting && <MenteeSetting AreYouMentor={AreYouMentor} />}
       {openPasswordSetting && <PasswordSetting />}
     </MyPageTemplate>
   );

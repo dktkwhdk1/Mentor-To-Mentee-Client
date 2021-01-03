@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setAccessToken, setLogin } from '../../modules/login';
 import { setUserInfo } from '../../modules/userInfoSetting';
-import axios from 'axios';
 import Modal from '../ModalMessage';
-
+import axios from 'axios';
 axios.defaults.withCredentials = true;
+
 const LoginModal = styled.div`
   width: 400px;
   height: auto;
@@ -48,6 +48,7 @@ const LoginModal = styled.div`
     cursor: pointer;
   }
 `;
+
 const Button = styled.button`
   width: 300px;
   background-color: white;
@@ -58,8 +59,9 @@ const Button = styled.button`
     background-color: #b9a186;
     color: white;
     border: #b9a186 1px solid;
-}
+  }
 `;
+
 const Input = styled.input`
   margin: 10px;
   width: 285px;
@@ -67,15 +69,18 @@ const Input = styled.input`
   padding: 0px;
   padding-left: 10px;
 `;
+
 function Login({ setLoginButtonOn, setSignupButtonOn }) {
   const [emailButtonOn, setEmailButtonOn] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const openModal = () => {
-    setModalVisible(true);
+  const [modalVisible, setModalVisible] = useState({
+    modal: false,
+    login: false,
+  });
+  const openModal = login => {
+    setModalVisible({ modal: true, login });
   };
   const closeModal = () => {
-    setModalVisible(false);
+    setModalVisible({ modal: false, login: false });
   };
 
   //이메일버튼 눌렀을때, 입력 폼 띄워주는 기능
@@ -89,15 +94,13 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
     setSignupButtonOn(true);
   };
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const onSubmitHandler = e => {
 
-    if (!email, !password) {
-      openModal();
-    }
-    else {
+  const onSubmitHandler = e => {
+    if (!email || !password) {
+      openModal(false);
+    } else {
       e.preventDefault();
       axios
         .post('https://localhost:4000/emailSignIn', {
@@ -106,36 +109,39 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
         })
         .then(res => {
           const accessToken = res.data.data.accessToken;
-          dispatch(setAccessToken(accessToken)); // 스토어에 토큰 저장
+          dispatch(setAccessToken(accessToken));
           axios
             .get('https://localhost:4000/accessTokenHandler', {
               headers: { authorization: `Bearer ${accessToken}` },
             })
             .then(res => {
               const userInfo = res.data.data;
-              console.log(res);
               if (userInfo.email === email) {
-                setLoginButtonOn(false);
-                dispatch(setLogin(true)); // 스토어에 로그인 상태 저장
-                dispatch(setUserInfo(userInfo)); // 스토어에 유저 정보(이름과 이메일) 저장
+                dispatch(setLogin(true));
+                dispatch(setUserInfo(userInfo));
               }
-            })
-            .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
-
+              openModal(true);
+            });
+        });
     }
+  };
+  const naverLoginHandler = async () => {
+    const client_id = 'jzmv9M17ZktTLYgIxIfb';
+    const state = Math.random().toString(36).slice(2);
+    const redirectURI = encodeURI('https://localhost:4000/naverCallback');
+    const api_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirectURI}&state=${state}`;
+    window.location.assign(api_url);
   };
 
   return (
     <LoginModal>
       <h2>로그인</h2>
       <div className='buttons'>
-        <Button className='modal-item'>
-          구글 아이디로 로그인
+        <Button className='modal-item'>구글 아이디로 로그인</Button>
+        <Button className='modal-item' onClick={naverLoginHandler}>
+          네이버 아이디로 로그인
         </Button>
-        <Button className='modal-item'>네이버 아이디로 로그인</Button>
-        <Button onClick={handleEmailLogin} className='modal-item'>
+        <Button className='modal-item' onClick={handleEmailLogin}>
           이메일로 로그인
         </Button>
       </div>
@@ -165,37 +171,39 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
           </div>
         </div>
       ) : (
-          ''
-        )}
+        ''
+      )}
       <h5 onClick={handleSignupButton} className='text-link'>
         계정이 없으시다면? 회원가입
       </h5>
-      {modalVisible ? (
-        <Modal
-          isMiddle={true}
-          visible={modalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-        >
-          모든 정보를 입력해주세요
-        </Modal>
+      {modalVisible.modal ? (
+        modalVisible.login ? (
+          <Modal
+            isMiddle={true}
+            visible={modalVisible}
+            closable={true}
+            maskClosable={true}
+            onClose={() => {
+              setLoginButtonOn(false);
+              closeModal();
+            }}
+          >
+            로그인에 성공하셨습니다.
+          </Modal>
+        ) : (
+          <Modal
+            isMiddle={true}
+            visible={modalVisible}
+            closable={true}
+            maskClosable={true}
+            onClose={closeModal}
+          >
+            모든 정보를 입력해주세요.
+          </Modal>
+        )
       ) : (
-          ''
-        )}
-      {/* {modalVisible ? (
-        <Modal
-          isMiddle={true}
-          visible={modalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-        >
-          모든 정보를 입력해주세요
-        </Modal>
-      ) : (
-          ''
-        )} */}
+        ''
+      )}
     </LoginModal>
   );
 }

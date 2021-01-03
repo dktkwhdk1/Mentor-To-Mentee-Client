@@ -17,19 +17,23 @@ const HeaderDiv = styled.nav`
   padding: 10px 30px;
 
   h1 {
-    margin: 0 180px;
+    margin: 0 120px;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: 800;
   }
 
   .hamburger {
     width: 35px;
     height: 35px;
     cursor: pointer;
-    margin-right: 180px;
+    margin-right: 120px;
   }
 
   .login-btn {
     cursor: pointer;
-    margin-right: 180px;
+    margin-right: 120px;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: 800;
   }
 `;
 
@@ -45,14 +49,6 @@ const StyledLink = styled(Link)`
     text-decoration: none;
   }
 `;
-
-// const MainImage = styled.div`
-//   height: 370px;
-//   img {
-//     height: 370px;
-//     width: 100%;
-//   }
-// `;
 
 function Header({ loginButtonOn, setLoginButtonOn }) {
   //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남

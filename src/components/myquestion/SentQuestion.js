@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -151,8 +152,6 @@ const Question = ({ sentQuestion }) => {
   const [answerButtonOn, setAnswerButtonOn] = useState(false);
   const [answerState, setAnswerState] = useState(false);
   const history = useHistory();
-
-  
   const {
     brief,
     question,
@@ -197,7 +196,10 @@ const Question = ({ sentQuestion }) => {
           }
           alt='image error'
         />
-        <div onClick={() => history.push(`/mentorprofile/${mentorId}`)} className='mentor-name'>
+        <div
+          onClick={() => history.push(`/mentorprofile/${mentorId}`)}
+          className='mentor-name'
+        >
           {mentorName}
           <span className='mentor'>멘토</span>
           <br />

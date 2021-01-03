@@ -4,7 +4,10 @@ body {
   padding: 0;
   background-color: #f6f6f6;
 }
-
+/* * {
+  font-family: 'Nanum Myeongjo', serif;
+  font-family: 'Nanum Gothic', sans-serif;
+} */
 .sidebar {
   transition: translate 0.5s ease-in-out;
 }
