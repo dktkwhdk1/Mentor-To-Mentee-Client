@@ -11,6 +11,7 @@ function Modal({
   visible,
   children,
   isMiddle,
+  isDelete,
   applymentor,
 }) {
   const onMaskClick = e => {
@@ -38,6 +39,7 @@ function Modal({
           tabIndex='0'
           className='modal-inner'
           isMiddle={isMiddle}
+          isDelete={isDelete}
           applymentor={applymentor}
         >
           {closable && <CloseButton close={close} />}
@@ -104,6 +106,12 @@ const ModalInner = styled.div`
     css`
       padding-top: 8px;
       padding-left: 30px;
+    `}
+  ${props =>
+    props.isDelete &&
+    css`
+      padding-top: 8px;
+      padding-left: 20px;
     `}
   ${props =>
     props.applymentor &&

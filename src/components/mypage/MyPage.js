@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import UserInfoSetting from './UserInfoSetting';
 import MenteeSetting from './MenteeSetting';
 import PasswordSetting from './PasswordSetting';
+import DeleteAccount from './DeleteAccount';
 import styled, { css } from 'styled-components';
 import { StyledLink } from '../header/Header';
 import { useSelector } from 'react-redux';
@@ -51,12 +52,21 @@ const SettingSelector = styled.div`
         font-weight: bold;
       `}
   }
+  .delete-account {
+    ${props =>
+      props.openDeleteAccount &&
+      css`
+        background: #e9ecef;
+        font-weight: bold;
+      `}
+  }
 `;
 
 function MyPage() {
   const AreYouMentor = useSelector(state => state.userInfoSetting.isMentor);
   const [openPasswordSetting, setPasswordSetting] = useState(false);
   const [openMenteeSetting, setMenteeSetting] = useState(false);
+  const [openDeleteAccount, setDeleteAccount] = useState(false);
   const [openUserSetting, setUserSetting] = useState(true);
 
   return (
@@ -64,6 +74,7 @@ function MyPage() {
       <SettingSelector
         openUserSetting={openUserSetting}
         openMenteeSetting={openMenteeSetting}
+        openDeleteAccount={openDeleteAccount}
         openPasswordSetting={openPasswordSetting}
       >
         <StyledLink to='/mypage/userinfo'>
@@ -73,6 +84,7 @@ function MyPage() {
               setUserSetting(true);
               setPasswordSetting(false);
               setMenteeSetting(false);
+              setDeleteAccount(false);
             }}
           >
             계정 설정
@@ -86,6 +98,7 @@ function MyPage() {
                 setUserSetting(false);
                 setPasswordSetting(false);
                 setMenteeSetting(true);
+                setDeleteAccount(false);
               }}
             >
               멘티 • 멘토 정보
@@ -99,6 +112,7 @@ function MyPage() {
                 setUserSetting(false);
                 setPasswordSetting(false);
                 setMenteeSetting(true);
+                setDeleteAccount(false);
               }}
             >
               멘티 정보
@@ -112,14 +126,29 @@ function MyPage() {
               setUserSetting(false);
               setPasswordSetting(true);
               setMenteeSetting(false);
+              setDeleteAccount(false);
             }}
           >
             비밀번호 설정
           </div>
         </StyledLink>
+        <StyledLink to='/mypage/deleteaccount'>
+          <div
+            className='delete-account'
+            onClick={() => {
+              setUserSetting(false);
+              setPasswordSetting(false);
+              setMenteeSetting(false);
+              setDeleteAccount(true);
+            }}
+          >
+            회원 탈퇴
+          </div>
+        </StyledLink>
       </SettingSelector>
       {openUserSetting && <UserInfoSetting />}
       {openMenteeSetting && <MenteeSetting AreYouMentor={AreYouMentor} />}
+      {openDeleteAccount && <DeleteAccount />}
       {openPasswordSetting && <PasswordSetting />}
     </MyPageTemplate>
   );

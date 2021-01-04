@@ -151,7 +151,7 @@ function Login({ loginButtonOn, setLoginButtonOn, setSignupButtonOn }) {
             modalVisible.login ? (
               <Modal
                 isMiddle={true}
-                visible={modalVisible}
+                visible={modalVisible.login}
                 closable={true}
                 maskClosable={true}
                 onClose={() => {
@@ -164,7 +164,7 @@ function Login({ loginButtonOn, setLoginButtonOn, setSignupButtonOn }) {
             ) : (
               <Modal
                 isMiddle={true}
-                visible={modalVisible}
+                visible={modalVisible.modal}
                 closable={true}
                 maskClosable={true}
                 onClose={closeModal}
