@@ -58,7 +58,7 @@ Modal.propTypes = {
   visible: PropTypes.bool,
 };
 
-const ModalWrapper = styled.div`
+export const ModalWrapper = styled.div`
   box-sizing: border-box;
   display: ${props => (props.visible ? 'block' : 'none')};
   position: fixed;
@@ -71,7 +71,7 @@ const ModalWrapper = styled.div`
   outline: 0;
 `;
 
-const ModalOverlay = styled.div`
+export const ModalOverlay = styled.div`
   box-sizing: border-box;
   display: ${props => (props.visible ? 'block' : 'none')};
   position: fixed;

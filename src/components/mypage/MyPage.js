@@ -3,7 +3,7 @@ import UserInfoSetting from './UserInfoSetting';
 import MenteeSetting from './MenteeSetting';
 import PasswordSetting from './PasswordSetting';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { StyledLink } from '../header/Header';
 import { useSelector } from 'react-redux';
 
 const MyPageTemplate = styled.div`
@@ -11,19 +11,6 @@ const MyPageTemplate = styled.div`
   position: relative;
   justify-content: center;
   padding-top: 30px;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
 `;
 
 const SettingSelector = styled.div`
@@ -67,10 +54,10 @@ const SettingSelector = styled.div`
 `;
 
 function MyPage() {
-  const [openUserSetting, setUserSetting] = useState(true);
-  const [openMenteeSetting, setMenteeSetting] = useState(false);
-  const [openPasswordSetting, setPasswordSetting] = useState(false);
   const AreYouMentor = useSelector(state => state.userInfoSetting.isMentor);
+  const [openPasswordSetting, setPasswordSetting] = useState(false);
+  const [openMenteeSetting, setMenteeSetting] = useState(false);
+  const [openUserSetting, setUserSetting] = useState(true);
 
   return (
     <MyPageTemplate>

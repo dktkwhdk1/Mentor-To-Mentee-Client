@@ -13,7 +13,6 @@ const HeaderDiv = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 10px 30px;
 
   h1 {
@@ -37,7 +36,7 @@ const HeaderDiv = styled.nav`
   }
 `;
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 

@@ -7,7 +7,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const QuestionForm = styled.form`
-  margin: 50px;
+  margin: 52px;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,7 @@ const QuestionForm = styled.form`
     border-radius: 4px;
     border: 1px solid #dee2e6;
   }
+
   .question-textarea {
     margin: 10px 0px;
     padding: 15px;

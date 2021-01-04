@@ -8,7 +8,6 @@ import Footer from './components/footer';
 import MyPage from './components/mypage/MyPage';
 import ApplyMentor from './components/ApplyMentor';
 import MyQuestion from './components/myquestion/MyQuestion';
-import QuestionAndAnswer from './components/myquestion/QuestionAndAnswer';
 import MentorProfile from './components/mentor-profile/MentorProfile';
 import { setUserInfo } from './modules/userInfoSetting';
 import { setAccessToken, setLogin } from './modules/login';
@@ -34,6 +33,7 @@ function App() {
       }
     }
   });
+
   return (
     <Router>
       <div className='App'>
@@ -53,10 +53,6 @@ function App() {
             <Route path='/myquestion' component={MyQuestion} />
             <Route path='/mypage' component={MyPage} />
             <Route path='/applymentor' component={ApplyMentor} />
-            <Route
-              path={`/QuestionAndAnswer/:id`}
-              component={QuestionAndAnswer}
-            />
           </Switch>
         </main>
       </div>

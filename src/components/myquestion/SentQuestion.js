@@ -43,12 +43,14 @@ const MentorInfoBlock = styled.div`
       padding-top: 8px;
       color: #8f8f94;
     }
+
     .mentor {
       padding-left: 4px;
       padding-top: 9px;
       font-size: 16px;
       color: #8f8f94;
     }
+
     .mentor-job {
       font-size: 18px;
       padding-left: 4px;
@@ -99,13 +101,16 @@ const AnswerBlock = styled.div`
     width: 200px;
     cursor: pointer;
   }
+
   .answer-state-false {
     border: 1px solid red;
     background: #e54444;
   }
+
   .createdAt {
     padding-left: 320px;
   }
+
   .answer-content {
     margin-top: 20px;
   }
@@ -168,6 +173,7 @@ const Question = ({ sentQuestion }) => {
 
   useEffect(() => {
     answerStateHandler();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -180,7 +186,7 @@ const Question = ({ sentQuestion }) => {
               ? mentorImage
               : 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
           }
-          alt='image error'
+          alt=''
         />
         <div
           onClick={() => history.push(`/mentorprofile/${mentorId}`)}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import ReceivedQuestion from './ReceivedQuestion';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { setSentQuestionAction } from '../../modules/myQuestion';
 import SentQuestion from './SentQuestion';
@@ -13,15 +12,12 @@ const MyQuestionTemplate = styled.div`
   position: relative;
   justify-content: center;
   padding-top: 30px;
-  // height: 1200px;
 `;
 
 const SettingSelector = styled.div`
   width: 200px;
   height: 120px;
   padding-top: 20px;
-  /*border-radius: 10px;*/
-  /*background: #e9ecef;*/
 
   div {
     padding-top: 10px;
@@ -77,6 +73,7 @@ const MyQuestion = () => {
         });
     };
     requestQuestion();
+    // eslint-disable-next-line
   }, []);
 
   return (

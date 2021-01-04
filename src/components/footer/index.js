@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { GoMarkGithub } from 'react-icons/go';
 
-//styled component
 const FooterDiv = styled.footer`
   margin-top: 30px;
   background-color: rgb(235, 235, 235);
@@ -17,7 +16,6 @@ const FooterDiv = styled.footer`
   h1 {
     margin: 10px;
   }
-
   .icon {
     color: black;
     font-size: 50px;

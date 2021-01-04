@@ -1,19 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { StyledLink } from '../header/Header';
 import styled from 'styled-components';
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-`;
 
 const CardItem = styled.div`
   margin: 15px;
@@ -22,9 +9,9 @@ const CardItem = styled.div`
   background-color: white;
   border-radius: 4px;
   font-size: 15px;
-
   box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
   transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+
   &:hover {
     transform: translateY(-8px);
     box-shadow: rgba(0, 0, 0, 0.08) 0px 12px 20px 0px;
@@ -47,6 +34,7 @@ const CardItem = styled.div`
   .profile-main {
     margin-top: 30px;
   }
+
   .mentor-name {
     margin-right: 5px;
     font-weight: bold;
@@ -72,6 +60,7 @@ function Card({ mentorData }) {
               mentorData.image ||
               'https://d2ljmlcsal6xzo.cloudfront.net/assets/fallback/temporary_profile-65c08fd0b2bb95434e40fa62b682df18417765c3b0ac165dcb5b3e9035f01b98.png'
             }
+            alt=''
           />
           <div className='profile-main'>
             <div className='name'>

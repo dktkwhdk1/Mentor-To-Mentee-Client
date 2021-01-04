@@ -1,37 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Modal from '../ModalMessage';
-import { Link } from 'react-router-dom';
+import Modal, { ModalOverlay, ModalWrapper } from '../ModalMessage';
+import { AiOutlineMail } from 'react-icons/ai';
+import { StyledLink } from './Header';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
-const ModalOverlay = styled.div`
-  box-sizing: border-box;
-  display: ${props => (props.visible ? 'block' : 'none')};
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 999;
-`;
-
-const ModalWrapper = styled.div`
-  box-sizing: border-box;
-  position: fixed;
-  display: ${props => (props.visible ? 'block' : 'none')};
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  overflow: auto;
-  outline: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-
-const SignUp = styled.div`
+export const TemplateSignUpAndLogin = styled.div`
   box-sizing: border-box;
   width: 400px;
   height: auto;
@@ -56,10 +31,15 @@ const SignUp = styled.div`
     margin: 5px;
     display: block;
   }
+
   .pw {
     margin-bottom: 10px;
   }
+
   .signup {
+    margin-top: 40px;
+  }
+  .login {
     margin-top: 40px;
   }
 
@@ -83,30 +63,39 @@ const SignUp = styled.div`
     text-decoration: underline;
     cursor: pointer;
   }
+
   .login-icon {
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
   .google {
     width: 18px;
     height: 18px;
-    margin-right: 5px;
+    margin-right: 6px;
   }
+
   .naver {
     width: 20px;
     height: 20px;
-    margin-right: 5px;
+    margin-right: 6px;
+  }
+
+  .email {
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
   }
 `;
 
-const Button = styled.button`
-  border-radius: 7px;
+export const Button = styled.button`
+  width: 300px;
   border: 1px solid rgb(37, 37, 37);
   background: rgb(37, 37, 37);
   color: white;
-  width: 300px;
   height: 40px;
+  border-radius: 7px;
   cursor: pointer;
 
   &:hover {
@@ -116,25 +105,12 @@ const Button = styled.button`
   }
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   margin: 10px;
   width: 285px;
   height: 25px;
   padding: 0px;
   padding-left: 10px;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
 `;
 
 function Signup({ signupButtonOn, setLoginButtonOn, setSignupButtonOn }) {
@@ -205,7 +181,7 @@ function Signup({ signupButtonOn, setLoginButtonOn, setSignupButtonOn }) {
         tabIndex='-1'
         visible={signupButtonOn}
       >
-        <SignUp>
+        <TemplateSignUpAndLogin>
           <h2 className='signup'>회원가입</h2>
           <div className='buttons'>
             <Button className='modal-item'>
@@ -229,7 +205,10 @@ function Signup({ signupButtonOn, setLoginButtonOn, setSignupButtonOn }) {
               </div>
             </Button>
             <Button onClick={handleEmailLogin} className='modal-item'>
-              이메일로 가입
+              <div className='login-icon'>
+                <AiOutlineMail className='email' />
+                이메일로 가입
+              </div>
             </Button>
           </div>
 
@@ -307,7 +286,7 @@ function Signup({ signupButtonOn, setLoginButtonOn, setSignupButtonOn }) {
           <h5 onClick={exitSignup} className='text-link'>
             닫기
           </h5>
-        </SignUp>
+        </TemplateSignUpAndLogin>
       </ModalWrapper>
     </>
   );
