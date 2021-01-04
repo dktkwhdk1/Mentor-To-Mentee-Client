@@ -102,9 +102,6 @@ function Main() {
           />
           <div className='background' />
           <div className='vvs'>We create products that make people happy</div>
-          <br />
-          <br />
-          <div className='vvs'>We create products that make people happy</div>
         </MainImage>
       ) : (
         ''

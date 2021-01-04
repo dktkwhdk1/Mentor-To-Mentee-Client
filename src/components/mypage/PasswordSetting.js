@@ -20,7 +20,7 @@ const InsertForm = styled.form`
   }
 `;
 
-const SubmitButton = styled.button`
+export const SubmitButton = styled.button`
   border-radius: 4px;
   border: 1px solid rgb(37, 37, 37);
   width: 91.5%;
