@@ -10,10 +10,17 @@ axios.defaults.withCredentials = true;
 
 function Login({ loginButtonOn, setLoginButtonOn, setSignupButtonOn }) {
   const [emailButtonOn, setEmailButtonOn] = useState(false);
+  const [canIsignIn, setCanIsignIn] = useState(false);
   const [modalVisible, setModalVisible] = useState({
     modal: false,
     login: false,
   });
+  const canNotLoginModal = () => {
+    setCanIsignIn(true);
+  };
+  const closeCanNotLoginModal = () => {
+    setCanIsignIn(false);
+  };
   const openModal = login => {
     setModalVisible({ modal: true, login });
   };
@@ -53,6 +60,7 @@ function Login({ loginButtonOn, setLoginButtonOn, setSignupButtonOn }) {
           password,
         })
         .then(res => {
+          console.log(res);
           const accessToken = res.data.data.accessToken;
           dispatch(setAccessToken(accessToken));
           axios
@@ -67,6 +75,11 @@ function Login({ loginButtonOn, setLoginButtonOn, setSignupButtonOn }) {
               }
               openModal(true);
             });
+        })
+        .catch(err => {
+          if (err) {
+            canNotLoginModal();
+          }
         });
     }
   };
@@ -172,6 +185,19 @@ function Login({ loginButtonOn, setLoginButtonOn, setSignupButtonOn }) {
                 모든 정보를 입력해주세요.
               </Modal>
             )
+          ) : (
+            ''
+          )}
+          {canIsignIn ? (
+            <Modal
+              canNotLogin={true}
+              visible={canIsignIn}
+              closable={true}
+              maskClosable={true}
+              onClose={closeCanNotLoginModal}
+            >
+              존재하지 않는 아이디이거나,{<br />}비밀번호가 일치하지 않습니다.
+            </Modal>
           ) : (
             ''
           )}

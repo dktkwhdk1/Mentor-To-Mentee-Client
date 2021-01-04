@@ -12,6 +12,7 @@ function Modal({
   children,
   isMiddle,
   isDelete,
+  canNotLogin,
   applymentor,
 }) {
   const onMaskClick = e => {
@@ -40,6 +41,7 @@ function Modal({
           className='modal-inner'
           isMiddle={isMiddle}
           isDelete={isDelete}
+          canNotLogin={canNotLogin}
           applymentor={applymentor}
         >
           {closable && <CloseButton close={close} />}
@@ -119,6 +121,15 @@ const ModalInner = styled.div`
       left: 37%;
       padding-top: 8px;
       padding-left: 30px;
+    `}
+    ${props =>
+    props.canNotLogin &&
+    css`
+      padding-top: 10px;
+      padding-left: 40px;
+      padding-right: 5px;
+      padding-bottom: 30px;
+      height: 100px;
     `}
 `;
 
