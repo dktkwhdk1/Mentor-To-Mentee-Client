@@ -26,7 +26,6 @@ const InsertForm = styled.form`
   }
 `;
 
-// 멘티 정보, 멘토 정보 버튼
 const Toggle = styled.button`
   background: #e9ecef;
   margin-bottom: 20px;
@@ -55,7 +54,7 @@ const Toggle = styled.button`
     `}
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   border-radius: 4px;
   border: 1px solid #dee2e6;
   width: 87%;
@@ -98,7 +97,7 @@ const Graduation = styled.div`
   word-spacing: 150px;
 `;
 
-const SubmitButton = styled.button`
+export const SubmitButton = styled.button`
   border-radius: 4px;
   border: 1px solid rgb(37, 37, 37);
   width: 91.5%;
@@ -171,6 +170,7 @@ function MenteeSetting({ AreYouMentor }) {
     }
     setMenteeInfoState({ ...menteeInfo, ...userInfo });
     return;
+    // eslint-disable-next-line
   }, []);
   const inputFormHandler = e => {
     setMenteeInfoState({ ...menteeInfo, [e.target.name]: e.target.value });

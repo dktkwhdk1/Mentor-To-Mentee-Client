@@ -1,20 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-`;
 
 const QuestionForm = styled.form`
   margin-left: 30px;
@@ -57,12 +43,14 @@ const MentorInfoBlock = styled.div`
       padding-top: 8px;
       color: #8f8f94;
     }
+
     .mentor {
       padding-left: 4px;
       padding-top: 9px;
       font-size: 16px;
       color: #8f8f94;
     }
+
     .mentor-job {
       font-size: 18px;
       padding-left: 4px;
@@ -113,13 +101,16 @@ const AnswerBlock = styled.div`
     width: 200px;
     cursor: pointer;
   }
+
   .answer-state-false {
     border: 1px solid red;
     background: #e54444;
   }
+
   .createdAt {
     padding-left: 320px;
   }
+
   .answer-content {
     margin-top: 20px;
   }
@@ -182,6 +173,7 @@ const Question = ({ sentQuestion }) => {
 
   useEffect(() => {
     answerStateHandler();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -194,7 +186,7 @@ const Question = ({ sentQuestion }) => {
               ? mentorImage
               : 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
           }
-          alt='image error'
+          alt=''
         />
         <div
           onClick={() => history.push(`/mentorprofile/${mentorId}`)}
@@ -208,9 +200,7 @@ const Question = ({ sentQuestion }) => {
         </div>
       </MentorInfoBlock>
       <QuestionBlock>
-        <StyledLink to={`/QuestionAndAnswer/${mentorId}`}>
-          <h2>{brief}</h2>
-        </StyledLink>
+        <h2>{brief}</h2>
         <div>{question}</div>
         <div className='createdAt'>{questionDate}</div>
       </QuestionBlock>

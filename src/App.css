@@ -9,7 +9,31 @@ body {
   font-family: 'Nanum Gothic', sans-serif;
 } */
 .sidebar {
-  transition: translate 0.5s ease-in-out;
+  transition: translate 1.5s ease-in-out;
+}
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 /*
 .main {

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import mentorListReducer from './main';
-import {login, isLoginReducer} from './login';
+import { login, isLoginReducer } from './login';
 import userInfoSetting from './userInfoSetting';
 import roleInfoSetting from './roleInfoSetting';
 import myQuestionReducer from './myQuestion';
@@ -11,7 +11,7 @@ const Reducer = combineReducers({
   userInfoSetting,
   roleInfoSetting,
   myQuestionReducer,
-  isLoginReducer
+  isLoginReducer,
 });
 
 export default Reducer;

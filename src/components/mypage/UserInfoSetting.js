@@ -147,6 +147,7 @@ function UserInfoSetting() {
     }
     setAccountInfo({ ...userInfo });
     return;
+    // eslint-disable-next-line
   }, []);
 
   const inputFormHandler = e => {

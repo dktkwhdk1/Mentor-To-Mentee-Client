@@ -1,76 +1,14 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setAccessToken, setLogin } from '../../modules/login';
 import { setUserInfo } from '../../modules/userInfoSetting';
-import Modal from '../ModalMessage';
+import { AiOutlineMail } from 'react-icons/ai';
+import Modal, { ModalOverlay, ModalWrapper } from '../ModalMessage';
+import { TemplateSignUpAndLogin, Button, Input } from './Signup';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
-const LoginModal = styled.div`
-  width: 400px;
-  height: auto;
-  border: 1px solid;
-  border-radius: 10px;
-  position: fixed;
-  background-color: white;
-  top: 30%;
-  left: 35%;
-  margin: auto;
-  padding-bottom: 30px;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .modal-item {
-    position: relative;
-    top: 10%;
-    margin: 5px;
-    display: block;
-  }
-  .modal-submit {
-    background-color: rgb(37, 37, 37);
-    color: white;
-    width: 300px;
-    height: 40px;
-    border-radius: 7px;
-    border: black 1px solid;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #b9a186;
-      border: #b9a186 1px solid;
-    }
-  }
-  .text-link {
-    color: gray;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`;
-
-const Button = styled.button`
-  width: 300px;
-  background-color: white;
-  height: 40px;
-  border-radius: 7px;
-  cursor: pointer;
-  &:hover {
-    background-color: #b9a186;
-    color: white;
-    border: #b9a186 1px solid;
-  }
-`;
-
-const Input = styled.input`
-  margin: 10px;
-  width: 285px;
-  height: 25px;
-  padding: 0px;
-  padding-left: 10px;
-`;
-
-function Login({ setLoginButtonOn, setSignupButtonOn }) {
+function Login({ loginButtonOn, setLoginButtonOn, setSignupButtonOn }) {
   const [emailButtonOn, setEmailButtonOn] = useState(false);
   const [modalVisible, setModalVisible] = useState({
     modal: false,
@@ -82,6 +20,13 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
   const closeModal = () => {
     setModalVisible({ modal: false, login: false });
   };
+
+  const onMaskClick = e => {
+    if (e.target === e.currentTarget) {
+      setLoginButtonOn(false);
+    }
+  };
+  const maskClosable = true;
 
   //이메일버튼 눌렀을때, 입력 폼 띄워주는 기능
   const handleEmailLogin = () => {
@@ -134,77 +79,105 @@ function Login({ setLoginButtonOn, setSignupButtonOn }) {
   };
 
   return (
-    <LoginModal>
-      <h2>로그인</h2>
-      <div className='buttons'>
-        <Button className='modal-item'>구글 아이디로 로그인</Button>
-        <Button className='modal-item' onClick={naverLoginHandler}>
-          네이버 아이디로 로그인
-        </Button>
-        <Button className='modal-item' onClick={handleEmailLogin}>
-          이메일로 로그인
-        </Button>
-      </div>
-      {emailButtonOn ? (
-        <div className='modal-form'>
-          <div className='inputs'>
-            <Input
-              type='email'
-              placeholder='이메일을 입력해주세요'
-              className='modal-item'
-              onChange={e => setEmail(e.target.value)}
-            ></Input>
-            <Input
-              type='password'
-              placeholder='비밀번호를 입력해주세요'
-              className='modal-item'
-              onChange={e => setPassword(e.target.value)}
-            ></Input>
+    <>
+      <ModalOverlay visible={loginButtonOn} />
+      <ModalWrapper
+        onClick={maskClosable ? onMaskClick : null}
+        tabIndex='-1'
+        visible={loginButtonOn}
+      >
+        <TemplateSignUpAndLogin>
+          <h2 className='login'>로그인</h2>
+          <div className='buttons'>
+            <Button className='modal-item'>
+              <div className='login-icon'>
+                <img
+                  src='https://d2ljmlcsal6xzo.cloudfront.net/assets/icons/google_logo-18f6b0c2c760efa52704288819167e97100f8a16799e10ae38990260f5b0341f.png'
+                  alt=''
+                  className='google'
+                />
+                구글 아이디로 로그인
+              </div>
+            </Button>
+            <Button className='modal-item' onClick={naverLoginHandler}>
+              <div className='login-icon'>
+                <img
+                  src='https://d2ljmlcsal6xzo.cloudfront.net/assets/icons/naver_logo-332865f7b796a02822378e0b61e6dcace93ae9a24abd810cd774a06b5fbcb0b5.png'
+                  alt=''
+                  className='naver'
+                />
+                네이버 아이디로 로그인
+              </div>
+            </Button>
+            <Button className='modal-item' onClick={handleEmailLogin}>
+              <div className='login-icon'>
+                <AiOutlineMail className='email' />
+                이메일로 로그인
+              </div>
+            </Button>
           </div>
-          <div>
-            <Input
-              type='submit'
-              value='로그인'
-              className='modal-item modal-submit'
-              onClick={onSubmitHandler}
-            ></Input>
-          </div>
-        </div>
-      ) : (
-        ''
-      )}
-      <h5 onClick={handleSignupButton} className='text-link'>
-        계정이 없으시다면? 회원가입
-      </h5>
-      {modalVisible.modal ? (
-        modalVisible.login ? (
-          <Modal
-            isMiddle={true}
-            visible={modalVisible}
-            closable={true}
-            maskClosable={true}
-            onClose={() => {
-              setLoginButtonOn(false);
-              closeModal();
-            }}
-          >
-            로그인에 성공하셨습니다.
-          </Modal>
-        ) : (
-          <Modal
-            isMiddle={true}
-            visible={modalVisible}
-            closable={true}
-            maskClosable={true}
-            onClose={closeModal}
-          >
-            모든 정보를 입력해주세요.
-          </Modal>
-        )
-      ) : (
-        ''
-      )}
-    </LoginModal>
+          {emailButtonOn ? (
+            <div className='modal-form'>
+              <div className='inputs'>
+                <Input
+                  type='email'
+                  placeholder='이메일을 입력해주세요'
+                  className='modal-item'
+                  onChange={e => setEmail(e.target.value)}
+                ></Input>
+                <Input
+                  type='password'
+                  placeholder='비밀번호를 입력해주세요'
+                  className='modal-item pw'
+                  onChange={e => setPassword(e.target.value)}
+                ></Input>
+              </div>
+              <div>
+                <Input
+                  type='submit'
+                  value='로그인'
+                  className='modal-item modal-submit'
+                  onClick={onSubmitHandler}
+                ></Input>
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
+          <h5 onClick={handleSignupButton} className='text-link'>
+            계정이 없으시다면? 회원가입
+          </h5>
+          {modalVisible.modal ? (
+            modalVisible.login ? (
+              <Modal
+                isMiddle={true}
+                visible={modalVisible}
+                closable={true}
+                maskClosable={true}
+                onClose={() => {
+                  setLoginButtonOn(false);
+                  closeModal();
+                }}
+              >
+                로그인에 성공하셨습니다.
+              </Modal>
+            ) : (
+              <Modal
+                isMiddle={true}
+                visible={modalVisible}
+                closable={true}
+                maskClosable={true}
+                onClose={closeModal}
+              >
+                모든 정보를 입력해주세요.
+              </Modal>
+            )
+          ) : (
+            ''
+          )}
+        </TemplateSignUpAndLogin>
+      </ModalWrapper>
+    </>
   );
 }
 

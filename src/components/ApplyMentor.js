@@ -15,25 +15,24 @@ const ApplyMentorTemplate = styled.div`
 
 const ApplyMentorDiv = styled.div`
   width: 960px;
-  // border: 1px solid #dee2e6;
-  // border-radius: 4px;
-  // height: 750px;
+
   .mentor-img img {
     width: 500px;
-    height: 380px;
+    height: 365px;
   }
 `;
 
 const Title = styled.div`
   margin: 30px 30px;
   font-size: 24px;
+
   .title {
     font-weight: 700;
     font-size: 30px;
     margin-bottom: 10px;
     font-family: 'Nanum Gothic', sans-serif;
-    // font-family: 'Nanum Myeongjo', serif;
   }
+
   .content {
     font-family: 'Nanum Myeongjo', serif;
   }
@@ -44,6 +43,7 @@ const Body = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   div {
     margin: 0px 10px;
   }
@@ -55,16 +55,17 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // border: 1px solid #dee2e6;
-  // border-radius: 4px;
+  margin-left: 10px;
+
   .input-item {
-    height: 50px;
+    height: 51px;
     padding: 5px;
     padding-left: 10px;
     margin: 10px;
     border-radius: 4px;
     border: 1px solid #dee2e6;
   }
+
   .input-select {
     height: 50px;
     padding-left: 10px;
@@ -73,6 +74,7 @@ const Form = styled.form`
     border-radius: 4px;
     border: 1px solid #dee2e6;
   }
+
   .input-submit {
     border: rgb(37, 37, 37) 1px solid;
     background-color: rgb(37, 37, 37);
@@ -145,7 +147,12 @@ function ApplyMentor() {
         <Body>
           <div className='mentor-img'>
             <img
-              src='https://d2ljmlcsal6xzo.cloudfront.net/assets/mentor_hero-fb0fabb03ac9a924cc639d018d7f1520d49c3f0f1bef7ef871a6c5141658a781.jpg'
+              // src='https://d2ljmlcsal6xzo.cloudfront.net/assets/mentor_hero-fb0fabb03ac9a924cc639d018d7f1520d49c3f0f1bef7ef871a6c5141658a781.jpg'
+              // src='https://i.pinimg.com/564x/c2/ba/6a/c2ba6a00c6f27a20926c293e7f0a3f0d.jpg'
+              // src='https://lh3.googleusercontent.com/proxy/kh5-UOxj3sl-_ceBRFZXyeEFSAK7DCunjJ_zuk54XFk0DF2PUi2iZ8rLumoZuAmOyEuCUWqooQ5CsITwgZkQNv4EkpWsnxu6DEaI80DTBLOA8OiN_Ez5FXsiVJGat5AvEAgZUkO-NQ'
+              // src='https://i.pinimg.com/564x/65/92/f5/6592f5c9856b5e2c7418a20e3ebaab55.jpg' // 곰돌이 푸
+              // src='https://png.pngtree.com/png-vector/20190925/ourlarge/pngtree-find-people-glyph-icon-vector-png-image_1742912.jpg' // 사람 모양
+              src='https://www.flaticon.com/svg/static/icons/svg/45/45268.svg'
               alt=''
             />
           </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMentorInfo } from '../../modules/roleInfoSetting';
+import { Input, SubmitButton } from './MenteeSetting';
 import Modal from '../ModalMessage';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -49,24 +50,6 @@ const Toggle = styled.button`
     `}
 `;
 
-const SubmitButton = styled.button`
-  border-radius: 4px;
-  border: 1px solid rgb(37, 37, 37);
-  width: 91.5%;
-  font-size: 12px;
-  padding: 10px;
-  margin-left: 20px;
-  margin-bottom: 15px;
-  background: rgb(37, 37, 37);
-  color: white;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #b9a186;
-    border: #b9a186 1px solid;
-  }
-`;
-
 const BigInput = styled.textarea`
   border-radius: 4px;
   border: 1px solid #dee2e6;
@@ -77,16 +60,6 @@ const BigInput = styled.textarea`
   margin-left: 20px;
   margin-bottom: 15px;
   resize: none; /* 크롬 크기조정 없애기 */
-`;
-
-const Input = styled.input`
-  border-radius: 4px;
-  border: 1px solid #dee2e6;
-  width: 87%;
-  font-size: 12px;
-  padding: 10px;
-  margin-left: 20px;
-  margin-bottom: 15px;
 `;
 
 function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
@@ -145,6 +118,7 @@ function MentorSetting({ isMentee, isMentor, setMentee, setMentor }) {
     }
     setMentorInfoState({ ...mentorInfo, ...userInfo });
     return;
+    // eslint-disable-next-line
   }, []);
 
   const inputFormHandler = e => {

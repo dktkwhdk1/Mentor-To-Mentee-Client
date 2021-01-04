@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setAccessToken, setLogin } from '../../modules/login';
+import { StyledLink } from './Header';
 import axios from 'axios';
 import CloseButton from '../CloseButton';
 
@@ -22,7 +22,6 @@ const Nav = styled.div`
 
   .nav-content {
     margin-bottom: 300px;
-    font-family: 'Nanum Myeongjo', serif;
   }
 
   .nav-quit {
@@ -38,7 +37,6 @@ const Nav = styled.div`
     list-style: none;
     padding: 20px;
     cursor: pointer;
-    font-family: 'Nanum Myeongjo', serif;
   }
 
   .nav-hover {
@@ -47,19 +45,6 @@ const Nav = styled.div`
       background-color: #fff;
       color: #242424;
     }
-  }
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
   }
 `;
 

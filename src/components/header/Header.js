@@ -13,7 +13,6 @@ const HeaderDiv = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 10px 30px;
 
   h1 {
@@ -37,7 +36,7 @@ const HeaderDiv = styled.nav`
   }
 `;
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 
@@ -51,8 +50,6 @@ const StyledLink = styled(Link)`
 `;
 
 function Header({ loginButtonOn, setLoginButtonOn }) {
-  //isLogin 여부에 따라서 NavBar에 로그인 버튼만 나타나거나, 다른 메뉴들이 나타남
-  // const [isLogin, setLogin] = useState(false);
   const [signupButtonOn, setSignupButtonOn] = useState(false);
   const [sideBarOn, setSideBarOn] = useState(false);
   const isLogin = useSelector(state => state.isLoginReducer.isLogin);
@@ -80,31 +77,31 @@ function Header({ loginButtonOn, setLoginButtonOn }) {
             Login
           </h3>
         )}
-
-        {signupButtonOn ? (
-          <Signup
-            setLoginButtonOn={setLoginButtonOn}
-            setSignupButtonOn={setSignupButtonOn}
-          ></Signup>
-        ) : (
-          ''
-        )}
-        {loginButtonOn ? (
-          <Login
-            setLoginButtonOn={setLoginButtonOn}
-            signupButtonOn={signupButtonOn}
-            setSignupButtonOn={setSignupButtonOn}
-          />
-        ) : (
-          ''
-        )}
-
         {sideBarOn ? (
           <SideBar className='sidebar' setSideBarOn={setSideBarOn} />
         ) : (
           ''
         )}
       </HeaderDiv>
+      {signupButtonOn ? (
+        <Signup
+          signupButtonOn={signupButtonOn}
+          setLoginButtonOn={setLoginButtonOn}
+          setSignupButtonOn={setSignupButtonOn}
+        />
+      ) : (
+        ''
+      )}
+      {loginButtonOn ? (
+        <Login
+          loginButtonOn={loginButtonOn}
+          setLoginButtonOn={setLoginButtonOn}
+          signupButtonOn={signupButtonOn}
+          setSignupButtonOn={setSignupButtonOn}
+        />
+      ) : (
+        ''
+      )}
     </>
   );
 }

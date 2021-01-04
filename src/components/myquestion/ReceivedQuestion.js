@@ -37,17 +37,20 @@ const MenteeInfoBlock = styled.div`
   .mentee-name {
     font-size: 22px;
     padding-top: 5px;
+
     .mentee-grade {
       font-size: 18px;
       padding-top: 8px;
       color: #8f8f94;
     }
+
     .mentee {
       padding-left: 4px;
       padding-top: 9px;
       font-size: 16px;
       color: #8f8f94;
     }
+
     .mentee-major {
       font-size: 18px;
       color: #8f8f94;
@@ -79,6 +82,7 @@ const QuestionBlock = styled.div`
 const AnswerBlock = styled.div`
   border: 1px solid #dee2e6;
   padding: 20px;
+
   .answer-btn {
     border: 1px solid #dee2e6;
     border-radius: 4px;
@@ -94,10 +98,12 @@ const AnswerBlock = styled.div`
     background: #32a859;
     cursor: pointer;
   }
+
   .answer-state-false {
     border: 1px solid red;
     background: #e54444;
   }
+
   .answer-content {
     margin-top: 20px;
     margin-left: 5px;
@@ -112,10 +118,11 @@ const AnswerForm = styled.form`
   .answer-text {
     border: 1px solid #dee2e6;
     padding: 20px;
-    width: 100%;
+    width: 578px;
     height: 120px;
     resize: none; /* 크롬 크기조정 없애기 */
   }
+
   .submit {
     margin-top: 10px;
     background: rgb(37, 37, 37);
@@ -243,7 +250,7 @@ const Question = ({ receivedQuestion, setReceivedQuestionList }) => {
               ? menteeImage
               : 'https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg'
           }
-          alt='image error'
+          alt=''
         />
         <div className='mentee-name'>
           {menteeName}

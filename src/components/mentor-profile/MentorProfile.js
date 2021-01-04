@@ -14,7 +14,7 @@ const Profile = styled.div`
   ${props =>
     !props.isAskButtonOn &&
     css`
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     `}
   width: 1024px;
   h1 {
@@ -36,19 +36,27 @@ const Card = styled.div`
   align-items: center;
   border: 1px solid #dee2e6;
   width: 250px;
-  height: 300px;
+  height: 310px;
   margin-right: 30px;
 
   .profile-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    .job {
+      text-align: center;
+    }
+
+    .info {
+      margin-bottom: 2px;
+    }
   }
 
   .mentor-name {
     margin-right: 5px;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 20px;
   }
 
   .mentor-img {
@@ -82,8 +90,13 @@ const Introduction = styled.div`
   border: 1px solid #dee2e6;
   padding: 35px;
   width: 800px;
+
+  .intro {
+    margin-bottom: 30px;
+  }
+
   .intro h2 {
-    margin-top: 10px;
+    margin-top: 0;
   }
 `;
 
@@ -108,6 +121,18 @@ function MentorProfile({ match }) {
   const handleAskButton = () => {
     setAskButtonOn(!isAskButtonOn);
   };
+  let mentorCareer = [];
+  let career = '';
+  if (mentor.career) {
+    for (let i = 0; i < mentor.career.length; i++) {
+      if (mentor.career[i] === '\n') {
+        mentorCareer.push(career);
+        career = '';
+        continue;
+      }
+      career += mentor.career[i];
+    }
+  }
 
   return (
     <MentorProfileTemplate>
@@ -122,9 +147,9 @@ function MentorProfile({ match }) {
                 <span className='mentor-text'>멘토</span>
               </div>
               <div className='content job'>
-                <div className='mentor-company'>{mentor.company}</div>
-                <div>{mentor.department}</div>
-                <div>{mentor.job || '과장'}</div>
+                <div className='mentor-company info'>{mentor.company}</div>
+                <div className='info'>{mentor.department}</div>
+                <div className='info'>{mentor.job || '과장'}</div>
               </div>
               <button className='content mentor-btn' onClick={handleAskButton}>
                 질문하기
@@ -142,7 +167,13 @@ function MentorProfile({ match }) {
             </div>
             <div className='career'>
               <h2>주요 경력</h2>
-              <div>{mentor.career || `아직 소개 내용이 없습니다 `}</div>
+              {mentorCareer.length ? (
+                mentorCareer.map(ele => {
+                  return <div>{ele}</div>;
+                })
+              ) : (
+                <div>아직 내용이 없습니다</div>
+              )}
             </div>
           </Introduction>
         </div>
