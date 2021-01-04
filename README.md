@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# Team VVS Project : 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Name
 
-## Available Scripts
 
-In the project directory, you can run:
+Mentor To Mentee (MtoM)
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## About
 
-### `yarn test`
+진로 상담과 관련하여 멘토와 멘티를 이어주는 플랫폼
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+멘티가 원하는 멘토를 선택하여, 질문을 보내고 
 
-### `yarn build`
+멘토는 받은 질문에 대해 답변을 보냅니다
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 사용스택
 
-### `yarn eject`
+- Front-end : React, Redux, CSS3, HTML5, React-hook, Javascript, RESTful API, React-router-dom,
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Back-end : Mysql, Express.js, HTTPS, RESTful API, jwt, Sequelize, Multer-s3, MVC pattern
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Deploy : EC2 with Load Balancer , S3, for client, S3 for imgUpload ,Route53, ACM
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## 작업기간 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2020.12.21 ~ 2021.01.04 (2주)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 주요 기능
 
-### Analyzing the Bundle Size
+- 이메일 로그인 & 소셜 로그인 (네이버)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- 멘토 지원하기
 
-### Making a Progressive Web App
+- 멘토에게 질문하기
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- 질문에 답변하기
 
-### Advanced Configuration
+- 마이페이지 ( 계정정보 변경 )
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- 회원탈퇴
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
