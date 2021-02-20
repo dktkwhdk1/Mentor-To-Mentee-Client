@@ -38,4 +38,4 @@ Mentor To Mentee는 이름에서 느껴지듯이 멘토와 멘티를 이어주�
 
 ## Wiki
 
-[Go to see Wiki !](https://github.com/codestates/Mentor-To-Mentee-client/wiki)
+[Go to see Wiki !](https://github.com/dktkwhdk1/Mentor-To-Mentee-client/wiki)
